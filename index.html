@@ -733,19 +733,19 @@
 
     <div class="whoop-grid">
       <div class="whoop-cell">
-        <div class="whoop-val recovery">--</div>
+        <div class="whoop-val recovery" id="whoopRecovery">--</div>
         <div class="whoop-label">RECOVERY</div>
       </div>
       <div class="whoop-cell">
-        <div class="whoop-val strain">--</div>
+        <div class="whoop-val strain" id="whoopStrain">--</div>
         <div class="whoop-label">STRAIN</div>
       </div>
       <div class="whoop-cell">
-        <div class="whoop-val sleep">--</div>
+        <div class="whoop-val sleep" id="whoopSleep">--</div>
         <div class="whoop-label">SLEEP</div>
       </div>
     </div>
-    <div class="whoop-note">SIGNAL INCOMING</div>
+    <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
   </section>
 
   <hr class="div-line" />
@@ -855,6 +855,19 @@
   </footer>
 
   <script>
+    /* ── WHOOP DATA LOADER ── */
+    fetch('whoop_data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.recovery !== null) document.getElementById('whoopRecovery').textContent = d.recovery + '%';
+        if (d.strain !== null) document.getElementById('whoopStrain').textContent = d.strain;
+        if (d.sleep_hours !== null) document.getElementById('whoopSleep').textContent = d.sleep_hours + 'h';
+        var date = new Date(d.updated);
+        var timeStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('whoopNote').textContent = 'LAST SIGNAL: ' + timeStr.toUpperCase();
+      })
+      .catch(function() {});
+
     /* ── SMOOTH SCROLL ── */
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       a.addEventListener('click', function(e) {
