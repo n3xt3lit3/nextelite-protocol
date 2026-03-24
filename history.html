@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Protocol History — NextElite</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+    :root {
+      --yellow: #F5C400;
+      --cyan: #00BADF;
+      --blue: #3B6EF5;
+      --pink: #E8197A;
+      --dark: #050505;
+      --card: #0c0c0e;
+      --card-border: #1a1a1e;
+      --text: #e4e4e7;
+      --text-dim: #52525b;
+      --text-muted: #3f3f46;
+      --green: #22c55e;
+      --purple: #a855f7;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .back {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      transition: color 0.2s;
+    }
+
+    .back:hover { color: var(--text); }
+
+    h1 {
+      font-size: 1.2rem;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+
+    /* ── CHART ── */
+    .chart-section {
+      margin-bottom: 3rem;
+    }
+
+    .chart-label {
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 120px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .chart-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .chart-bar {
+      width: 100%;
+      min-height: 2px;
+      border-radius: 2px 2px 0 0;
+      transition: height 0.3s;
+    }
+
+    .chart-bar.recovery { background: var(--green); }
+    .chart-bar.strain { background: var(--blue); }
+    .chart-bar.sleep { background: var(--purple); }
+
+    .chart-date {
+      font-size: 0.45rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      transform: rotate(-45deg);
+      white-space: nowrap;
+    }
+
+    /* ── TABLE ── */
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 3rem;
+    }
+
+    .history-table th {
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .history-table td {
+      font-size: 0.72rem;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text-dim);
+    }
+
+    .history-table tr:hover td {
+      color: var(--text);
+    }
+
+    .val-recovery { color: var(--green); }
+    .val-strain { color: var(--blue); }
+    .val-sleep { color: var(--purple); }
+
+    .empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 4rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">BACK TO PROTOCOL</a>
+
+    <h1>Protocol History</h1>
+    <div class="subtitle" id="dayCount">LOADING...</div>
+
+    <!-- RECOVERY CHART -->
+    <div class="chart-section">
+      <div class="chart-label">RECOVERY %</div>
+      <div class="chart" id="recoveryChart"></div>
+    </div>
+
+    <!-- STRAIN CHART -->
+    <div class="chart-section">
+      <div class="chart-label">STRAIN</div>
+      <div class="chart" id="strainChart"></div>
+    </div>
+
+    <!-- SLEEP CHART -->
+    <div class="chart-section">
+      <div class="chart-label">SLEEP HOURS</div>
+      <div class="chart" id="sleepChart"></div>
+    </div>
+
+    <!-- TABLE -->
+    <table class="history-table" id="historyTable">
+      <thead>
+        <tr>
+          <th>DATE</th>
+          <th>RECOVERY</th>
+          <th>STRAIN</th>
+          <th>SLEEP</th>
+          <th>HRV</th>
+          <th>RHR</th>
+        </tr>
+      </thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+
+    <div class="empty" id="emptyMsg" style="display:none;">No history yet. Data builds over time.</div>
+  </div>
+
+  <script>
+    fetch('whoop_history.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data || data.length === 0) {
+          document.getElementById('emptyMsg').style.display = 'block';
+          document.getElementById('dayCount').textContent = '0 DAYS TRACKED';
+          return;
+        }
+
+        document.getElementById('dayCount').textContent = data.length + ' DAYS TRACKED';
+
+        var recoveryChart = document.getElementById('recoveryChart');
+        var strainChart = document.getElementById('strainChart');
+        var sleepChart = document.getElementById('sleepChart');
+        var tbody = document.getElementById('historyBody');
+
+        // Show last 30 days max in charts
+        var chartData = data.slice(-30);
+
+        chartData.forEach(function(d) {
+          var dateStr = d.date ? d.date.slice(5) : '--';
+
+          // Recovery bar (0-100%)
+          var rBar = document.createElement('div');
+          rBar.className = 'chart-bar-wrap';
+          var rInner = document.createElement('div');
+          rInner.className = 'chart-bar recovery';
+          rInner.style.height = (d.recovery || 0) + '%';
+          var rDate = document.createElement('div');
+          rDate.className = 'chart-date';
+          rDate.textContent = dateStr;
+          rBar.appendChild(rInner);
+          rBar.appendChild(rDate);
+          recoveryChart.appendChild(rBar);
+
+          // Strain bar (0-21 scale)
+          var sBar = document.createElement('div');
+          sBar.className = 'chart-bar-wrap';
+          var sInner = document.createElement('div');
+          sInner.className = 'chart-bar strain';
+          sInner.style.height = ((d.strain || 0) / 21 * 100) + '%';
+          sBar.appendChild(sInner);
+          strainChart.appendChild(sBar);
+
+          // Sleep bar (0-12h)
+          var slBar = document.createElement('div');
+          slBar.className = 'chart-bar-wrap';
+          var slInner = document.createElement('div');
+          slInner.className = 'chart-bar sleep';
+          slInner.style.height = ((d.sleep_hours || 0) / 12 * 100) + '%';
+          slBar.appendChild(slInner);
+          sleepChart.appendChild(slBar);
+        });
+
+        // Table — reverse (newest first)
+        data.slice().reverse().forEach(function(d) {
+          var tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td>' + (d.date || '--') + '</td>' +
+            '<td class="val-recovery">' + (d.recovery !== null ? d.recovery + '%' : '--') + '</td>' +
+            '<td class="val-strain">' + (d.strain !== null ? d.strain : '--') + '</td>' +
+            '<td class="val-sleep">' + (d.sleep_hours !== null ? d.sleep_hours + 'h' : '--') + '</td>' +
+            '<td>' + (d.hrv !== null ? Math.round(d.hrv) + 'ms' : '--') + '</td>' +
+            '<td>' + (d.rhr !== null ? Math.round(d.rhr) + 'bpm' : '--') + '</td>';
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(function() {
+        document.getElementById('emptyMsg').style.display = 'block';
+        document.getElementById('dayCount').textContent = '0 DAYS TRACKED';
+      });
+  </script>
+</body>
+</html>

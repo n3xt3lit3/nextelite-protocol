@@ -140,9 +140,26 @@ def main():
                 result["sleep_hours"] = round(actual_sleep_ms / 3600000, 1)
             result["sleep_performance"] = score.get("sleep_performance_percentage")
 
-    # Save for website
+    # Save for website (latest)
     with open(DATA_FILE, "w") as f:
         json.dump(result, f, indent=2)
+
+    # Append to history
+    history_file = os.path.join(DIR, "whoop_history.json")
+    history = []
+    if os.path.exists(history_file):
+        with open(history_file) as f:
+            history = json.load(f)
+
+    # Only add if different date from last entry
+    today = datetime.now().strftime("%Y-%m-%d")
+    if not history or history[-1].get("date") != today:
+        entry = dict(result)
+        entry["date"] = today
+        history.append(entry)
+        with open(history_file, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"Added to history ({len(history)} days tracked)")
 
     # Save raw for debugging
     raw = {"cycles": cycles, "recovery": recovery_data, "sleep": sleep_data}
