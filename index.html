@@ -682,6 +682,51 @@
       transform: translateX(4px);
     }
 
+    /* ── SIGNAL ── */
+    .signal-list {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .signal-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid var(--card-border);
+      transition: border-color 0.3s, background 0.3s;
+      text-decoration: none;
+    }
+
+    .signal-item:hover {
+      border-color: #2a2a30;
+      background: var(--card);
+    }
+
+    .signal-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .signal-tag {
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .signal-arrow {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .signal-item:hover .signal-arrow {
+      color: var(--text);
+      transform: translateX(4px);
+    }
+
     /* ── ROADMAP ── */
     .roadmap {
       position: relative;
@@ -814,6 +859,7 @@
         <li><a href="#drop">DROP</a></li>
         <li><a href="#feed">FEED</a></li>
         <li><a href="#sound">SOUND</a></li>
+        <li><a href="#signal">SIGNAL</a></li>
         <li><a href="#roadmap">ROADMAP</a></li>
         <li><a href="#log">LOG</a></li>
       </ul>
@@ -991,6 +1037,36 @@
   <section id="sound" class="section reveal">
     <div class="section-label">SOUND</div>
     <iframe style="border-radius:12px;border:none;" src="https://open.spotify.com/embed/playlist/5P44E8xzkRzqSYcNrLEr8V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </section>
+
+  <hr class="div-line" />
+
+  <!-- SIGNAL -->
+  <section id="signal" class="section reveal">
+    <div class="section-label">SIGNAL</div>
+
+    <div class="signal-list">
+      <a href="https://www.youtube.com/@CryptoSenseii" target="_blank" class="signal-item">
+        <div class="signal-name">Crypto Sensei</div>
+        <div class="signal-tag">XRP</div>
+        <div class="signal-arrow">-></div>
+      </a>
+      <a href="https://www.youtube.com/@CryptoMason" target="_blank" class="signal-item">
+        <div class="signal-name">Crypto Mason</div>
+        <div class="signal-tag">XRP</div>
+        <div class="signal-arrow">-></div>
+      </a>
+      <a href="https://www.youtube.com/@jakeclaver" target="_blank" class="signal-item">
+        <div class="signal-name">Jake Claver</div>
+        <div class="signal-tag">XRP</div>
+        <div class="signal-arrow">-></div>
+      </a>
+      <a href="https://www.youtube.com/@MickleXRP" target="_blank" class="signal-item">
+        <div class="signal-name">Mickle</div>
+        <div class="signal-tag">XRP</div>
+        <div class="signal-arrow">-></div>
+      </a>
+    </div>
   </section>
 
   <hr class="div-line" />
