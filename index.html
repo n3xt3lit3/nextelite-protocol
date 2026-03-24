@@ -631,26 +631,44 @@
     }
 
     /* ── X FEED ── */
-    .feed-wrap {
+    .x-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      overflow: hidden;
-      min-height: 200px;
+      transition: border-color 0.3s, background 0.3s;
+      text-decoration: none;
     }
 
-    .feed-fallback {
-      display: block;
-      text-align: center;
-      padding: 1.25rem;
-      font-size: 0.6rem;
-      letter-spacing: 2px;
+    .x-card:hover {
+      border-color: #2a2a30;
+      background: var(--card);
+    }
+
+    .x-handle {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .x-hint {
+      font-size: 0.62rem;
       color: var(--text-muted);
-      border: 1px solid var(--card-border);
-      border-top: none;
-      transition: color 0.2s;
+      letter-spacing: 1.5px;
+      flex: 1;
     }
 
-    .feed-fallback:hover { color: var(--text); }
+    .x-arrow {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .x-card:hover .x-arrow {
+      color: var(--text);
+      transform: translateX(4px);
+    }
 
     /* ── ROADMAP ── */
     .roadmap {
@@ -943,10 +961,11 @@
   <!-- X FEED -->
   <section id="feed" class="section reveal">
     <div class="section-label">FEED</div>
-    <div class="feed-wrap">
-      <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter noborders transparent" data-height="500" href="https://twitter.com/N3XT3LIT3">loading @N3XT3LIT3...</a>
-    </div>
-    <a href="https://x.com/N3XT3LIT3" target="_blank" class="feed-fallback">@N3XT3LIT3 ON X</a>
+    <a href="https://x.com/N3XT3LIT3" target="_blank" class="x-card">
+      <div class="x-handle">@N3XT3LIT3</div>
+      <div class="x-hint">follow the signal</div>
+      <div class="x-arrow">-></div>
+    </a>
   </section>
 
   <hr class="div-line" />
@@ -1204,6 +1223,5 @@
     });
   </script>
 
-  <script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
