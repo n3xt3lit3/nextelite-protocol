@@ -630,6 +630,116 @@
       caret-color: var(--cyan);
     }
 
+    /* ── X FEED ── */
+    .feed-wrap {
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 200px;
+    }
+
+    .feed-fallback {
+      display: block;
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      border-top: none;
+      transition: color 0.2s;
+    }
+
+    .feed-fallback:hover { color: var(--text); }
+
+    /* ── ROADMAP ── */
+    .roadmap {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .roadmap::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(
+        var(--yellow),
+        var(--cyan),
+        var(--blue),
+        #a855f7,
+        var(--pink)
+      );
+      opacity: 0.4;
+    }
+
+    .rm-item {
+      position: relative;
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .rm-dot {
+      position: absolute;
+      left: -2rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transform: translateX(-0.5px);
+    }
+
+    .rm-dot.done {
+      background: #22c55e;
+      opacity: 0.6;
+    }
+
+    .rm-dot.active {
+      background: var(--blue);
+      box-shadow: 0 0 8px var(--blue), 0 0 16px rgba(59,110,245,0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .rm-dot.upcoming {
+      background: var(--card-border);
+    }
+
+    .rm-num {
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      min-width: 20px;
+    }
+
+    .rm-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      flex: 1;
+    }
+
+    .rm-item.done .rm-name {
+      color: var(--text-dim);
+    }
+
+    .rm-item.upcoming .rm-name {
+      color: var(--text-muted);
+    }
+
+    .rm-status {
+      font-size: 0.48rem;
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    .rm-status.s-done { color: #22c55e; opacity: 0.6; }
+    .rm-status.s-active { color: var(--blue); }
+    .rm-status.s-upcoming { color: var(--text-muted); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 540px) {
       .nav-links { display: none; }
@@ -672,7 +782,9 @@
         <li><a href="#protocol">PROTOCOL</a></li>
         <li><a href="#data">DATA</a></li>
         <li><a href="#drop">DROP</a></li>
+        <li><a href="#feed">FEED</a></li>
         <li><a href="#sound">SOUND</a></li>
+        <li><a href="#roadmap">ROADMAP</a></li>
         <li><a href="#log">LOG</a></li>
       </ul>
       <div class="nav-status">
@@ -828,10 +940,91 @@
 
   <hr class="div-line" />
 
+  <!-- X FEED -->
+  <section id="feed" class="section reveal">
+    <div class="section-label">FEED</div>
+    <div class="feed-wrap">
+      <a class="twitter-timeline" data-theme="dark" data-chrome="noheader nofooter noborders transparent" data-height="500" href="https://twitter.com/N3XT3LIT3">loading @N3XT3LIT3...</a>
+    </div>
+    <a href="https://x.com/N3XT3LIT3" target="_blank" class="feed-fallback">@N3XT3LIT3 ON X</a>
+  </section>
+
+  <hr class="div-line" />
+
   <!-- SOUND -->
   <section id="sound" class="section reveal">
     <div class="section-label">SOUND</div>
     <iframe style="border-radius:12px;border:1px solid var(--card-border);" src="https://open.spotify.com/embed/playlist/5P44E8xzkRzqSYcNrLEr8V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </section>
+
+  <hr class="div-line" />
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="section reveal">
+    <div class="section-label">ROADMAP</div>
+
+    <div class="roadmap">
+      <div class="rm-item done">
+        <span class="rm-dot done"></span>
+        <span class="rm-num">01</span>
+        <span class="rm-name">Site live</span>
+        <span class="rm-status s-done">DONE</span>
+      </div>
+      <div class="rm-item done">
+        <span class="rm-dot done"></span>
+        <span class="rm-num">02</span>
+        <span class="rm-name">WHOOP connected</span>
+        <span class="rm-status s-done">DONE</span>
+      </div>
+      <div class="rm-item done">
+        <span class="rm-dot done"></span>
+        <span class="rm-num">03</span>
+        <span class="rm-name">Sound layer</span>
+        <span class="rm-status s-done">DONE</span>
+      </div>
+      <div class="rm-item done">
+        <span class="rm-dot done"></span>
+        <span class="rm-num">04</span>
+        <span class="rm-name">Open source</span>
+        <span class="rm-status s-done">DONE</span>
+      </div>
+      <div class="rm-item">
+        <span class="rm-dot active"></span>
+        <span class="rm-num">05</span>
+        <span class="rm-name">Nememe #001 mint</span>
+        <span class="rm-status s-active">IN PROGRESS</span>
+      </div>
+      <div class="rm-item upcoming">
+        <span class="rm-dot upcoming"></span>
+        <span class="rm-num">06</span>
+        <span class="rm-name">Daily WHOOP automation</span>
+        <span class="rm-status s-upcoming">UPCOMING</span>
+      </div>
+      <div class="rm-item upcoming">
+        <span class="rm-dot upcoming"></span>
+        <span class="rm-num">07</span>
+        <span class="rm-name">Custom domain</span>
+        <span class="rm-status s-upcoming">UPCOMING</span>
+      </div>
+      <div class="rm-item upcoming">
+        <span class="rm-dot upcoming"></span>
+        <span class="rm-num">08</span>
+        <span class="rm-name">Protocol app</span>
+        <span class="rm-status s-upcoming">UPCOMING</span>
+      </div>
+      <div class="rm-item upcoming">
+        <span class="rm-dot upcoming"></span>
+        <span class="rm-num">09</span>
+        <span class="rm-name">More drops</span>
+        <span class="rm-status s-upcoming">UPCOMING</span>
+      </div>
+      <div class="rm-item upcoming">
+        <span class="rm-dot upcoming"></span>
+        <span class="rm-num">10</span>
+        <span class="rm-name">AI agents</span>
+        <span class="rm-status s-upcoming">UPCOMING</span>
+      </div>
+    </div>
   </section>
 
   <hr class="div-line" />
@@ -852,6 +1045,14 @@
       <div class="log-entry">
         <div class="log-date">03.2026</div>
         <div class="log-text">Site live. Signal on.</div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">03.2026</div>
+        <div class="log-text">WHOOP connected. Biometrics flowing.</div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">03.2026</div>
+        <div class="log-text">Roadmap public. Building in the open.</div>
       </div>
     </div>
   </section>
@@ -1003,5 +1204,6 @@
     });
   </script>
 
+  <script async src="https://platform.twitter.com/widgets.js"></script>
 </body>
 </html>
