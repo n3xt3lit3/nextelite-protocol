@@ -28,6 +28,7 @@
       font-family: 'Space Mono', monospace;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
@@ -57,6 +58,7 @@
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.5px;
+      cursor: pointer;
     }
 
     .nav-logo .N  { color: var(--yellow); }
@@ -116,6 +118,45 @@
       margin-bottom: 0.75rem;
       opacity: 0;
       animation: fadeUp 1s 0.3s forwards;
+      position: relative;
+    }
+
+    /* ── GLITCH ── */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    .glitch::before {
+      color: var(--cyan);
+      animation: glitch-1 4s infinite linear;
+    }
+
+    .glitch::after {
+      color: var(--pink);
+      animation: glitch-2 4s infinite linear;
+    }
+
+    @keyframes glitch-1 {
+      0%, 88%, 92%, 100% { opacity: 0; transform: none; }
+      89% { opacity: 0.8; transform: translate(-2px, -1px); clip-path: inset(20% 0 60% 0); }
+      91% { opacity: 0.8; transform: translate(2px, 1px); clip-path: inset(50% 0 20% 0); }
+    }
+
+    @keyframes glitch-2 {
+      0%, 90%, 94%, 100% { opacity: 0; transform: none; }
+      91% { opacity: 0.6; transform: translate(2px, 1px); clip-path: inset(40% 0 30% 0); }
+      93% { opacity: 0.6; transform: translate(-1px, -2px); clip-path: inset(10% 0 70% 0); }
     }
 
     .hero-sub {
@@ -150,6 +191,18 @@
     @keyframes bob {
       0%,100% { transform: translateY(0); }
       50% { transform: translateY(6px); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ── SECTIONS ── */
@@ -469,11 +522,6 @@
       writing-mode: vertical-rl;
       pointer-events: none;
       z-index: 50;
-      transition: opacity 0.4s;
-    }
-
-    .tattoo:hover {
-      opacity: 0.7;
     }
 
     .tattoo-left {
@@ -485,6 +533,101 @@
     .tattoo-right {
       right: 1.2rem;
       top: 50%;
+    }
+
+    /* ── HIDDEN TERMINAL ── */
+    .terminal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 9999;
+      display: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .terminal-overlay.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .terminal {
+      width: 90%;
+      max-width: 560px;
+      background: #0a0a0a;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: #111;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .terminal-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.r { background: #ff5f57; }
+    .terminal-dot.y { background: #ffbd2e; }
+    .terminal-dot.g { background: #28c840; }
+
+    .terminal-title {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+      min-height: 250px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .terminal-output {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .terminal-input-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--card-border);
+      gap: 0.5rem;
+    }
+
+    .terminal-prompt {
+      font-size: 0.72rem;
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .terminal-input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      width: 100%;
+      caret-color: var(--cyan);
     }
 
     /* ── RESPONSIVE ── */
@@ -500,10 +643,29 @@
   <div class="tattoo tattoo-left">next_elite();</div>
   <div class="tattoo tattoo-right">// code your next level</div>
 
+  <!-- HIDDEN TERMINAL -->
+  <div class="terminal-overlay" id="terminalOverlay">
+    <div class="terminal" id="terminalBox">
+      <div class="terminal-bar">
+        <span class="terminal-dot r"></span>
+        <span class="terminal-dot y"></span>
+        <span class="terminal-dot g"></span>
+        <span class="terminal-title">nextelite v0.1</span>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="terminal-output" id="terminalOutput"></div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="terminal-prompt">&gt;</span>
+        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus />
+      </div>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <div class="nav-logo">
+      <div class="nav-logo" id="navLogo">
         <span class="N">n</span><span class="e1">e</span><span class="x">x</span><span>t</span><span>_</span><span class="pk">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span>
       </div>
       <ul class="nav-links">
@@ -521,7 +683,7 @@
 
   <!-- HERO -->
   <header class="hero">
-    <h1 class="hero-name">Nemine Steffensen</h1>
+    <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
     <div class="hero-scroll">
       <span>|</span>
@@ -532,10 +694,10 @@
 
   <!-- PILLARS -->
   <section id="protocol">
-    <div class="section" style="padding-bottom:2rem;">
+    <div class="section reveal" style="padding-bottom:2rem;">
       <div class="section-label">PROTOCOL PILLARS</div>
     </div>
-    <div class="pillars">
+    <div class="pillars reveal">
       <div class="pillar">
         <div class="pillar-name">BOXING</div>
         <div class="pillar-line" style="background:var(--yellow);"></div>
@@ -566,7 +728,7 @@
   <hr class="div-line" />
 
   <!-- WHOOP DATA -->
-  <section id="data" class="section">
+  <section id="data" class="section reveal">
     <div class="section-label">BIOMETRICS</div>
 
     <div class="whoop-grid">
@@ -589,7 +751,7 @@
   <hr class="div-line" />
 
   <!-- PROTOCOL STACK -->
-  <section class="section">
+  <section class="section reveal">
     <div class="section-label">DAILY STACK</div>
 
     <div class="stack">
@@ -619,7 +781,7 @@
   <hr class="div-line" />
 
   <!-- NFT DROP -->
-  <section id="drop" class="section">
+  <section id="drop" class="section reveal">
     <div class="section-label">DROP</div>
 
     <div class="drop">
@@ -665,7 +827,7 @@
   <hr class="div-line" />
 
   <!-- LOG -->
-  <section id="log" class="section">
+  <section id="log" class="section reveal">
     <div class="section-label">LOG</div>
 
     <div class="log">
@@ -692,13 +854,129 @@
     <div class="footer-sub">PROTOCOL v0.1</div>
   </footer>
 
-  <!-- SMOOTH SCROLL -->
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
+    /* ── SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
         e.preventDefault();
-        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        var target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
+    });
+
+    /* ── SCROLL REVEAL ── */
+    var reveals = document.querySelectorAll('.reveal');
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(function(el) { revealObserver.observe(el); });
+
+    /* ── HIDDEN TERMINAL ── */
+    var overlay = document.getElementById('terminalOverlay');
+    var termInput = document.getElementById('terminalInput');
+    var termOutput = document.getElementById('terminalOutput');
+    var termBody = document.getElementById('terminalBody');
+    var termBox = document.getElementById('terminalBox');
+    var termOpen = false;
+
+    // initial message
+    termOutput.innerHTML = '<span style="color:#22c55e">&gt; connection established</span>\ntype "help" for commands\n';
+
+    var commands = {
+      help: function() {
+        return '<span style="color:#52525b">available commands:</span>\n  about     - who\n  pillars   - the four\n  drop      - nft status\n  stack     - daily protocol\n  whoop     - biometric status\n  clear     - reset\n  exit      - close';
+      },
+      about: function() {
+        return 'Nemine Steffensen\nthe protocol is the product.\neverything else is noise.';
+      },
+      pillars: function() {
+        return '<span style="color:#00BADF">BOXING</span>  - active\n<span style="color:#00BADF">DOG</span>     - active\n<span style="color:#00BADF">XRP</span>     - building\n<span style="color:#00BADF">WHOOP</span>   - connecting';
+      },
+      drop: function() {
+        return '<span style="color:#00BADF">Nememe #001</span>\nchain:   XRPL\nedition: 1/1\nprice:   --\nstatus:  <span style="color:#22c55e">COMING SOON</span>';
+      },
+      stack: function() {
+        return '06:00  Morning Protocol\n--:--  Boxing\nDaily  Dog Work\nPM     Recovery (WHOOP-led)\nEVE    Build';
+      },
+      whoop: function() {
+        return 'recovery: <span style="color:#22c55e">--</span>\nstrain:   <span style="color:#3B6EF5">--</span>\nsleep:    <span style="color:#a855f7">--</span>\n[awaiting signal]';
+      },
+      clear: function() { return '__CLEAR__'; },
+      exit: function() { return '__EXIT__'; }
+    };
+
+    function openTerminal() {
+      termOpen = true;
+      overlay.classList.add('open');
+      setTimeout(function() { termInput.focus(); }, 50);
+    }
+
+    function closeTerminal() {
+      termOpen = false;
+      overlay.classList.remove('open');
+      termInput.blur();
+    }
+
+    // Triple-click the logo to open terminal
+    var logoClicks = 0;
+    var logoTimer = null;
+    document.getElementById('navLogo').addEventListener('click', function() {
+      logoClicks++;
+      if (logoClicks === 3) {
+        logoClicks = 0;
+        clearTimeout(logoTimer);
+        openTerminal();
+      } else {
+        clearTimeout(logoTimer);
+        logoTimer = setTimeout(function() { logoClicks = 0; }, 500);
+      }
+    });
+
+    // Also open with Ctrl+Shift+K or Cmd+Shift+K
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'K') {
+        e.preventDefault();
+        if (termOpen) { closeTerminal(); } else { openTerminal(); }
+      }
+      if (e.key === 'Escape' && termOpen) {
+        closeTerminal();
+      }
+    });
+
+    // close on overlay click (but not terminal box)
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeTerminal();
+    });
+
+    // handle input
+    termInput.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter') return;
+      var cmd = termInput.value.trim().toLowerCase();
+      termInput.value = '';
+      if (!cmd) return;
+
+      var handler = commands[cmd];
+      if (handler) {
+        var result = handler();
+        if (result === '__CLEAR__') {
+          termOutput.innerHTML = '<span style="color:#22c55e">&gt; cleared</span>\n';
+          return;
+        }
+        if (result === '__EXIT__') {
+          closeTerminal();
+          return;
+        }
+        termOutput.innerHTML += '\n<span style="color:#00BADF">&gt; ' + cmd + '</span>\n' + result + '\n';
+      } else {
+        termOutput.innerHTML += '\n<span style="color:#00BADF">&gt; ' + cmd + '</span>\n<span style="color:#E8197A">unknown command. type "help"</span>\n';
+      }
+
+      termBody.scrollTop = termBody.scrollHeight;
     });
   </script>
 
