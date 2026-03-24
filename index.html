@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,58 +7,98 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+    /* ── THEME VARS ── */
     :root {
       --yellow: #F5C400;
       --cyan: #00BADF;
       --blue: #3B6EF5;
       --pink: #E8197A;
-      --dark: #050505;
+      --green: #22c55e;
+      --purple: #a855f7;
+    }
+
+    [data-theme="dark"] {
+      --bg: #050505;
+      --bg-raised: #0a0a0c;
       --card: #0c0c0e;
       --card-border: #1a1a1e;
+      --card-glass: rgba(12,12,14,0.6);
       --text: #e4e4e7;
       --text-dim: #52525b;
       --text-muted: #3f3f46;
+      --nav-bg: rgba(5,5,5,0.8);
+      --grain-opacity: 0.03;
+      --overlay-gradient: rgba(5,5,5,0.9);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-raised: #f4f4f5;
+      --card: #ffffff;
+      --card-border: #e4e4e7;
+      --card-glass: rgba(255,255,255,0.6);
+      --text: #18181b;
+      --text-dim: #71717a;
+      --text-muted: #a1a1aa;
+      --nav-bg: rgba(250,250,250,0.8);
+      --grain-opacity: 0.02;
+      --overlay-gradient: rgba(250,250,250,0.9);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--dark);
+      background: var(--bg);
       color: var(--text);
       font-family: 'Space Mono', monospace;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── GRAIN TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: var(--grain-opacity);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px;
     }
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── NAV ── */
+    /* ── FLOATING NAV ── */
     nav {
       position: fixed;
-      top: 0;
-      width: 100%;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 100;
-      background: rgba(5,5,5,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--card-border);
+      background: var(--nav-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+      padding: 0.6rem 1.5rem;
+      transition: background 0.4s, border-color 0.4s;
     }
 
     .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0.9rem 2rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 1.5rem;
     }
 
     .nav-logo {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .nav-logo .N  { color: var(--yellow); }
@@ -68,33 +108,69 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-size: 0.6rem;
-      letter-spacing: 2px;
-      color: var(--text-dim);
+      font-size: 0.5rem;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
       transition: color 0.2s;
     }
 
     .nav-links a:hover { color: var(--text); }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
     .nav-status {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.58rem;
+      font-size: 0.5rem;
       letter-spacing: 1.5px;
       color: var(--text-muted);
     }
 
     .live-dot {
       width: 5px; height: 5px;
-      background: #22c55e;
+      background: var(--green);
       border-radius: 50%;
       animation: pulse 2.5s infinite;
+    }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      width: 36px;
+      height: 20px;
+      border-radius: 100px;
+      border: 1px solid var(--card-border);
+      background: var(--bg-raised);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    [data-theme="light"] .theme-toggle::after {
+      transform: translateX(16px);
+      background: var(--text);
     }
 
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
@@ -121,781 +197,230 @@
       position: relative;
     }
 
-    /* ── GLITCH ── */
-    .glitch {
-      position: relative;
-    }
-
-    .glitch::before,
-    .glitch::after {
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after {
       content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; opacity: 0;
     }
-
-    .glitch::before {
-      color: var(--cyan);
-      animation: glitch-1 4s infinite linear;
-    }
-
-    .glitch::after {
-      color: var(--pink);
-      animation: glitch-2 4s infinite linear;
-    }
+    .glitch::before { color: var(--cyan); animation: glitch-1 4s infinite linear; }
+    .glitch::after { color: var(--pink); animation: glitch-2 4s infinite linear; }
 
     @keyframes glitch-1 {
-      0%, 88%, 92%, 100% { opacity: 0; transform: none; }
-      89% { opacity: 0.8; transform: translate(-2px, -1px); clip-path: inset(20% 0 60% 0); }
-      91% { opacity: 0.8; transform: translate(2px, 1px); clip-path: inset(50% 0 20% 0); }
+      0%,88%,92%,100% { opacity:0; transform:none; }
+      89% { opacity:0.8; transform:translate(-2px,-1px); clip-path:inset(20% 0 60% 0); }
+      91% { opacity:0.8; transform:translate(2px,1px); clip-path:inset(50% 0 20% 0); }
     }
-
     @keyframes glitch-2 {
-      0%, 90%, 94%, 100% { opacity: 0; transform: none; }
-      91% { opacity: 0.6; transform: translate(2px, 1px); clip-path: inset(40% 0 30% 0); }
-      93% { opacity: 0.6; transform: translate(-1px, -2px); clip-path: inset(10% 0 70% 0); }
+      0%,90%,94%,100% { opacity:0; transform:none; }
+      91% { opacity:0.6; transform:translate(2px,1px); clip-path:inset(40% 0 30% 0); }
+      93% { opacity:0.6; transform:translate(-1px,-2px); clip-path:inset(10% 0 70% 0); }
     }
 
     .hero-sub {
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      opacity: 0;
+      font-size: 0.7rem; letter-spacing: 3px;
+      color: var(--text-muted); opacity: 0;
       animation: fadeUp 1s 0.6s forwards;
     }
 
     .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      font-size: 0.55rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      opacity: 0;
+      position: absolute; bottom: 2.5rem;
+      font-size: 0.55rem; letter-spacing: 3px;
+      color: var(--text-muted); opacity: 0;
       animation: fadeUp 1s 1.2s forwards;
     }
+    .hero-scroll span { display: block; margin-top: 0.5rem; animation: bob 2s infinite; }
 
-    .hero-scroll span {
-      display: block;
-      margin-top: 0.5rem;
-      animation: bob 2s infinite;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes bob {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(6px); }
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
 
     /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
 
     /* ── SECTIONS ── */
-    .section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 6rem 2rem;
-    }
+    .section { max-width:720px; margin:0 auto; padding:6rem 2rem; }
+    .section-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:2.5rem; }
+    .div-line { border:none; border-top:1px solid var(--card-border); margin:0; transition:border-color 0.4s; }
 
-    .section-label {
-      font-size: 0.55rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-    }
-
-    .div-line {
-      border: none;
-      border-top: 1px solid var(--card-border);
-      margin: 0;
-    }
-
-    /* ── PILLARS ── */
-    .pillars {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--card-border);
-    }
-
-    @media (max-width: 540px) {
-      .pillars { grid-template-columns: 1fr; }
-    }
+    /* ── PILLARS (GLASSMORPHIC) ── */
+    .pillars { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:540px) { .pillars { grid-template-columns:1fr; } }
 
     .pillar {
-      background: var(--dark);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: background 0.3s;
-      cursor: default;
+      background: var(--card-glass);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border); border-radius: 12px;
+      padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 0.75rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s; cursor: default;
     }
+    .pillar:hover { background:var(--card); transform:translateY(-2px); }
+    .pillar-name { font-size:0.68rem; font-weight:700; letter-spacing:2px; }
+    .pillar-line { width:20px; height:2px; border-radius:1px; }
+    .pillar-hint { font-size:0.65rem; color:var(--text-dim); line-height:1.6; }
+    .pillar-badge { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); margin-top:auto; }
 
-    .pillar:hover { background: var(--card); }
+    /* ── WHOOP (BENTO) ── */
+    .bento { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    @media (max-width:540px) { .bento { grid-template-columns:1fr; } }
 
-    .pillar-name {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 2px;
+    .bento-card {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border); border-radius: 12px;
+      padding: 2rem 1.5rem; text-align: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
     }
+    .bento-card:hover { transform:translateY(-2px); background:var(--card); }
+    .bento-val { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
+    .bento-val.recovery { color:var(--green); }
+    .bento-val.strain { color:var(--blue); }
+    .bento-val.sleep { color:var(--purple); }
+    .bento-label { font-size:0.5rem; letter-spacing:2.5px; color:var(--text-muted); }
 
-    .pillar-line {
-      width: 20px;
-      height: 1px;
-    }
+    .whoop-meta { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; }
+    .whoop-note { font-size:0.55rem; color:var(--text-muted); letter-spacing:1px; }
+    .whoop-history-link { font-size:0.55rem; letter-spacing:2px; color:var(--text-muted); transition:color 0.2s; }
+    .whoop-history-link:hover { color:var(--text); }
 
-    .pillar-hint {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-
-    .pillar-badge {
-      font-size: 0.5rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
-
-    /* ── WHOOP ── */
-    .whoop-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--card-border);
-      border: 1px solid var(--card-border);
-    }
-
-    @media (max-width: 540px) {
-      .whoop-grid { grid-template-columns: 1fr; }
-    }
-
-    .whoop-cell {
-      background: var(--dark);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-    }
-
-    .whoop-val {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .whoop-val.recovery { color: #22c55e; }
-    .whoop-val.strain { color: var(--blue); }
-    .whoop-val.sleep { color: #a855f7; }
-
-    .whoop-label {
-      font-size: 0.5rem;
-      letter-spacing: 2.5px;
-      color: var(--text-muted);
-    }
-
-    .whoop-note {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      text-align: center;
-      padding: 1.5rem;
-      letter-spacing: 1px;
-      border: 1px solid var(--card-border);
-      border-top: none;
-    }
-
-    /* ── PROTOCOL STACK ── */
-    .stack {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stack-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .stack-item:last-child { border-bottom: none; }
-
-    .stack-name {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .stack-value {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-    }
+    /* ── STACK ── */
+    .stack { display:flex; flex-direction:column; }
+    .stack-item { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 0; border-bottom:1px solid var(--card-border); transition:border-color 0.4s; }
+    .stack-item:last-child { border-bottom:none; }
+    .stack-name { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; }
+    .stack-value { font-size:0.68rem; color:var(--text-dim); }
 
     /* ── NFT DROP ── */
-    .drop {
-      position: relative;
-    }
+    .drop { position:relative; }
+    .drop-image-wrap { position:relative; overflow:hidden; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.4s; }
+    .drop-image { width:100%; display:block; filter:grayscale(20%); transition:filter 0.5s; }
+    .drop-image-wrap:hover .drop-image { filter:grayscale(0%); }
+    .drop-overlay { position:absolute; bottom:0; left:0; right:0; padding:2rem; background:linear-gradient(transparent,var(--overlay-gradient)); }
+    .drop-number { font-size:0.5rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:0.5rem; }
+    .drop-title { font-size:1.2rem; font-weight:700; }
 
-    .drop-image-wrap {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-    }
-
-    .drop-image {
-      width: 100%;
-      display: block;
-      filter: grayscale(20%);
-      transition: filter 0.5s;
-    }
-
-    .drop-image-wrap:hover .drop-image {
-      filter: grayscale(0%);
-    }
-
-    .drop-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 2rem;
-      background: linear-gradient(transparent, rgba(5,5,5,0.9));
-    }
-
-    .drop-number {
-      font-size: 0.5rem;
-      letter-spacing: 3px;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .drop-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    .drop-meta {
-      display: flex;
-      gap: 1px;
-      background: var(--card-border);
-      border: 1px solid var(--card-border);
-    }
-
+    .drop-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1rem; }
     .drop-meta-cell {
-      flex: 1;
-      background: var(--dark);
-      padding: 1.25rem;
-      text-align: center;
+      background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border:1px solid var(--card-border); border-radius:12px; padding:1.25rem; text-align:center;
+      transition:background 0.3s, border-color 0.4s;
     }
+    .drop-meta-label { font-size:0.48rem; letter-spacing:2px; color:var(--text-muted); margin-bottom:0.35rem; }
+    .drop-meta-val { font-size:0.75rem; font-weight:700; }
 
-    .drop-meta-label {
-      font-size: 0.48rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .drop-meta-val {
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .drop-rights {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--card-border);
-      border: 1px solid var(--card-border);
-      border-top: none;
-    }
-
-    @media (max-width: 540px) {
-      .drop-rights { grid-template-columns: 1fr; }
-    }
-
+    .drop-rights { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-top:1rem; }
+    @media (max-width:540px) { .drop-rights { grid-template-columns:1fr; } .drop-meta { grid-template-columns:1fr; } }
     .drop-right {
-      background: var(--dark);
-      padding: 1rem 1.25rem;
-      font-size: 0.62rem;
-      color: var(--text-dim);
-      letter-spacing: 0.5px;
+      background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border:1px solid var(--card-border); border-radius:8px; padding:1rem 1.25rem;
+      font-size:0.62rem; color:var(--text-dim); letter-spacing:0.5px; transition:background 0.3s, border-color 0.4s;
     }
 
-    .drop-status {
-      text-align: center;
-      padding: 1.5rem;
-      border: 1px solid var(--card-border);
-      border-top: none;
-    }
-
-    .drop-status-text {
-      font-size: 0.55rem;
-      letter-spacing: 3px;
-      color: var(--yellow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .drop-status-dot {
-      width: 5px; height: 5px;
-      background: var(--yellow);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    /* ── LOG ── */
-    .log {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .log-entry {
-      display: flex;
-      gap: 2rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .log-entry:last-child { border-bottom: none; }
-
-    .log-date {
-      font-size: 0.55rem;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      min-width: 80px;
-      padding-top: 0.1rem;
-    }
-
-    .log-text {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-
-    /* ── SUBSCRIBE ── */
-    .subscribe-wrap {
-      max-width: 400px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .subscribe-hint {
-      font-size: 0.55rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .subscribe-form {
-      display: flex;
-      gap: 0;
-      border: 1px solid var(--card-border);
-    }
-
-    .subscribe-form input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      padding: 0.9rem 1rem;
-      outline: none;
-    }
-
-    .subscribe-form input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .subscribe-form button {
-      background: transparent;
-      border: none;
-      border-left: 1px solid var(--card-border);
-      color: var(--text-muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 2px;
-      padding: 0.9rem 1.5rem;
-      cursor: pointer;
-      transition: color 0.2s, background 0.2s;
-    }
-
-    .subscribe-form button:hover {
-      color: var(--text);
-      background: var(--card);
-    }
-
-    .subscribe-ok {
-      font-size: 0.6rem;
-      color: var(--green);
-      margin-top: 1rem;
-      display: none;
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      text-align: center;
-      padding: 4rem 2rem;
-      border-top: 1px solid var(--card-border);
-    }
-
-    .footer-logo {
-      font-size: 0.7rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-
-    .footer-logo .N  { color: var(--yellow); }
-    .footer-logo .e1 { color: var(--cyan); }
-    .footer-logo .x  { color: var(--blue); }
-    .footer-logo .pk { color: var(--pink); }
-
-    .footer-sub {
-      font-size: 0.5rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-    }
-
-    /* ── TATTOO SLOGANS ── */
-    .tattoo {
-      position: fixed;
-      font-size: 0.52rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      opacity: 0.35;
-      writing-mode: vertical-rl;
-      pointer-events: none;
-      z-index: 50;
-    }
-
-    .tattoo-left {
-      left: 1.2rem;
-      bottom: 3rem;
-      transform: rotate(180deg);
-    }
-
-    .tattoo-right {
-      right: 1.2rem;
-      top: 50%;
-    }
-
-    /* ── HIDDEN TERMINAL ── */
-    .terminal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 9999;
-      display: none;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .terminal-overlay.open {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .terminal {
-      width: 90%;
-      max-width: 620px;
-      background: #1e1e2e;
-      border: 1px solid #313244;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 20px 80px rgba(0,0,0,0.6);
-    }
-
-    .terminal-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      background: #181825;
-      border-bottom: 1px solid #313244;
-    }
-
-    .terminal-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-    }
-
-    .terminal-dot.r { background: #f38ba8; }
-    .terminal-dot.y { background: #f9e2af; }
-    .terminal-dot.g { background: #a6e3a1; }
-
-    .terminal-title {
-      font-size: 0.58rem;
-      color: #6c7086;
-      letter-spacing: 1px;
-      margin-left: 0.5rem;
-    }
-
-    .terminal-body {
-      padding: 1.25rem;
-      min-height: 280px;
-      max-height: 420px;
-      overflow-y: auto;
-      background: #1e1e2e;
-    }
-
-    .terminal-output {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: #cdd6f4;
-      line-height: 1.9;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .terminal-input-row {
-      display: flex;
-      align-items: center;
-      padding: 0.85rem 1.25rem;
-      border-top: 1px solid #313244;
-      gap: 0.5rem;
-      background: #181825;
-    }
-
-    .terminal-prompt {
-      font-size: 0.72rem;
-      color: #cba6f7;
-      flex-shrink: 0;
-    }
-
-    .terminal-input {
-      background: none;
-      border: none;
-      outline: none;
-      color: #cdd6f4;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      width: 100%;
-      caret-color: #cba6f7;
-    }
+    .drop-status { text-align:center; padding:1.5rem; margin-top:1rem; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.4s; }
+    .drop-status-text { font-size:0.55rem; letter-spacing:3px; color:var(--yellow); display:flex; align-items:center; justify-content:center; gap:0.5rem; }
+    .drop-status-dot { width:5px; height:5px; background:var(--yellow); border-radius:50%; animation:pulse 2s infinite; }
 
     /* ── X FEED ── */
-    .tweet-embed {
-      margin-bottom: 1.5rem;
-      max-width: 550px;
-    }
-
-    .tweet-embed .twitter-tweet {
-      margin: 0 !important;
-    }
-
-    .x-card {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2rem;
-      border: 1px solid var(--card-border);
-      transition: border-color 0.3s, background 0.3s;
-      text-decoration: none;
-    }
-
-    .x-card:hover {
-      border-color: #2a2a30;
-      background: var(--card);
-    }
-
-    .x-handle {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .x-hint {
-      font-size: 0.62rem;
-      color: var(--text-muted);
-      letter-spacing: 1.5px;
-      flex: 1;
-    }
-
-    .x-arrow {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .x-card:hover .x-arrow {
-      color: var(--text);
-      transform: translateX(4px);
-    }
+    .tweet-embed { margin-bottom:1.5rem; max-width:550px; }
+    .tweet-embed .twitter-tweet { margin:0 !important; }
+    .x-card { display:flex; align-items:center; gap:1.5rem; padding:2rem; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.3s, background 0.3s; text-decoration:none; }
+    .x-card:hover { background:var(--card); }
+    .x-handle { font-size:1.1rem; font-weight:700; letter-spacing:-0.5px; }
+    .x-hint { font-size:0.62rem; color:var(--text-muted); letter-spacing:1.5px; flex:1; }
+    .x-arrow { font-size:0.82rem; color:var(--text-muted); transition:color 0.2s, transform 0.2s; }
+    .x-card:hover .x-arrow { color:var(--text); transform:translateX(4px); }
 
     /* ── SIGNAL ── */
-    .signal-list {
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .signal-item {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid var(--card-border);
-      transition: border-color 0.3s, background 0.3s;
-      text-decoration: none;
-    }
-
-    .signal-item:hover {
-      border-color: #2a2a30;
-      background: var(--card);
-    }
-
-    .signal-name {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    .signal-tag {
-      font-size: 0.5rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      flex: 1;
-    }
-
-    .signal-arrow {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      transition: color 0.2s, transform 0.2s;
-    }
-
-    .signal-item:hover .signal-arrow {
-      color: var(--text);
-      transform: translateX(4px);
-    }
+    .signal-list { display:grid; gap:0.5rem; }
+    .signal-item { display:flex; align-items:center; gap:1.5rem; padding:1.2rem 1.5rem; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.3s, background 0.3s; text-decoration:none; }
+    .signal-item:hover { background:var(--card); }
+    .signal-name { font-size:0.82rem; font-weight:700; letter-spacing:-0.3px; }
+    .signal-tag { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); flex:1; }
+    .signal-arrow { font-size:0.82rem; color:var(--text-muted); transition:color 0.2s, transform 0.2s; }
+    .signal-item:hover .signal-arrow { color:var(--text); transform:translateX(4px); }
 
     /* ── ROADMAP ── */
-    .roadmap {
-      position: relative;
-      padding-left: 2rem;
-    }
+    .roadmap { position:relative; padding-left:2rem; }
+    .roadmap::before { content:''; position:absolute; left:4px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--yellow),var(--cyan),var(--blue),var(--purple),var(--pink)); opacity:0.4; }
+    .rm-item { position:relative; padding:1rem 0; display:flex; align-items:center; gap:1rem; }
+    .rm-dot { position:absolute; left:-2rem; width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+    .rm-dot.done { background:var(--green); opacity:0.6; }
+    .rm-dot.active { background:var(--blue); box-shadow:0 0 8px var(--blue), 0 0 16px rgba(59,110,245,0.3); animation:pulse 2s infinite; }
+    .rm-dot.upcoming { background:var(--card-border); }
+    .rm-num { font-size:0.5rem; color:var(--text-muted); letter-spacing:1px; min-width:20px; }
+    .rm-name { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; flex:1; }
+    .rm-item.done .rm-name { color:var(--text-dim); }
+    .rm-item.upcoming .rm-name { color:var(--text-muted); }
+    .rm-status { font-size:0.48rem; letter-spacing:2px; flex-shrink:0; }
+    .rm-status.s-done { color:var(--green); opacity:0.6; }
+    .rm-status.s-active { color:var(--blue); }
+    .rm-status.s-upcoming { color:var(--text-muted); }
 
-    .roadmap::before {
-      content: '';
-      position: absolute;
-      left: 4px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(
-        var(--yellow),
-        var(--cyan),
-        var(--blue),
-        #a855f7,
-        var(--pink)
-      );
-      opacity: 0.4;
-    }
+    /* ── LOG ── */
+    .log { display:flex; flex-direction:column; }
+    .log-entry { display:flex; gap:2rem; padding:1rem 0; border-bottom:1px solid var(--card-border); transition:border-color 0.4s; }
+    .log-entry:last-child { border-bottom:none; }
+    .log-date { font-size:0.55rem; letter-spacing:1.5px; color:var(--text-muted); min-width:80px; padding-top:0.1rem; }
+    .log-text { font-size:0.72rem; color:var(--text-dim); line-height:1.6; }
 
-    .rm-item {
-      position: relative;
-      padding: 1rem 0;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
+    /* ── SUBSCRIBE ── */
+    .subscribe-wrap { max-width:400px; margin:0 auto; text-align:center; }
+    .subscribe-hint { font-size:0.55rem; letter-spacing:2px; color:var(--text-muted); margin-bottom:1.5rem; }
+    .subscribe-form { display:flex; gap:0; border:1px solid var(--card-border); border-radius:12px; overflow:hidden; transition:border-color 0.4s; }
+    .subscribe-form input { flex:1; background:transparent; border:none; color:var(--text); font-family:'Space Mono',monospace; font-size:0.7rem; padding:0.9rem 1rem; outline:none; }
+    .subscribe-form input::placeholder { color:var(--text-muted); }
+    .subscribe-form button { background:transparent; border:none; border-left:1px solid var(--card-border); color:var(--text-muted); font-family:'Space Mono',monospace; font-size:0.55rem; letter-spacing:2px; padding:0.9rem 1.5rem; cursor:pointer; transition:color 0.2s, background 0.2s; }
+    .subscribe-form button:hover { color:var(--text); background:var(--card); }
+    .subscribe-ok { font-size:0.6rem; color:var(--green); margin-top:1rem; display:none; }
 
-    .rm-dot {
-      position: absolute;
-      left: -2rem;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      transform: translateX(-0.5px);
-    }
+    /* ── FOOTER ── */
+    .footer { text-align:center; padding:4rem 2rem; border-top:1px solid var(--card-border); transition:border-color 0.4s; }
+    .footer-logo { font-size:0.7rem; font-weight:700; margin-bottom:0.75rem; }
+    .footer-logo .N { color:var(--yellow); }
+    .footer-logo .e1 { color:var(--cyan); }
+    .footer-logo .x { color:var(--blue); }
+    .footer-logo .pk { color:var(--pink); }
+    .footer-sub { font-size:0.5rem; color:var(--text-muted); letter-spacing:2px; }
 
-    .rm-dot.done {
-      background: #22c55e;
-      opacity: 0.6;
-    }
+    /* ── TATTOO ── */
+    .tattoo { position:fixed; font-size:0.52rem; letter-spacing:2px; color:var(--text-muted); opacity:0.35; writing-mode:vertical-rl; pointer-events:none; z-index:50; }
+    .tattoo-left { left:1.2rem; bottom:3rem; transform:rotate(180deg); }
+    .tattoo-right { right:1.2rem; top:50%; }
 
-    .rm-dot.active {
-      background: var(--blue);
-      box-shadow: 0 0 8px var(--blue), 0 0 16px rgba(59,110,245,0.3);
-      animation: pulse 2s infinite;
-    }
-
-    .rm-dot.upcoming {
-      background: var(--card-border);
-    }
-
-    .rm-num {
-      font-size: 0.5rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      min-width: 20px;
-    }
-
-    .rm-name {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      flex: 1;
-    }
-
-    .rm-item.done .rm-name {
-      color: var(--text-dim);
-    }
-
-    .rm-item.upcoming .rm-name {
-      color: var(--text-muted);
-    }
-
-    .rm-status {
-      font-size: 0.48rem;
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
-
-    .rm-status.s-done { color: #22c55e; opacity: 0.6; }
-    .rm-status.s-active { color: var(--blue); }
-    .rm-status.s-upcoming { color: var(--text-muted); }
+    /* ── TERMINAL ── */
+    .terminal-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:9999; display:none; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+    .terminal-overlay.open { display:flex; align-items:center; justify-content:center; }
+    .terminal { width:90%; max-width:620px; background:#1e1e2e; border:1px solid #313244; border-radius:10px; overflow:hidden; box-shadow:0 20px 80px rgba(0,0,0,0.6); }
+    .terminal-bar { display:flex; align-items:center; gap:0.5rem; padding:0.75rem 1rem; background:#181825; border-bottom:1px solid #313244; }
+    .terminal-dot { width:10px; height:10px; border-radius:50%; }
+    .terminal-dot.r { background:#f38ba8; } .terminal-dot.y { background:#f9e2af; } .terminal-dot.g { background:#a6e3a1; }
+    .terminal-title { font-size:0.58rem; color:#6c7086; letter-spacing:1px; margin-left:0.5rem; }
+    .terminal-body { padding:1.25rem; min-height:280px; max-height:420px; overflow-y:auto; background:#1e1e2e; }
+    .terminal-output { font-family:'Space Mono',monospace; font-size:0.72rem; color:#cdd6f4; line-height:1.9; white-space:pre-wrap; word-break:break-word; }
+    .terminal-input-row { display:flex; align-items:center; padding:0.85rem 1.25rem; border-top:1px solid #313244; gap:0.5rem; background:#181825; }
+    .terminal-prompt { font-size:0.72rem; color:#cba6f7; flex-shrink:0; }
+    .terminal-input { background:none; border:none; outline:none; color:#cdd6f4; font-family:'Space Mono',monospace; font-size:0.72rem; width:100%; caret-color:#cba6f7; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 540px) {
-      .nav-links { display: none; }
-      .tattoo { display: none; }
+    @media (max-width:700px) {
+      .nav-links { display:none; }
+      .tattoo { display:none; }
+      nav { padding:0.5rem 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- TATTOO SLOGANS -->
   <div class="tattoo tattoo-left">next_elite();</div>
   <div class="tattoo tattoo-right">// code your next level</div>
 
-  <!-- HIDDEN TERMINAL -->
   <div class="terminal-overlay" id="terminalOverlay">
     <div class="terminal" id="terminalBox">
       <div class="terminal-bar">
         <span class="terminal-dot r"></span>
         <span class="terminal-dot y"></span>
         <span class="terminal-dot g"></span>
-        <span class="terminal-title">nextelite v0.1</span>
+        <span class="terminal-title">nextelite v0.2</span>
       </div>
       <div class="terminal-body" id="terminalBody">
         <div class="terminal-output" id="terminalOutput"></div>
@@ -907,7 +432,6 @@
     </div>
   </div>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <div class="nav-logo" id="navLogo">
@@ -923,117 +447,96 @@
         <li><a href="#roadmap">ROADMAP</a></li>
         <li><a href="#log">LOG</a></li>
       </ul>
-      <div class="nav-status">
-        <span class="live-dot"></span>
-        v0.1
+      <div class="nav-right">
+        <div class="nav-status"><span class="live-dot"></span> v0.2</div>
+        <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
   <header class="hero">
     <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
-    <div class="hero-scroll">
-      <span>|</span>
-    </div>
+    <div class="hero-scroll"><span>|</span></div>
   </header>
 
   <hr class="div-line" />
 
-  <!-- PILLARS -->
   <section id="protocol">
     <div class="section reveal" style="padding-bottom:2rem;">
       <div class="section-label">PROTOCOL PILLARS</div>
     </div>
-    <div class="pillars reveal">
-      <div class="pillar">
-        <div class="pillar-name">BOXING</div>
-        <div class="pillar-line" style="background:var(--yellow);"></div>
-        <div class="pillar-hint">rounds. technique. war.</div>
-        <div class="pillar-badge">ACTIVE</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">DOG</div>
-        <div class="pillar-line" style="background:var(--cyan);"></div>
-        <div class="pillar-hint">behavior. precision. bond.</div>
-        <div class="pillar-badge">ACTIVE</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">XRP</div>
-        <div class="pillar-line" style="background:var(--blue);"></div>
-        <div class="pillar-hint">ledger. ownership. infrastructure.</div>
-        <div class="pillar-badge">BUILDING</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-name">WHOOP</div>
-        <div class="pillar-line" style="background:var(--pink);"></div>
-        <div class="pillar-hint">recovery. strain. signal.</div>
-        <div class="pillar-badge">CONNECTING</div>
+    <div class="section reveal" style="padding-top:0;">
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-name">BOXING</div>
+          <div class="pillar-line" style="background:var(--yellow);"></div>
+          <div class="pillar-hint">rounds. technique. war.</div>
+          <div class="pillar-badge">ACTIVE</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">DOG</div>
+          <div class="pillar-line" style="background:var(--cyan);"></div>
+          <div class="pillar-hint">behavior. precision. bond.</div>
+          <div class="pillar-badge">ACTIVE</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">XRP</div>
+          <div class="pillar-line" style="background:var(--blue);"></div>
+          <div class="pillar-hint">ledger. ownership. infrastructure.</div>
+          <div class="pillar-badge">BUILDING</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-name">WHOOP</div>
+          <div class="pillar-line" style="background:var(--pink);"></div>
+          <div class="pillar-hint">recovery. strain. signal.</div>
+          <div class="pillar-badge">CONNECTING</div>
+        </div>
       </div>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- WHOOP DATA -->
   <section id="data" class="section reveal">
     <div class="section-label">BIOMETRICS</div>
-
-    <div class="whoop-grid">
-      <div class="whoop-cell">
-        <div class="whoop-val recovery" id="whoopRecovery">--</div>
-        <div class="whoop-label">RECOVERY</div>
+    <div class="bento">
+      <div class="bento-card">
+        <div class="bento-val recovery" id="whoopRecovery">--</div>
+        <div class="bento-label">RECOVERY</div>
       </div>
-      <div class="whoop-cell">
-        <div class="whoop-val strain" id="whoopStrain">--</div>
-        <div class="whoop-label">STRAIN</div>
+      <div class="bento-card">
+        <div class="bento-val strain" id="whoopStrain">--</div>
+        <div class="bento-label">STRAIN</div>
       </div>
-      <div class="whoop-cell">
-        <div class="whoop-val sleep" id="whoopSleep">--</div>
-        <div class="whoop-label">SLEEP</div>
+      <div class="bento-card">
+        <div class="bento-val sleep" id="whoopSleep">--</div>
+        <div class="bento-label">SLEEP</div>
       </div>
     </div>
-    <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
-    <a href="history.html" style="display:block;text-align:center;padding:1rem;font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);border-top:none;transition:color 0.2s;">VIEW HISTORY</a>
+    <div class="whoop-meta">
+      <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
+      <a href="history.html" class="whoop-history-link">VIEW HISTORY</a>
+    </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- PROTOCOL STACK -->
   <section class="section reveal">
     <div class="section-label">DAILY STACK</div>
-
     <div class="stack">
-      <div class="stack-item">
-        <div class="stack-name">Morning Protocol</div>
-        <div class="stack-value">06:00</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-name">Boxing</div>
-        <div class="stack-value">--:--</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-name">Dog Work</div>
-        <div class="stack-value">Daily</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-name">Recovery</div>
-        <div class="stack-value">WHOOP-led</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-name">Build</div>
-        <div class="stack-value">EVE</div>
-      </div>
+      <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
+      <div class="stack-item"><div class="stack-name">Boxing</div><div class="stack-value">--:--</div></div>
+      <div class="stack-item"><div class="stack-name">Dog Work</div><div class="stack-value">Daily</div></div>
+      <div class="stack-item"><div class="stack-name">Recovery</div><div class="stack-value">WHOOP-led</div></div>
+      <div class="stack-item"><div class="stack-name">Build</div><div class="stack-value">EVE</div></div>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- NFT DROP -->
   <section id="drop" class="section reveal">
     <div class="section-label">DROP</div>
-
     <div class="drop">
       <div class="drop-image-wrap">
         <img src="meme001.png" alt="001" class="drop-image" />
@@ -1042,48 +545,30 @@
           <div class="drop-title">Nememe</div>
         </div>
       </div>
-
       <div class="drop-meta">
-        <div class="drop-meta-cell">
-          <div class="drop-meta-label">EDITION</div>
-          <div class="drop-meta-val">1/1</div>
-        </div>
-        <div class="drop-meta-cell">
-          <div class="drop-meta-label">CHAIN</div>
-          <div class="drop-meta-val">XRPL</div>
-        </div>
-        <div class="drop-meta-cell">
-          <div class="drop-meta-label">PRICE</div>
-          <div class="drop-meta-val">--</div>
-        </div>
+        <div class="drop-meta-cell"><div class="drop-meta-label">EDITION</div><div class="drop-meta-val">1/1</div></div>
+        <div class="drop-meta-cell"><div class="drop-meta-label">CHAIN</div><div class="drop-meta-val">XRPL</div></div>
+        <div class="drop-meta-cell"><div class="drop-meta-label">PRICE</div><div class="drop-meta-val">--</div></div>
       </div>
-
       <div class="drop-rights">
         <div class="drop-right">Commercial rights</div>
         <div class="drop-right">Genesis holder</div>
         <div class="drop-right">Mint pending</div>
         <div class="drop-right">Transferable</div>
       </div>
-
       <div class="drop-status">
-        <div class="drop-status-text">
-          <span class="drop-status-dot"></span>
-          NOT YET MINTED
-        </div>
+        <div class="drop-status-text"><span class="drop-status-dot"></span> NOT YET MINTED</div>
       </div>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- X FEED -->
   <section id="feed" class="section reveal">
     <div class="section-label">FEED</div>
-
     <div class="tweet-embed">
       <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
     </div>
-
     <a href="https://x.com/N3XT3LIT3" target="_blank" class="x-card">
       <div class="x-handle">@N3XT3LIT3</div>
       <div class="x-hint">follow the signal</div>
@@ -1093,7 +578,6 @@
 
   <hr class="div-line" />
 
-  <!-- SOUND -->
   <section id="sound" class="section reveal">
     <div class="section-label">SOUND</div>
     <iframe style="border-radius:12px;border:none;" src="https://open.spotify.com/embed/playlist/5P44E8xzkRzqSYcNrLEr8V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -1101,140 +585,51 @@
 
   <hr class="div-line" />
 
-  <!-- SIGNAL -->
   <section id="signal" class="section reveal">
     <div class="section-label">SIGNAL</div>
-
     <div class="signal-list">
-      <a href="https://www.youtube.com/@CryptoSenseii" target="_blank" class="signal-item">
-        <div class="signal-name">Crypto Sensei</div>
-        <div class="signal-tag">XRP</div>
-        <div class="signal-arrow">-></div>
-      </a>
-      <a href="https://www.youtube.com/@CryptoMason" target="_blank" class="signal-item">
-        <div class="signal-name">Crypto Mason</div>
-        <div class="signal-tag">XRP</div>
-        <div class="signal-arrow">-></div>
-      </a>
-      <a href="https://www.youtube.com/@jakeclaver" target="_blank" class="signal-item">
-        <div class="signal-name">Jake Claver</div>
-        <div class="signal-tag">XRP</div>
-        <div class="signal-arrow">-></div>
-      </a>
-      <a href="https://www.youtube.com/@MickleXRP" target="_blank" class="signal-item">
-        <div class="signal-name">Mickle</div>
-        <div class="signal-tag">XRP</div>
-        <div class="signal-arrow">-></div>
-      </a>
+      <a href="https://www.youtube.com/@CryptoSenseii" target="_blank" class="signal-item"><div class="signal-name">Crypto Sensei</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
+      <a href="https://www.youtube.com/@CryptoMason" target="_blank" class="signal-item"><div class="signal-name">Crypto Mason</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
+      <a href="https://www.youtube.com/@jakeclaver" target="_blank" class="signal-item"><div class="signal-name">Jake Claver</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
+      <a href="https://www.youtube.com/@MickleXRP" target="_blank" class="signal-item"><div class="signal-name">Mickle</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- ROADMAP -->
   <section id="roadmap" class="section reveal">
     <div class="section-label">ROADMAP</div>
-
     <div class="roadmap">
-      <div class="rm-item done">
-        <span class="rm-dot done"></span>
-        <span class="rm-num">01</span>
-        <span class="rm-name">Site live</span>
-        <span class="rm-status s-done">DONE</span>
-      </div>
-      <div class="rm-item done">
-        <span class="rm-dot done"></span>
-        <span class="rm-num">02</span>
-        <span class="rm-name">WHOOP connected</span>
-        <span class="rm-status s-done">DONE</span>
-      </div>
-      <div class="rm-item done">
-        <span class="rm-dot done"></span>
-        <span class="rm-num">03</span>
-        <span class="rm-name">Sound layer</span>
-        <span class="rm-status s-done">DONE</span>
-      </div>
-      <div class="rm-item done">
-        <span class="rm-dot done"></span>
-        <span class="rm-num">04</span>
-        <span class="rm-name">Open source</span>
-        <span class="rm-status s-done">DONE</span>
-      </div>
-      <div class="rm-item">
-        <span class="rm-dot active"></span>
-        <span class="rm-num">05</span>
-        <span class="rm-name">Nememe #001 mint</span>
-        <span class="rm-status s-active">IN PROGRESS</span>
-      </div>
-      <div class="rm-item upcoming">
-        <span class="rm-dot upcoming"></span>
-        <span class="rm-num">06</span>
-        <span class="rm-name">Daily WHOOP automation</span>
-        <span class="rm-status s-upcoming">UPCOMING</span>
-      </div>
-      <div class="rm-item upcoming">
-        <span class="rm-dot upcoming"></span>
-        <span class="rm-num">07</span>
-        <span class="rm-name">Custom domain</span>
-        <span class="rm-status s-upcoming">UPCOMING</span>
-      </div>
-      <div class="rm-item upcoming">
-        <span class="rm-dot upcoming"></span>
-        <span class="rm-num">08</span>
-        <span class="rm-name">Protocol app</span>
-        <span class="rm-status s-upcoming">UPCOMING</span>
-      </div>
-      <div class="rm-item upcoming">
-        <span class="rm-dot upcoming"></span>
-        <span class="rm-num">09</span>
-        <span class="rm-name">More drops</span>
-        <span class="rm-status s-upcoming">UPCOMING</span>
-      </div>
-      <div class="rm-item upcoming">
-        <span class="rm-dot upcoming"></span>
-        <span class="rm-num">10</span>
-        <span class="rm-name">AI agents</span>
-        <span class="rm-status s-upcoming">UPCOMING</span>
-      </div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">01</span><span class="rm-name">Site live</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">02</span><span class="rm-name">WHOOP connected</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">03</span><span class="rm-name">Sound layer</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">04</span><span class="rm-name">Open source</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">05</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">06</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">07</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">08</span><span class="rm-name">Protocol app</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">09</span><span class="rm-name">More drops</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">10</span><span class="rm-name">AI agents</span><span class="rm-status s-upcoming">UPCOMING</span></div>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- LOG -->
   <section id="log" class="section reveal">
     <div class="section-label">LOG</div>
-
     <div class="log">
-      <div class="log-entry">
-        <div class="log-date">03.2026</div>
-        <div class="log-text">Protocol initiated.</div>
-      </div>
-      <div class="log-entry">
-        <div class="log-date">03.2026</div>
-        <div class="log-text">Nememe #001 artwork complete. Mint pending.</div>
-      </div>
-      <div class="log-entry">
-        <div class="log-date">03.2026</div>
-        <div class="log-text">Site live. Signal on.</div>
-      </div>
-      <div class="log-entry">
-        <div class="log-date">03.2026</div>
-        <div class="log-text">WHOOP connected. Biometrics flowing.</div>
-      </div>
-      <div class="log-entry">
-        <div class="log-date">03.2026</div>
-        <div class="log-text">Roadmap public. Building in the open.</div>
-      </div>
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Protocol initiated.</div></div>
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Nememe #001 artwork complete. Mint pending.</div></div>
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Site live. Signal on.</div></div>
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">WHOOP connected. Biometrics flowing.</div></div>
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Roadmap public. Building in the open.</div></div>
     </div>
   </section>
 
   <hr class="div-line" />
 
-  <!-- SUBSCRIBE -->
   <section id="subscribe" class="section reveal">
     <div class="section-label">SUBSCRIBE</div>
-
     <div class="subscribe-wrap">
       <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
       <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
@@ -1245,171 +640,75 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-logo">
       <span class="N">n</span><span class="e1">e</span><span class="x">x</span><span>t</span><span>_</span><span class="pk">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span>
     </div>
-    <div class="footer-sub">PROTOCOL v0.1 -- UNDER CONSTRUCTION</div>
+    <div class="footer-sub">PROTOCOL v0.2 -- UNDER CONSTRUCTION</div>
   </footer>
 
   <script>
-    /* ── SUBSCRIBE FORM ── */
+    /* ── THEME ── */
+    var toggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
+    var saved = localStorage.getItem('nextelite-theme');
+    if (saved) html.setAttribute('data-theme', saved);
+    toggle.addEventListener('click', function() {
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('nextelite-theme', next);
+    });
+
+    /* ── SUBSCRIBE ── */
     document.getElementById('subscribeForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var form = this;
-      var data = new FormData(form);
-      fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      }).then(function(r) {
-        if (r.ok) {
-          form.style.display = 'none';
-          document.getElementById('subscribeOk').style.display = 'block';
-        }
-      }).catch(function() {});
+      fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} })
+        .then(function(r) { if (r.ok) { form.style.display='none'; document.getElementById('subscribeOk').style.display='block'; } })
+        .catch(function() {});
     });
 
-    /* ── WHOOP DATA LOADER ── */
-    fetch('whoop_data.json')
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        if (d.recovery !== null) document.getElementById('whoopRecovery').textContent = d.recovery + '%';
-        if (d.strain !== null) document.getElementById('whoopStrain').textContent = d.strain;
-        if (d.sleep_hours !== null) document.getElementById('whoopSleep').textContent = d.sleep_hours + 'h';
-        var date = new Date(d.updated);
-        var timeStr = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' + date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('whoopNote').textContent = 'LAST SIGNAL: ' + timeStr.toUpperCase();
-      })
-      .catch(function() {});
+    /* ── WHOOP ── */
+    fetch('whoop_data.json').then(function(r){return r.json();}).then(function(d) {
+      if (d.recovery !== null) document.getElementById('whoopRecovery').textContent = d.recovery + '%';
+      if (d.strain !== null) document.getElementById('whoopStrain').textContent = d.strain;
+      if (d.sleep_hours !== null) document.getElementById('whoopSleep').textContent = d.sleep_hours + 'h';
+      var date = new Date(d.updated);
+      var t = date.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' + date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('whoopNote').textContent = 'LAST SIGNAL: ' + t.toUpperCase();
+    }).catch(function(){});
 
-    /* ── SMOOTH SCROLL ── */
+    /* ── SCROLL ── */
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-      a.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
+      a.addEventListener('click', function(e) { e.preventDefault(); var t=document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
     });
 
-    /* ── SCROLL REVEAL ── */
+    /* ── REVEAL ── */
     var reveals = document.querySelectorAll('.reveal');
-    var revealObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
+    var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
+    reveals.forEach(function(el) { obs.observe(el); });
 
-    reveals.forEach(function(el) { revealObserver.observe(el); });
-
-    /* ── HIDDEN TERMINAL ── */
-    var overlay = document.getElementById('terminalOverlay');
-    var termInput = document.getElementById('terminalInput');
-    var termOutput = document.getElementById('terminalOutput');
-    var termBody = document.getElementById('terminalBody');
-    var termBox = document.getElementById('terminalBox');
-    var termOpen = false;
-
-    // initial message
+    /* ── TERMINAL ── */
+    var overlay=document.getElementById('terminalOverlay'), termInput=document.getElementById('terminalInput'), termOutput=document.getElementById('terminalOutput'), termBody=document.getElementById('terminalBody'), termOpen=false;
     termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; connection established</span>\n<span style="color:#6c7086">type "help" for commands</span>\n';
-
     var commands = {
-      help: function() {
-        return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';
-      },
-      about: function() {
-        return '<span style="color:#cdd6f4">Nemine Steffensen</span>\n<span style="color:#6c7086">the protocol is the product.</span>\n<span style="color:#6c7086">everything else is noise.</span>';
-      },
-      pillars: function() {
-        return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">DOG</span>     <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';
-      },
-      drop: function() {
-        return '<span style="color:#cba6f7">Nememe #001</span>\n<span style="color:#6c7086">chain:</span>   <span style="color:#89b4fa">XRPL</span>\n<span style="color:#6c7086">edition:</span> <span style="color:#cdd6f4">1/1</span>\n<span style="color:#6c7086">price:</span>   <span style="color:#cdd6f4">--</span>\n<span style="color:#6c7086">status:</span>  <span style="color:#f9e2af">NOT YET MINTED</span>';
-      },
-      stack: function() {
-        return '<span style="color:#f9e2af">06:00</span>  Morning Protocol\n<span style="color:#f9e2af">--:--</span>  Boxing\n<span style="color:#f9e2af">Daily</span>  Dog Work\n<span style="color:#f9e2af">PM</span>     Recovery (WHOOP-led)\n<span style="color:#f9e2af">EVE</span>    Build';
-      },
-      whoop: function() {
-        return '<span style="color:#6c7086">recovery:</span> <span style="color:#a6e3a1">--</span>\n<span style="color:#6c7086">strain:</span>   <span style="color:#89b4fa">--</span>\n<span style="color:#6c7086">sleep:</span>    <span style="color:#cba6f7">--</span>\n<span style="color:#6c7086">[awaiting signal]</span>';
-      },
-      clear: function() { return '__CLEAR__'; },
-      exit: function() { return '__EXIT__'; }
+      help: function(){return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';},
+      about: function(){return '<span style="color:#cdd6f4">Nemine Steffensen</span>\n<span style="color:#6c7086">the protocol is the product.</span>\n<span style="color:#6c7086">everything else is noise.</span>';},
+      pillars: function(){return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">DOG</span>     <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';},
+      drop: function(){return '<span style="color:#cba6f7">Nememe #001</span>\n<span style="color:#6c7086">chain:</span>   <span style="color:#89b4fa">XRPL</span>\n<span style="color:#6c7086">edition:</span> <span style="color:#cdd6f4">1/1</span>\n<span style="color:#6c7086">price:</span>   <span style="color:#cdd6f4">--</span>\n<span style="color:#6c7086">status:</span>  <span style="color:#f9e2af">NOT YET MINTED</span>';},
+      stack: function(){return '<span style="color:#f9e2af">06:00</span>  Morning Protocol\n<span style="color:#f9e2af">--:--</span>  Boxing\n<span style="color:#f9e2af">Daily</span>  Dog Work\n<span style="color:#f9e2af">PM</span>     Recovery (WHOOP-led)\n<span style="color:#f9e2af">EVE</span>    Build';},
+      whoop: function(){return '<span style="color:#6c7086">recovery:</span> <span style="color:#a6e3a1">--</span>\n<span style="color:#6c7086">strain:</span>   <span style="color:#89b4fa">--</span>\n<span style="color:#6c7086">sleep:</span>    <span style="color:#cba6f7">--</span>\n<span style="color:#6c7086">[awaiting signal]</span>';},
+      clear: function(){return '__CLEAR__';},
+      exit: function(){return '__EXIT__';}
     };
-
-    function openTerminal() {
-      termOpen = true;
-      overlay.classList.add('open');
-      setTimeout(function() { termInput.focus(); }, 50);
-    }
-
-    function closeTerminal() {
-      termOpen = false;
-      overlay.classList.remove('open');
-      termInput.blur();
-    }
-
-    // Triple-click the logo to open terminal
-    var logoClicks = 0;
-    var logoTimer = null;
-    document.getElementById('navLogo').addEventListener('click', function() {
-      logoClicks++;
-      if (logoClicks === 3) {
-        logoClicks = 0;
-        clearTimeout(logoTimer);
-        openTerminal();
-      } else {
-        clearTimeout(logoTimer);
-        logoTimer = setTimeout(function() { logoClicks = 0; }, 500);
-      }
-    });
-
-    // Also open with Ctrl+Shift+K or Cmd+Shift+K
-    document.addEventListener('keydown', function(e) {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'K') {
-        e.preventDefault();
-        if (termOpen) { closeTerminal(); } else { openTerminal(); }
-      }
-      if (e.key === 'Escape' && termOpen) {
-        closeTerminal();
-      }
-    });
-
-    // close on overlay click (but not terminal box)
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) closeTerminal();
-    });
-
-    // handle input
-    termInput.addEventListener('keydown', function(e) {
-      if (e.key !== 'Enter') return;
-      var cmd = termInput.value.trim().toLowerCase();
-      termInput.value = '';
-      if (!cmd) return;
-
-      var handler = commands[cmd];
-      if (handler) {
-        var result = handler();
-        if (result === '__CLEAR__') {
-          termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; cleared</span>\n';
-          return;
-        }
-        if (result === '__EXIT__') {
-          closeTerminal();
-          return;
-        }
-        termOutput.innerHTML += '\n<span style="color:#89b4fa">&gt; ' + cmd + '</span>\n' + result + '\n';
-      } else {
-        termOutput.innerHTML += '\n<span style="color:#89b4fa">&gt; ' + cmd + '</span>\n<span style="color:#f38ba8">unknown command. type "help"</span>\n';
-      }
-
-      termBody.scrollTop = termBody.scrollHeight;
-    });
+    function openTerminal(){termOpen=true;overlay.classList.add('open');setTimeout(function(){termInput.focus();},50);}
+    function closeTerminal(){termOpen=false;overlay.classList.remove('open');termInput.blur();}
+    var logoClicks=0,logoTimer=null;
+    document.getElementById('navLogo').addEventListener('click',function(){logoClicks++;if(logoClicks===3){logoClicks=0;clearTimeout(logoTimer);openTerminal();}else{clearTimeout(logoTimer);logoTimer=setTimeout(function(){logoClicks=0;},500);}});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key==='K'){e.preventDefault();if(termOpen)closeTerminal();else openTerminal();}if(e.key==='Escape'&&termOpen)closeTerminal();});
+    overlay.addEventListener('click',function(e){if(e.target===overlay)closeTerminal();});
+    termInput.addEventListener('keydown',function(e){if(e.key!=='Enter')return;var cmd=termInput.value.trim().toLowerCase();termInput.value='';if(!cmd)return;var h=commands[cmd];if(h){var r=h();if(r==='__CLEAR__'){termOutput.innerHTML='<span style="color:#a6e3a1">&gt; cleared</span>\n';return;}if(r==='__EXIT__'){closeTerminal();return;}termOutput.innerHTML+='\n<span style="color:#89b4fa">&gt; '+cmd+'</span>\n'+r+'\n';}else{termOutput.innerHTML+='\n<span style="color:#89b4fa">&gt; '+cmd+'</span>\n<span style="color:#f38ba8">unknown command. type "help"</span>\n';}termBody.scrollTop=termBody.scrollHeight;});
   </script>
-
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 </body>
 </html>
