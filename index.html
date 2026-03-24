@@ -557,50 +557,52 @@
 
     .terminal {
       width: 90%;
-      max-width: 560px;
-      background: #0a0a0a;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
+      max-width: 620px;
+      background: #1e1e2e;
+      border: 1px solid #313244;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.6);
     }
 
     .terminal-bar {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.65rem 1rem;
-      background: #111;
-      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1rem;
+      background: #181825;
+      border-bottom: 1px solid #313244;
     }
 
     .terminal-dot {
-      width: 8px; height: 8px;
+      width: 10px; height: 10px;
       border-radius: 50%;
     }
 
-    .terminal-dot.r { background: #ff5f57; }
-    .terminal-dot.y { background: #ffbd2e; }
-    .terminal-dot.g { background: #28c840; }
+    .terminal-dot.r { background: #f38ba8; }
+    .terminal-dot.y { background: #f9e2af; }
+    .terminal-dot.g { background: #a6e3a1; }
 
     .terminal-title {
-      font-size: 0.55rem;
-      color: var(--text-muted);
+      font-size: 0.58rem;
+      color: #6c7086;
       letter-spacing: 1px;
       margin-left: 0.5rem;
     }
 
     .terminal-body {
       padding: 1.25rem;
-      min-height: 250px;
-      max-height: 400px;
+      min-height: 280px;
+      max-height: 420px;
       overflow-y: auto;
+      background: #1e1e2e;
     }
 
     .terminal-output {
       font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
-      color: var(--text-dim);
-      line-height: 1.8;
+      color: #cdd6f4;
+      line-height: 1.9;
       white-space: pre-wrap;
       word-break: break-word;
     }
@@ -608,14 +610,15 @@
     .terminal-input-row {
       display: flex;
       align-items: center;
-      padding: 0.75rem 1.25rem;
-      border-top: 1px solid var(--card-border);
+      padding: 0.85rem 1.25rem;
+      border-top: 1px solid #313244;
       gap: 0.5rem;
+      background: #181825;
     }
 
     .terminal-prompt {
       font-size: 0.72rem;
-      color: var(--cyan);
+      color: #cba6f7;
       flex-shrink: 0;
     }
 
@@ -623,14 +626,23 @@
       background: none;
       border: none;
       outline: none;
-      color: var(--text);
+      color: #cdd6f4;
       font-family: 'Space Mono', monospace;
       font-size: 0.72rem;
       width: 100%;
-      caret-color: var(--cyan);
+      caret-color: #cba6f7;
     }
 
     /* ── X FEED ── */
+    .tweet-embed {
+      margin-bottom: 1.5rem;
+      max-width: 550px;
+    }
+
+    .tweet-embed .twitter-tweet {
+      margin: 0 !important;
+    }
+
     .x-card {
       display: flex;
       align-items: center;
@@ -961,6 +973,11 @@
   <!-- X FEED -->
   <section id="feed" class="section reveal">
     <div class="section-label">FEED</div>
+
+    <div class="tweet-embed">
+      <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
+    </div>
+
     <a href="https://x.com/N3XT3LIT3" target="_blank" class="x-card">
       <div class="x-handle">@N3XT3LIT3</div>
       <div class="x-hint">follow the signal</div>
@@ -1128,26 +1145,26 @@
     var termOpen = false;
 
     // initial message
-    termOutput.innerHTML = '<span style="color:#22c55e">&gt; connection established</span>\ntype "help" for commands\n';
+    termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; connection established</span>\n<span style="color:#6c7086">type "help" for commands</span>\n';
 
     var commands = {
       help: function() {
-        return '<span style="color:#52525b">available commands:</span>\n  about     - who\n  pillars   - the four\n  drop      - nft status\n  stack     - daily protocol\n  whoop     - biometric status\n  clear     - reset\n  exit      - close';
+        return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';
       },
       about: function() {
-        return 'Nemine Steffensen\nthe protocol is the product.\neverything else is noise.';
+        return '<span style="color:#cdd6f4">Nemine Steffensen</span>\n<span style="color:#6c7086">the protocol is the product.</span>\n<span style="color:#6c7086">everything else is noise.</span>';
       },
       pillars: function() {
-        return '<span style="color:#00BADF">BOXING</span>  - active\n<span style="color:#00BADF">DOG</span>     - active\n<span style="color:#00BADF">XRP</span>     - building\n<span style="color:#00BADF">WHOOP</span>   - connecting';
+        return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">DOG</span>     <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';
       },
       drop: function() {
-        return '<span style="color:#00BADF">Nememe #001</span>\nchain:   XRPL\nedition: 1/1\nprice:   --\nstatus:  <span style="color:#F5C400">NOT YET MINTED</span>';
+        return '<span style="color:#cba6f7">Nememe #001</span>\n<span style="color:#6c7086">chain:</span>   <span style="color:#89b4fa">XRPL</span>\n<span style="color:#6c7086">edition:</span> <span style="color:#cdd6f4">1/1</span>\n<span style="color:#6c7086">price:</span>   <span style="color:#cdd6f4">--</span>\n<span style="color:#6c7086">status:</span>  <span style="color:#f9e2af">NOT YET MINTED</span>';
       },
       stack: function() {
-        return '06:00  Morning Protocol\n--:--  Boxing\nDaily  Dog Work\nPM     Recovery (WHOOP-led)\nEVE    Build';
+        return '<span style="color:#f9e2af">06:00</span>  Morning Protocol\n<span style="color:#f9e2af">--:--</span>  Boxing\n<span style="color:#f9e2af">Daily</span>  Dog Work\n<span style="color:#f9e2af">PM</span>     Recovery (WHOOP-led)\n<span style="color:#f9e2af">EVE</span>    Build';
       },
       whoop: function() {
-        return 'recovery: <span style="color:#22c55e">--</span>\nstrain:   <span style="color:#3B6EF5">--</span>\nsleep:    <span style="color:#a855f7">--</span>\n[awaiting signal]';
+        return '<span style="color:#6c7086">recovery:</span> <span style="color:#a6e3a1">--</span>\n<span style="color:#6c7086">strain:</span>   <span style="color:#89b4fa">--</span>\n<span style="color:#6c7086">sleep:</span>    <span style="color:#cba6f7">--</span>\n<span style="color:#6c7086">[awaiting signal]</span>';
       },
       clear: function() { return '__CLEAR__'; },
       exit: function() { return '__EXIT__'; }
@@ -1207,21 +1224,23 @@
       if (handler) {
         var result = handler();
         if (result === '__CLEAR__') {
-          termOutput.innerHTML = '<span style="color:#22c55e">&gt; cleared</span>\n';
+          termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; cleared</span>\n';
           return;
         }
         if (result === '__EXIT__') {
           closeTerminal();
           return;
         }
-        termOutput.innerHTML += '\n<span style="color:#00BADF">&gt; ' + cmd + '</span>\n' + result + '\n';
+        termOutput.innerHTML += '\n<span style="color:#89b4fa">&gt; ' + cmd + '</span>\n' + result + '\n';
       } else {
-        termOutput.innerHTML += '\n<span style="color:#00BADF">&gt; ' + cmd + '</span>\n<span style="color:#E8197A">unknown command. type "help"</span>\n';
+        termOutput.innerHTML += '\n<span style="color:#89b4fa">&gt; ' + cmd + '</span>\n<span style="color:#f38ba8">unknown command. type "help"</span>\n';
       }
 
       termBody.scrollTop = termBody.scrollHeight;
     });
   </script>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 </body>
 </html>
