@@ -30,7 +30,7 @@ def save_tokens(tokens):
 
 
 def refresh_tokens(tokens):
-    secret = input("Paste your WHOOP Client Secret: ").strip()
+    secret = os.environ.get("WHOOP_CLIENT_SECRET") or input("Paste your WHOOP Client Secret: ").strip()
 
     data = urllib.parse.urlencode({
         "grant_type": "refresh_token",

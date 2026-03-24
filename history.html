@@ -64,25 +64,67 @@
       margin-bottom: 3rem;
     }
 
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      border: 1px solid var(--card-border);
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-value.recovery { color: var(--green); }
+    .stat-value.strain { color: var(--blue); }
+    .stat-value.sleep { color: var(--purple); }
+
+    .stat-label {
+      font-size: 0.45rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
     /* ── CHART ── */
     .chart-section {
       margin-bottom: 3rem;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
     }
 
     .chart-label {
       font-size: 0.55rem;
       letter-spacing: 3px;
       color: var(--text-muted);
-      margin-bottom: 1.5rem;
+    }
+
+    .chart-avg {
+      font-size: 0.55rem;
+      color: var(--text-dim);
     }
 
     .chart {
       display: flex;
       align-items: flex-end;
       gap: 2px;
-      height: 120px;
+      height: 140px;
       border-bottom: 1px solid var(--card-border);
       padding-bottom: 0.5rem;
+      position: relative;
     }
 
     .chart-bar-wrap {
@@ -92,18 +134,46 @@
       align-items: center;
       height: 100%;
       justify-content: flex-end;
+      position: relative;
+      min-width: 8px;
     }
 
     .chart-bar {
       width: 100%;
       min-height: 2px;
       border-radius: 2px 2px 0 0;
-      transition: height 0.3s;
+      transition: opacity 0.2s;
+      position: relative;
+      cursor: default;
+    }
+
+    .chart-bar:hover {
+      opacity: 0.8;
     }
 
     .chart-bar.recovery { background: var(--green); }
     .chart-bar.strain { background: var(--blue); }
     .chart-bar.sleep { background: var(--purple); }
+
+    .chart-tooltip {
+      display: none;
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.5rem;
+      color: var(--text);
+      background: #18181b;
+      padding: 2px 6px;
+      border-radius: 3px;
+      white-space: nowrap;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .chart-bar-wrap:hover .chart-tooltip {
+      display: block;
+    }
 
     .chart-date {
       font-size: 0.45rem;
@@ -111,6 +181,21 @@
       margin-top: 0.5rem;
       transform: rotate(-45deg);
       white-space: nowrap;
+    }
+
+    /* avg line */
+    .chart-avg-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-top: 1px dashed var(--text-muted);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* single data point */
+    .chart.single-point .chart-bar-wrap {
+      max-width: 60px;
     }
 
     /* ── TABLE ── */
@@ -140,15 +225,25 @@
       color: var(--text);
     }
 
-    .val-recovery { color: var(--green); }
-    .val-strain { color: var(--blue); }
-    .val-sleep { color: var(--purple); }
+    .val-recovery { color: var(--green) !important; }
+    .val-strain { color: var(--blue) !important; }
+    .val-sleep { color: var(--purple) !important; }
 
     .empty {
       text-align: center;
       color: var(--text-muted);
       font-size: 0.72rem;
       padding: 4rem 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
     }
   </style>
 </head>
@@ -159,21 +254,46 @@
     <h1>Protocol History</h1>
     <div class="subtitle" id="dayCount">LOADING...</div>
 
+    <!-- STATS -->
+    <div class="stats-row" id="statsRow" style="display:none;">
+      <div class="stat-card">
+        <div class="stat-value recovery" id="avgRecovery">--</div>
+        <div class="stat-label">AVG RECOVERY</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value strain" id="avgStrain">--</div>
+        <div class="stat-label">AVG STRAIN</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value sleep" id="avgSleep">--</div>
+        <div class="stat-label">AVG SLEEP</div>
+      </div>
+    </div>
+
     <!-- RECOVERY CHART -->
     <div class="chart-section">
-      <div class="chart-label">RECOVERY %</div>
+      <div class="chart-header">
+        <div class="chart-label">RECOVERY %</div>
+        <div class="chart-avg" id="recoveryAvgLabel"></div>
+      </div>
       <div class="chart" id="recoveryChart"></div>
     </div>
 
     <!-- STRAIN CHART -->
     <div class="chart-section">
-      <div class="chart-label">STRAIN</div>
+      <div class="chart-header">
+        <div class="chart-label">STRAIN</div>
+        <div class="chart-avg" id="strainAvgLabel"></div>
+      </div>
       <div class="chart" id="strainChart"></div>
     </div>
 
     <!-- SLEEP CHART -->
     <div class="chart-section">
-      <div class="chart-label">SLEEP HOURS</div>
+      <div class="chart-header">
+        <div class="chart-label">SLEEP HOURS</div>
+        <div class="chart-avg" id="sleepAvgLabel"></div>
+      </div>
       <div class="chart" id="sleepChart"></div>
     </div>
 
@@ -193,6 +313,8 @@
     </table>
 
     <div class="empty" id="emptyMsg" style="display:none;">No history yet. Data builds over time.</div>
+
+    <div class="footer-note">data sourced from WHOOP. updated daily.</div>
   </div>
 
   <script>
@@ -207,6 +329,26 @@
 
         document.getElementById('dayCount').textContent = data.length + ' DAYS TRACKED';
 
+        // Calculate averages
+        var totals = { recovery: 0, strain: 0, sleep: 0, count: 0 };
+        data.forEach(function(d) {
+          if (d.recovery !== null) { totals.recovery += d.recovery; totals.count++; }
+          if (d.strain !== null) totals.strain += d.strain;
+          if (d.sleep_hours !== null) totals.sleep += d.sleep_hours;
+        });
+        var count = totals.count || 1;
+        var avgRec = Math.round(totals.recovery / count);
+        var avgStr = (totals.strain / count).toFixed(1);
+        var avgSlp = (totals.sleep / count).toFixed(1);
+
+        document.getElementById('statsRow').style.display = 'grid';
+        document.getElementById('avgRecovery').textContent = avgRec + '%';
+        document.getElementById('avgStrain').textContent = avgStr;
+        document.getElementById('avgSleep').textContent = avgSlp + 'h';
+        document.getElementById('recoveryAvgLabel').textContent = 'AVG ' + avgRec + '%';
+        document.getElementById('strainAvgLabel').textContent = 'AVG ' + avgStr;
+        document.getElementById('sleepAvgLabel').textContent = 'AVG ' + avgSlp + 'h';
+
         var recoveryChart = document.getElementById('recoveryChart');
         var strainChart = document.getElementById('strainChart');
         var sleepChart = document.getElementById('sleepChart');
@@ -215,15 +357,41 @@
         // Show last 30 days max in charts
         var chartData = data.slice(-30);
 
+        // Add single-point class if needed
+        if (chartData.length <= 2) {
+          recoveryChart.classList.add('single-point');
+          strainChart.classList.add('single-point');
+          sleepChart.classList.add('single-point');
+        }
+
+        // Add average lines
+        var recAvgPct = avgRec;
+        var strAvgPct = (parseFloat(avgStr) / 21 * 100);
+        var slpAvgPct = (parseFloat(avgSlp) / 12 * 100);
+
+        function addAvgLine(chart, pct) {
+          var line = document.createElement('div');
+          line.className = 'chart-avg-line';
+          line.style.bottom = pct + '%';
+          chart.appendChild(line);
+        }
+        addAvgLine(recoveryChart, recAvgPct);
+        addAvgLine(strainChart, strAvgPct);
+        addAvgLine(sleepChart, slpAvgPct);
+
         chartData.forEach(function(d) {
           var dateStr = d.date ? d.date.slice(5) : '--';
 
-          // Recovery bar (0-100%)
+          // Recovery bar
           var rBar = document.createElement('div');
           rBar.className = 'chart-bar-wrap';
+          var rTooltip = document.createElement('div');
+          rTooltip.className = 'chart-tooltip';
+          rTooltip.textContent = (d.recovery || 0) + '%';
           var rInner = document.createElement('div');
           rInner.className = 'chart-bar recovery';
           rInner.style.height = (d.recovery || 0) + '%';
+          rInner.appendChild(rTooltip);
           var rDate = document.createElement('div');
           rDate.className = 'chart-date';
           rDate.textContent = dateStr;
@@ -231,26 +399,42 @@
           rBar.appendChild(rDate);
           recoveryChart.appendChild(rBar);
 
-          // Strain bar (0-21 scale)
+          // Strain bar
           var sBar = document.createElement('div');
           sBar.className = 'chart-bar-wrap';
+          var sTooltip = document.createElement('div');
+          sTooltip.className = 'chart-tooltip';
+          sTooltip.textContent = (d.strain || 0);
           var sInner = document.createElement('div');
           sInner.className = 'chart-bar strain';
           sInner.style.height = ((d.strain || 0) / 21 * 100) + '%';
+          sInner.appendChild(sTooltip);
+          var sDate = document.createElement('div');
+          sDate.className = 'chart-date';
+          sDate.textContent = dateStr;
           sBar.appendChild(sInner);
+          sBar.appendChild(sDate);
           strainChart.appendChild(sBar);
 
-          // Sleep bar (0-12h)
+          // Sleep bar
           var slBar = document.createElement('div');
           slBar.className = 'chart-bar-wrap';
+          var slTooltip = document.createElement('div');
+          slTooltip.className = 'chart-tooltip';
+          slTooltip.textContent = (d.sleep_hours || 0) + 'h';
           var slInner = document.createElement('div');
           slInner.className = 'chart-bar sleep';
           slInner.style.height = ((d.sleep_hours || 0) / 12 * 100) + '%';
+          slInner.appendChild(slTooltip);
+          var slDate = document.createElement('div');
+          slDate.className = 'chart-date';
+          slDate.textContent = dateStr;
           slBar.appendChild(slInner);
+          slBar.appendChild(slDate);
           sleepChart.appendChild(slBar);
         });
 
-        // Table — reverse (newest first)
+        // Table — newest first
         data.slice().reverse().forEach(function(d) {
           var tr = document.createElement('tr');
           tr.innerHTML =

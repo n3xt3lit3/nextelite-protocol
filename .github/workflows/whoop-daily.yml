@@ -1,0 +1,43 @@
+name: Daily WHOOP Fetch
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 07:00 UTC daily
+  workflow_dispatch: # manual trigger
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore tokens
+        run: echo '${{ secrets.WHOOP_TOKENS }}' > .whoop_tokens.json
+
+      - name: Fetch WHOOP data
+        env:
+          WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+        run: python whoop_fetch.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "NextElite Bot"
+          git config user.email "bot@nextelite.protocol"
+          git add whoop_data.json whoop_history.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "daily whoop update"
+          git push
+
+      - name: Save refreshed tokens
+        if: always()
+        run: |
+          if [ -f .whoop_tokens.json ]; then
+            echo "If tokens were refreshed, update the WHOOP_TOKENS secret manually"
+          fi

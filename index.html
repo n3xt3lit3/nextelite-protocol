@@ -488,6 +488,66 @@
       line-height: 1.6;
     }
 
+    /* ── SUBSCRIBE ── */
+    .subscribe-wrap {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .subscribe-hint {
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .subscribe-form {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--card-border);
+    }
+
+    .subscribe-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.9rem 1rem;
+      outline: none;
+    }
+
+    .subscribe-form input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .subscribe-form button {
+      background: transparent;
+      border: none;
+      border-left: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 2px;
+      padding: 0.9rem 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .subscribe-form button:hover {
+      color: var(--text);
+      background: var(--card);
+    }
+
+    .subscribe-ok {
+      font-size: 0.6rem;
+      color: var(--green);
+      margin-top: 1rem;
+      display: none;
+    }
+
     /* ── FOOTER ── */
     .footer {
       text-align: center;
@@ -1169,6 +1229,22 @@
     </div>
   </section>
 
+  <hr class="div-line" />
+
+  <!-- SUBSCRIBE -->
+  <section id="subscribe" class="section reveal">
+    <div class="section-label">SUBSCRIBE</div>
+
+    <div class="subscribe-wrap">
+      <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
+      <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">SUBMIT</button>
+      </form>
+      <div class="subscribe-ok" id="subscribeOk">signal received.</div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-logo">
@@ -1178,6 +1254,23 @@
   </footer>
 
   <script>
+    /* ── SUBSCRIBE FORM ── */
+    document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r) {
+        if (r.ok) {
+          form.style.display = 'none';
+          document.getElementById('subscribeOk').style.display = 'block';
+        }
+      }).catch(function() {});
+    });
+
     /* ── WHOOP DATA LOADER ── */
     fetch('whoop_data.json')
       .then(function(r) { return r.json(); })
