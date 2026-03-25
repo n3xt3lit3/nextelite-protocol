@@ -420,7 +420,7 @@
         <span class="terminal-dot r"></span>
         <span class="terminal-dot y"></span>
         <span class="terminal-dot g"></span>
-        <span class="terminal-title">nextelite v0.2</span>
+        <span class="terminal-title">nextelite v0.3</span>
       </div>
       <div class="terminal-body" id="terminalBody">
         <div class="terminal-output" id="terminalOutput"></div>
@@ -440,15 +440,18 @@
       <ul class="nav-links">
         <li><a href="#protocol">PROTOCOL</a></li>
         <li><a href="#data">DATA</a></li>
+        <li><a href="#story">STORY</a></li>
         <li><a href="#drop">DROP</a></li>
         <li><a href="#feed">FEED</a></li>
         <li><a href="#sound">SOUND</a></li>
         <li><a href="#signal">SIGNAL</a></li>
+        <li><a href="tagteach.html">TAGTEACH</a></li>
+        <li><a href="ai.html">AI</a></li>
         <li><a href="#roadmap">ROADMAP</a></li>
         <li><a href="#log">LOG</a></li>
       </ul>
       <div class="nav-right">
-        <div class="nav-status"><span class="live-dot"></span> v0.2</div>
+        <div class="nav-status"><span class="live-dot"></span> v0.3</div>
         <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
       </div>
     </div>
@@ -468,14 +471,14 @@
     </div>
     <div class="section reveal" style="padding-top:0;">
       <div class="pillars">
-        <div class="pillar">
+        <div class="pillar" style="cursor:pointer;" onclick="location.href='tagteach.html'">
           <div class="pillar-name">BOXING</div>
           <div class="pillar-line" style="background:var(--yellow);"></div>
           <div class="pillar-hint">rounds. technique. war.</div>
-          <div class="pillar-badge">ACTIVE</div>
+          <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">ACTIVE <span style="font-size:0.5rem;color:var(--text-muted);">TAGTEACH -></span></div>
         </div>
-        <div class="pillar">
-          <div class="pillar-name">DOG</div>
+        <div class="pillar" style="cursor:pointer;" onclick="location.href='clicker.html'">
+          <div class="pillar-name">CLICKER TRAINING</div>
           <div class="pillar-line" style="background:var(--cyan);"></div>
           <div class="pillar-hint">behavior. precision. bond.</div>
           <div class="pillar-badge">ACTIVE</div>
@@ -491,6 +494,12 @@
           <div class="pillar-line" style="background:var(--pink);"></div>
           <div class="pillar-hint">recovery. strain. signal.</div>
           <div class="pillar-badge">CONNECTING</div>
+        </div>
+        <div class="pillar" style="cursor:pointer;grid-column:1/-1;" onclick="location.href='ai.html'">
+          <div class="pillar-name">AI</div>
+          <div class="pillar-line" style="background:var(--purple);"></div>
+          <div class="pillar-hint">learn how to set up and use Claude Code. tools that think with you.</div>
+          <div class="pillar-badge">NEW</div>
         </div>
       </div>
     </div>
@@ -530,6 +539,18 @@
       <div class="stack-item"><div class="stack-name">Dog Work</div><div class="stack-value">Daily</div></div>
       <div class="stack-item"><div class="stack-name">Recovery</div><div class="stack-value">WHOOP-led</div></div>
       <div class="stack-item"><div class="stack-name">Build</div><div class="stack-value">EVE</div></div>
+    </div>
+  </section>
+
+  <hr class="div-line" />
+
+  <section id="story" class="section reveal">
+    <div class="section-label">STORY</div>
+    <div class="pillar" style="cursor:pointer;" onclick="location.href='story.html'">
+      <div class="pillar-name">BEFORE THE PROTOCOL</div>
+      <div class="pillar-line" style="background:var(--cyan);"></div>
+      <div class="pillar-hint">the pitch. the camera. everything that led here.</div>
+      <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">FULL STORY <span style="transition:transform 0.2s;">-></span></div>
     </div>
   </section>
 
@@ -605,11 +626,12 @@
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">03</span><span class="rm-name">Sound layer</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">04</span><span class="rm-name">Open source</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">05</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">06</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">07</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">08</span><span class="rm-name">Protocol app</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">09</span><span class="rm-name">More drops</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">10</span><span class="rm-name">AI agents</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">06</span><span class="rm-name">Story + TagTeach pages</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">07</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">08</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">09</span><span class="rm-name">Protocol app</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">10</span><span class="rm-name">More drops</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">11</span><span class="rm-name">AI agents</span><span class="rm-status s-upcoming">UPCOMING</span></div>
     </div>
   </section>
 
@@ -618,6 +640,7 @@
   <section id="log" class="section reveal">
     <div class="section-label">LOG</div>
     <div class="log">
+      <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">v0.3 -- story, tagteach, clicker, AI pages. built in public.</div></div>
       <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Protocol initiated.</div></div>
       <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Nememe #001 artwork complete. Mint pending.</div></div>
       <div class="log-entry"><div class="log-date">03.2026</div><div class="log-text">Site live. Signal on.</div></div>
@@ -644,7 +667,8 @@
     <div class="footer-logo">
       <span class="N">n</span><span class="e1">e</span><span class="x">x</span><span>t</span><span>_</span><span class="pk">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span>
     </div>
-    <div class="footer-sub">PROTOCOL v0.2 -- UNDER CONSTRUCTION</div>
+    <div class="footer-sub">PROTOCOL v0.3 -- BUILT IN PUBLIC</div>
+    <div class="footer-sub" style="margin-top:0.5rem;opacity:0.6;">this site is the process. every version ships raw. watch it evolve.</div>
   </footer>
 
   <script>
@@ -692,12 +716,16 @@
     var overlay=document.getElementById('terminalOverlay'), termInput=document.getElementById('terminalInput'), termOutput=document.getElementById('terminalOutput'), termBody=document.getElementById('terminalBody'), termOpen=false;
     termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; connection established</span>\n<span style="color:#6c7086">type "help" for commands</span>\n';
     var commands = {
-      help: function(){return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';},
+      help: function(){return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">story</span>     <span style="color:#6c7086">- the origin</span>\n  <span style="color:#89b4fa">tagteach</span>  <span style="color:#6c7086">- boxing method</span>\n  <span style="color:#89b4fa">clicker</span>   <span style="color:#6c7086">- dog training</span>\n  <span style="color:#89b4fa">ai</span>        <span style="color:#6c7086">- claude code</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';},
       about: function(){return '<span style="color:#cdd6f4">Nemine Steffensen</span>\n<span style="color:#6c7086">the protocol is the product.</span>\n<span style="color:#6c7086">everything else is noise.</span>';},
-      pillars: function(){return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">DOG</span>     <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';},
+      pillars: function(){return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">CLICKER TRAINING</span> <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';},
       drop: function(){return '<span style="color:#cba6f7">Nememe #001</span>\n<span style="color:#6c7086">chain:</span>   <span style="color:#89b4fa">XRPL</span>\n<span style="color:#6c7086">edition:</span> <span style="color:#cdd6f4">1/1</span>\n<span style="color:#6c7086">price:</span>   <span style="color:#cdd6f4">--</span>\n<span style="color:#6c7086">status:</span>  <span style="color:#f9e2af">NOT YET MINTED</span>';},
       stack: function(){return '<span style="color:#f9e2af">06:00</span>  Morning Protocol\n<span style="color:#f9e2af">--:--</span>  Boxing\n<span style="color:#f9e2af">Daily</span>  Dog Work\n<span style="color:#f9e2af">PM</span>     Recovery (WHOOP-led)\n<span style="color:#f9e2af">EVE</span>    Build';},
       whoop: function(){return '<span style="color:#6c7086">recovery:</span> <span style="color:#a6e3a1">--</span>\n<span style="color:#6c7086">strain:</span>   <span style="color:#89b4fa">--</span>\n<span style="color:#6c7086">sleep:</span>    <span style="color:#cba6f7">--</span>\n<span style="color:#6c7086">[awaiting signal]</span>';},
+      story: function(){return '<span style="color:#94e2d5">THE STORY</span>\n<span style="color:#6c7086">soccer. energikampen. the origin.</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">story.html</span>';},
+      tagteach: function(){return '<span style="color:#f9e2af">TAGTEACH</span>\n<span style="color:#6c7086">boxing built different</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">tagteach.html</span>';},
+      clicker: function(){return '<span style="color:#94e2d5">CLICKER TRAINING</span>\n<span style="color:#6c7086">precision dog work</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">clicker.html</span>';},
+      ai: function(){return '<span style="color:#cba6f7">AI</span>\n<span style="color:#6c7086">learn to set up Claude Code</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">ai.html</span>';},
       clear: function(){return '__CLEAR__';},
       exit: function(){return '__EXIT__';}
     };
