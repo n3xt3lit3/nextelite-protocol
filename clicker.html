@@ -353,24 +353,26 @@
 
     /* ── MOBILE PRODUCT ── */
     @media (max-width:540px) {
-      .product-hero-overlay { padding: 1.5rem 1.2rem; }
-      .product-name { font-size: 0.75rem; }
+      .product-hero img { aspect-ratio: 4/3; }
+      .product-hero-overlay { padding: 1.2rem; }
+      .product-name { font-size: 0.72rem; }
 
       .product-details {
         grid-template-columns: 1fr;
       }
       .product-detail-img {
-        height: 200px;
+        display: none;
       }
-      .product-info { padding: 1.5rem; }
+      .product-info { padding: 1.2rem; }
+      .product-desc { font-size: 0.6rem; }
 
       .product-strip {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.4rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.3rem;
       }
       .product-strip img {
-        height: 140px;
-        border-radius: 8px;
+        height: 100px;
+        border-radius: 6px;
       }
 
       .order-btn {
