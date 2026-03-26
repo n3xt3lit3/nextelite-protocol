@@ -490,18 +490,35 @@
     .tattoo-right { right:1.2rem; top:50%; }
 
     /* ── TERMINAL ── */
-    .terminal-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.92); z-index:9999; display:none; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
-    .terminal-overlay.open { display:flex; align-items:center; justify-content:center; }
-    .terminal { width:90%; max-width:620px; background:#1e1e2e; border:1px solid #313244; border-radius:10px; overflow:hidden; box-shadow:0 20px 80px rgba(0,0,0,0.6); }
-    .terminal-bar { display:flex; align-items:center; gap:0.5rem; padding:0.75rem 1rem; background:#181825; border-bottom:1px solid #313244; }
-    .terminal-dot { width:10px; height:10px; border-radius:50%; }
-    .terminal-dot.r { background:#f38ba8; } .terminal-dot.y { background:#f9e2af; } .terminal-dot.g { background:#a6e3a1; }
-    .terminal-title { font-size:0.58rem; color:#6c7086; letter-spacing:1px; margin-left:0.5rem; }
-    .terminal-body { padding:1.25rem; min-height:280px; max-height:420px; overflow-y:auto; background:#1e1e2e; }
-    .terminal-output { font-family:'Space Mono',monospace; font-size:0.72rem; color:#cdd6f4; line-height:1.9; white-space:pre-wrap; word-break:break-word; }
-    .terminal-input-row { display:flex; align-items:center; padding:0.85rem 1.25rem; border-top:1px solid #313244; gap:0.5rem; background:#181825; }
-    .terminal-prompt { font-size:0.72rem; color:#cba6f7; flex-shrink:0; }
-    .terminal-input { background:none; border:none; outline:none; color:#cdd6f4; font-family:'Space Mono',monospace; font-size:0.72rem; width:100%; caret-color:#cba6f7; }
+    /* ── CHATBOT ── */
+    .chat-fab { position:fixed; bottom:1.5rem; right:1.5rem; width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, var(--cyan), var(--blue)); border:none; cursor:pointer; z-index:9998; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,186,223,0.3); transition:transform 0.2s, box-shadow 0.2s; }
+    .chat-fab:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(0,186,223,0.4); }
+    .chat-fab svg { width:24px; height:24px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .chat-fab.open svg.icon-chat { display:none; }
+    .chat-fab:not(.open) svg.icon-close { display:none; }
+    .chat-window { position:fixed; bottom:5.5rem; right:1.5rem; width:370px; max-width:calc(100vw - 2rem); height:480px; max-height:calc(100vh - 8rem); background:#1e1e2e; border:1px solid #313244; border-radius:14px; z-index:9999; display:none; flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+    .chat-window.open { display:flex; animation:chatSlideUp 0.25s ease; }
+    @keyframes chatSlideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .chat-header { display:flex; align-items:center; gap:0.6rem; padding:0.85rem 1rem; background:#181825; border-bottom:1px solid #313244; }
+    .chat-header-dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); animation:pulse 2s infinite; }
+    .chat-header-title { font-size:0.65rem; letter-spacing:2px; color:var(--text-dim); }
+    .chat-messages { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.6rem; }
+    .chat-msg { max-width:85%; padding:0.6rem 0.85rem; border-radius:12px; font-family:'Space Mono',monospace; font-size:0.7rem; line-height:1.7; word-break:break-word; }
+    .chat-msg.bot { align-self:flex-start; background:#313244; color:#cdd6f4; border-bottom-left-radius:4px; }
+    .chat-msg.user { align-self:flex-end; background:linear-gradient(135deg, rgba(0,186,223,0.15), rgba(137,180,250,0.15)); color:#cdd6f4; border-bottom-right-radius:4px; border:1px solid rgba(0,186,223,0.2); }
+    .chat-msg.bot .msg-label { font-size:0.5rem; letter-spacing:1.5px; color:#6c7086; margin-bottom:0.25rem; }
+    .chat-input-row { display:flex; align-items:center; padding:0.75rem 1rem; border-top:1px solid #313244; gap:0.5rem; background:#181825; }
+    .chat-input { background:none; border:none; outline:none; color:#cdd6f4; font-family:'Space Mono',monospace; font-size:0.72rem; width:100%; caret-color:var(--cyan); }
+    .chat-input::placeholder { color:#6c7086; }
+    .chat-send { background:none; border:none; cursor:pointer; padding:0.25rem; display:flex; }
+    .chat-send svg { width:18px; height:18px; stroke:var(--cyan); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:stroke 0.2s; }
+    .chat-send:hover svg { stroke:var(--text); }
+    .chat-typing { align-self:flex-start; padding:0.6rem 0.85rem; }
+    .chat-typing span { display:inline-block; width:6px; height:6px; border-radius:50%; background:#6c7086; margin:0 2px; animation:typingBounce 1.2s infinite; }
+    .chat-typing span:nth-child(2) { animation-delay:0.15s; }
+    .chat-typing span:nth-child(3) { animation-delay:0.3s; }
+    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
+    @media (max-width:500px) { .chat-window { bottom:0; right:0; width:100%; height:100%; max-width:100%; max-height:100%; border-radius:0; } .chat-fab.open { display:none; } }
 
     /* ── RESPONSIVE ── */
     @media (max-width:700px) {
@@ -516,21 +533,21 @@
   <div class="tattoo tattoo-left">next_elite();</div>
   <div class="tattoo tattoo-right">// code your next level</div>
 
-  <div class="terminal-overlay" id="terminalOverlay">
-    <div class="terminal" id="terminalBox">
-      <div class="terminal-bar">
-        <span class="terminal-dot r"></span>
-        <span class="terminal-dot y"></span>
-        <span class="terminal-dot g"></span>
-        <span class="terminal-title">nextelite v0.3</span>
-      </div>
-      <div class="terminal-body" id="terminalBody">
-        <div class="terminal-output" id="terminalOutput"></div>
-      </div>
-      <div class="terminal-input-row">
-        <span class="terminal-prompt">&gt;</span>
-        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus />
-      </div>
+  <!-- Chatbot -->
+  <button class="chat-fab" id="chatFab" aria-label="Open chat">
+    <svg class="icon-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <span class="chat-header-dot"></span>
+      <span class="chat-header-title">NEXTELITE AI</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chatInput" placeholder="ask me anything..." autocomplete="off" spellcheck="false" />
+      <button class="chat-send" id="chatSend"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
   </div>
 
@@ -837,30 +854,102 @@
     var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
     reveals.forEach(function(el) { obs.observe(el); });
 
-    /* ── TERMINAL ── */
-    var overlay=document.getElementById('terminalOverlay'), termInput=document.getElementById('terminalInput'), termOutput=document.getElementById('terminalOutput'), termBody=document.getElementById('terminalBody'), termOpen=false;
-    termOutput.innerHTML = '<span style="color:#a6e3a1">&gt; connection established</span>\n<span style="color:#6c7086">type "help" for commands</span>\n';
-    var commands = {
-      help: function(){return '<span style="color:#6c7086">available commands:</span>\n  <span style="color:#89b4fa">about</span>     <span style="color:#6c7086">- who</span>\n  <span style="color:#89b4fa">pillars</span>   <span style="color:#6c7086">- the four</span>\n  <span style="color:#89b4fa">story</span>     <span style="color:#6c7086">- the origin</span>\n  <span style="color:#89b4fa">tagteach</span>  <span style="color:#6c7086">- boxing method</span>\n  <span style="color:#89b4fa">clicker</span>   <span style="color:#6c7086">- dog training</span>\n  <span style="color:#89b4fa">ai</span>        <span style="color:#6c7086">- services</span>\n  <span style="color:#89b4fa">drop</span>      <span style="color:#6c7086">- nft status</span>\n  <span style="color:#89b4fa">stack</span>     <span style="color:#6c7086">- daily protocol</span>\n  <span style="color:#89b4fa">whoop</span>     <span style="color:#6c7086">- biometric status</span>\n  <span style="color:#89b4fa">clear</span>     <span style="color:#6c7086">- reset</span>\n  <span style="color:#89b4fa">exit</span>      <span style="color:#6c7086">- close</span>';},
-      about: function(){return '<span style="color:#cdd6f4">Nemine Steffensen</span>\n<span style="color:#6c7086">the protocol is the product.</span>\n<span style="color:#6c7086">everything else is noise.</span>';},
-      pillars: function(){return '<span style="color:#f9e2af">BOXING</span>  <span style="color:#6c7086">- active</span>\n<span style="color:#94e2d5">CLICKER TRAINING</span> <span style="color:#6c7086">- active</span>\n<span style="color:#89b4fa">XRP</span>     <span style="color:#6c7086">- building</span>\n<span style="color:#f38ba8">WHOOP</span>   <span style="color:#6c7086">- connecting</span>';},
-      drop: function(){return '<span style="color:#cba6f7">Nememe #001</span>\n<span style="color:#6c7086">chain:</span>   <span style="color:#89b4fa">XRPL</span>\n<span style="color:#6c7086">edition:</span> <span style="color:#cdd6f4">1/1</span>\n<span style="color:#6c7086">price:</span>   <span style="color:#cdd6f4">--</span>\n<span style="color:#6c7086">status:</span>  <span style="color:#f9e2af">NOT YET MINTED</span>';},
-      stack: function(){return '<span style="color:#f9e2af">06:00</span>  Morning Protocol\n<span style="color:#f9e2af">--:--</span>  Boxing\n<span style="color:#f9e2af">Daily</span>  Dog Work\n<span style="color:#f9e2af">PM</span>     Recovery (WHOOP-led)\n<span style="color:#f9e2af">EVE</span>    Build';},
-      whoop: function(){return '<span style="color:#6c7086">recovery:</span> <span style="color:#a6e3a1">--</span>\n<span style="color:#6c7086">strain:</span>   <span style="color:#89b4fa">--</span>\n<span style="color:#6c7086">sleep:</span>    <span style="color:#cba6f7">--</span>\n<span style="color:#6c7086">[awaiting signal]</span>';},
-      story: function(){return '<span style="color:#94e2d5">THE STORY</span>\n<span style="color:#6c7086">soccer. energikampen. the origin.</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">story.html</span>';},
-      tagteach: function(){return '<span style="color:#f9e2af">TAGTEACH</span>\n<span style="color:#6c7086">boxing built different</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">tagteach.html</span>';},
-      clicker: function(){return '<span style="color:#94e2d5">CLICKER TRAINING</span>\n<span style="color:#6c7086">precision dog work</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">clicker.html</span>';},
-      ai: function(){return '<span style="color:#cba6f7">AI</span>\n<span style="color:#6c7086">build with AI. no code required.</span>\n<span style="color:#6c7086">visit:</span> <span style="color:#89b4fa">ai.html</span>';},
-      clear: function(){return '__CLEAR__';},
-      exit: function(){return '__EXIT__';}
+    /* ── CHATBOT ── */
+    var chatFab=document.getElementById('chatFab'), chatWin=document.getElementById('chatWindow'), chatMsgs=document.getElementById('chatMessages'), chatIn=document.getElementById('chatInput'), chatSend=document.getElementById('chatSend'), chatOpen=false;
+
+    var knowledge = {
+      about: "Nemine Steffensen — the protocol is the product. Boxing, clicker training, biohacking & building on XRPL. Everything else is noise.",
+      boxing: "Boxing is trained using TagTeach — a precision coaching method built on positive reinforcement and audible markers. No guesswork, just clean reps.",
+      tagteach: "TagTeach breaks complex skills into tag points — small, achievable steps marked with an audible 'tag' when done correctly. Used in boxing training here.",
+      clicker: "Clicker training uses operant conditioning and a marker signal to shape precise behaviors in dogs. Based on science, not dominance. All training resources are from canis.no.",
+      dogs: "Dog training here is 100% clicker-based. Positive reinforcement, marker signals, and shaping. Check the Clicker Training page for more.",
+      whoop: "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol — training intensity adapts to biometric signals.",
+      xrp: "Building on XRPL. Nememe #001 is the first NFT drop — 1/1 edition, not yet minted. More drops coming.",
+      nft: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
+      drop: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
+      stack: "The daily protocol: morning routine at 06:00, boxing, dog work, WHOOP-led recovery in the afternoon, and building in the evening.",
+      protocol: "NextElite is a personal protocol — not a product you buy, but a system you live. Boxing, clicker training, biohacking, XRP. Code your next level.",
+      ai: "AI services — build with AI, no code required. Automations, agents, and tools crafted for real use cases.",
+      pillars: "Four pillars: Boxing (TagTeach), Clicker Training (dogs), XRP (XRPL building), and WHOOP (biometric data). Each one feeds the protocol.",
+      story: "It started with soccer — Energikampen — and evolved into something bigger. The full origin story is on the Story page.",
+      sound: "The site has an ambient sound layer — subtle audio that adds atmosphere. Toggle it on to experience the full vibe.",
+      site: "This site is built from scratch — no frameworks, no templates. Pure HTML, CSS, and JS. Open source on GitHub."
     };
-    function openTerminal(){termOpen=true;overlay.classList.add('open');setTimeout(function(){termInput.focus();},50);}
-    function closeTerminal(){termOpen=false;overlay.classList.remove('open');termInput.blur();}
-    var logoClicks=0,logoTimer=null;
-    document.getElementById('navLogo').addEventListener('click',function(){logoClicks++;if(logoClicks===3){logoClicks=0;clearTimeout(logoTimer);openTerminal();}else{clearTimeout(logoTimer);logoTimer=setTimeout(function(){logoClicks=0;},500);}});
-    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key==='K'){e.preventDefault();if(termOpen)closeTerminal();else openTerminal();}if(e.key==='Escape'&&termOpen)closeTerminal();});
-    overlay.addEventListener('click',function(e){if(e.target===overlay)closeTerminal();});
-    termInput.addEventListener('keydown',function(e){if(e.key!=='Enter')return;var cmd=termInput.value.trim().toLowerCase();termInput.value='';if(!cmd)return;var h=commands[cmd];if(h){var r=h();if(r==='__CLEAR__'){termOutput.innerHTML='<span style="color:#a6e3a1">&gt; cleared</span>\n';return;}if(r==='__EXIT__'){closeTerminal();return;}termOutput.innerHTML+='\n<span style="color:#89b4fa">&gt; '+cmd+'</span>\n'+r+'\n';}else{termOutput.innerHTML+='\n<span style="color:#89b4fa">&gt; '+cmd+'</span>\n<span style="color:#f38ba8">unknown command. type "help"</span>\n';}termBody.scrollTop=termBody.scrollHeight;});
+
+    function findAnswer(q) {
+      q = q.toLowerCase().replace(/[?!.,]/g,'');
+      var words = q.split(/\s+/);
+
+      if (/who (are you|is|made|built|created)/.test(q) || /what is (this|nextelite|next elite)/.test(q)) return knowledge.protocol;
+      if (/who is nemi/.test(q) || /tell me about (nemi|yourself|the founder)/.test(q)) return knowledge.about;
+
+      var keyMap = {
+        'boxing':['boxing','box','fight','train'], 'tagteach':['tagteach','tag teach','tag point','marker'],
+        'clicker':['clicker','operant','shaping','marker signal'], 'dogs':['dog','dogs','canine','puppy'],
+        'whoop':['whoop','recovery','strain','sleep','biometric','hrv'], 'xrp':['xrp','xrpl','crypto','ledger','ripple'],
+        'nft':['nft','nememe','mint','collectible'], 'drop':['drop'],
+        'stack':['stack','routine','daily','morning','schedule','day'], 'protocol':['protocol','system','method'],
+        'ai':['ai','automation','agent','artificial'], 'pillars':['pillar','pillars','four'],
+        'story':['story','origin','soccer','energikampen','how it started'], 'sound':['sound','audio','music','ambient'],
+        'site':['site','website','code','github','open source','tech']
+      };
+
+      var best=null, bestScore=0;
+      for (var key in keyMap) {
+        var score=0;
+        keyMap[key].forEach(function(kw){ if(q.indexOf(kw)!==-1) score+=2; });
+        words.forEach(function(w){ keyMap[key].forEach(function(kw){ if(kw.indexOf(w)!==-1 && w.length>2) score+=1; }); });
+        if(score>bestScore){bestScore=score;best=key;}
+      }
+
+      if(best && bestScore>=2) return knowledge[best];
+
+      var greetings=['hi','hey','hello','yo','sup','what\'s up','whats up'];
+      if(greetings.some(function(g){return q===g||q.startsWith(g+' ');})) return "Hey. Ask me anything about the protocol — boxing, clicker training, WHOOP, XRP, or the daily stack.";
+
+      return "Interesting question. I know about the protocol, boxing, tagteach, clicker training, dogs, WHOOP, XRP, NFT drops, the daily stack, AI, and the story. Try asking about one of those.";
+    }
+
+    function addMsg(text, type) {
+      var el=document.createElement('div');
+      el.className='chat-msg '+type;
+      if(type==='bot'){el.innerHTML='<div class="msg-label">NEXTELITE</div>'+text;}
+      else{el.textContent=text;}
+      chatMsgs.appendChild(el);
+      chatMsgs.scrollTop=chatMsgs.scrollHeight;
+    }
+
+    function showTyping() {
+      var el=document.createElement('div');
+      el.className='chat-typing';
+      el.id='chatTyping';
+      el.innerHTML='<span></span><span></span><span></span>';
+      chatMsgs.appendChild(el);
+      chatMsgs.scrollTop=chatMsgs.scrollHeight;
+    }
+    function removeTyping() { var t=document.getElementById('chatTyping'); if(t)t.remove(); }
+
+    function sendChat() {
+      var q=chatIn.value.trim();
+      chatIn.value='';
+      if(!q)return;
+      addMsg(q,'user');
+      showTyping();
+      var answer=findAnswer(q);
+      setTimeout(function(){ removeTyping(); addMsg(answer,'bot'); }, 600+Math.random()*400);
+    }
+
+    addMsg("Hey — ask me anything about the protocol.","bot");
+
+    chatFab.addEventListener('click',function(){
+      chatOpen=!chatOpen;
+      chatFab.classList.toggle('open',chatOpen);
+      chatWin.classList.toggle('open',chatOpen);
+      if(chatOpen)setTimeout(function(){chatIn.focus();},100);
+    });
+    chatIn.addEventListener('keydown',function(e){if(e.key==='Enter')sendChat();});
+    chatSend.addEventListener('click',sendChat);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&chatOpen){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');}});
   </script>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
