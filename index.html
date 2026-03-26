@@ -403,6 +403,10 @@
     .x-hint { font-size:0.62rem; color:var(--text-muted); letter-spacing:1.5px; flex:1; }
     .x-arrow { font-size:0.82rem; color:var(--text-muted); transition:color 0.2s, transform 0.2s; }
     .x-card:hover .x-arrow { color:var(--text); transform:translateX(4px); }
+    .xrp-playbook-content { flex:1; display:flex; flex-direction:column; gap:0.5rem; }
+    .xrp-playbook-content .x-handle { font-size:1.2rem; }
+    .xrp-playbook-line { width:40px; height:2px; background:linear-gradient(90deg, var(--yellow), var(--pink)); border-radius:2px; }
+    .xrp-playbook-card { flex-wrap:wrap; }
 
     /* ── SIGNAL ── */
     .signal-list { display:grid; gap:0.5rem; }
@@ -760,9 +764,12 @@
     <div class="tweet-embed">
       <blockquote class="twitter-tweet" id="tweetEmbed" data-theme="light"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
     </div>
-    <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="x-card" style="margin-bottom:1rem;">
-      <div class="x-handle">The XRP Playbook</div>
-      <div class="x-hint">MEME EDITION — where memes teach better than textbooks</div>
+    <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="x-card xrp-playbook-card" style="margin-bottom:1rem;">
+      <div class="xrp-playbook-content">
+        <div class="x-handle">The XRP Playbook</div>
+        <div class="xrp-playbook-line"></div>
+        <div class="x-hint">MEME EDITION — where memes teach better than textbooks</div>
+      </div>
       <div class="x-arrow">-></div>
     </a>
     <a href="https://x.com/N3XT3LIT3" target="_blank" class="x-card">
