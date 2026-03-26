@@ -108,7 +108,10 @@
 
     .log-dot { display:none; }
     .log-status { font-size:0.4rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; margin-left:auto; }
-    .log-status.s-done { color:var(--cyan); background:rgba(0,186,223,0.08); }
+    .log-status.c-yellow { color:var(--yellow); background:rgba(245,196,0,0.08); }
+    .log-status.c-cyan { color:var(--cyan); background:rgba(0,186,223,0.08); }
+    .log-status.c-blue { color:var(--blue); background:rgba(59,110,245,0.08); }
+    .log-status.c-pink { color:var(--pink); background:rgba(232,25,122,0.08); }
 
     .log-text {
       font-size: 0.72rem;
@@ -260,8 +263,9 @@
         text.className = 'log-text';
         text.textContent = entry.text;
 
+        var colors = ['c-yellow','c-cyan','c-blue','c-pink'];
         var status = document.createElement('span');
-        status.className = 'log-status s-done';
+        status.className = 'log-status ' + colors[group.querySelectorAll('.log-item').length % 4];
         status.textContent = 'DONE';
 
         if (entry.type === 'major') {
