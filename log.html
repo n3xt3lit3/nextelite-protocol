@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Log — NextElite</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+    :root {
+      --yellow: #F5C400;
+      --cyan: #00BADF;
+      --blue: #3B6EF5;
+      --pink: #E8197A;
+      --dark: #050505;
+      --card: #0c0c0e;
+      --card-border: #1a1a1e;
+      --text: #e4e4e7;
+      --text-dim: #52525b;
+      --text-muted: #3f3f46;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .back {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--text); }
+
+    h1 {
+      font-size: 1.2rem;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+
+    /* ── VERSION BADGES ── */
+    .version-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .version-badge {
+      font-size: 0.5rem;
+      letter-spacing: 1.5px;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--text-dim);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .version-badge.current {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* ── DATE GROUP ── */
+    .date-group {
+      margin-bottom: 2.5rem;
+    }
+    .date-header {
+      font-size: 0.5rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    /* ── LOG ENTRY ── */
+    .log-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      transition: color 0.2s;
+    }
+    .log-item:hover { color: var(--text); }
+
+    .log-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--card-border);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+    .log-item.major .log-dot { background: var(--cyan); }
+    .log-item.feature .log-dot { background: var(--yellow); }
+    .log-item.fix .log-dot { background: var(--pink); }
+
+    .log-text {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .log-item:hover .log-text { color: var(--text); }
+
+    .log-tag {
+      font-size: 0.42rem;
+      letter-spacing: 1.5px;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+    .tag-version { background: rgba(0,186,223,0.12); color: var(--cyan); }
+    .tag-feature { background: rgba(245,196,0,0.12); color: var(--yellow); }
+    .tag-fix { background: rgba(232,25,122,0.12); color: var(--pink); }
+
+    .stats-row {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .stat { text-align: center; }
+    .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--cyan); }
+    .stat-label { font-size: 0.42rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 4rem 1.25rem 3rem; }
+      .stats-row { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">&larr; BACK TO PROTOCOL</a>
+
+    <h1>Protocol Log</h1>
+    <div class="subtitle">EVERY CHANGE. BUILDING IN PUBLIC.</div>
+
+    <div class="version-bar">
+      <span class="version-badge">v0.1</span>
+      <span class="version-badge">v0.2</span>
+      <span class="version-badge current">v0.3</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value" id="totalChanges">0</div>
+        <div class="stat-label">TOTAL CHANGES</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalDays">0</div>
+        <div class="stat-label">DAYS ACTIVE</div>
+      </div>
+    </div>
+
+    <div id="logContainer"></div>
+
+    <div class="footer-note">built in public. every commit counts.</div>
+  </div>
+
+  <script>
+    var entries = [
+      // 26.03.2026
+      { date: "26.03.2026", text: "Floating chatbot replaces secret terminal", type: "feature" },
+      { date: "26.03.2026", text: "Roadmap timeline dots removed — status text only", type: "fix" },
+      { date: "26.03.2026", text: "Hero tagline added: next_elite( ); // code your next level", type: "feature" },
+      { date: "26.03.2026", text: "Roadmap: align dots, update items, adjust progress ratios", type: "fix" },
+      { date: "26.03.2026", text: "Drop card: natural image proportions", type: "fix" },
+      { date: "26.03.2026", text: "Story card: solid background with gradient border", type: "fix" },
+      { date: "26.03.2026", text: "Roadmap: brand colors (yellow/cyan/blue/pink)", type: "feature" },
+      { date: "26.03.2026", text: "Nememe replaced with higher quality version", type: "fix" },
+      { date: "26.03.2026", text: "Roadmap redesigned: progress bar, pill badges, phase labels, hover rows", type: "feature" },
+      { date: "26.03.2026", text: "Visual upgrade: hero gradient, manifesto, staggered reveals, card glows, count-up", type: "feature" },
+      { date: "26.03.2026", text: "NFT card redesigned multiple times — final: compact vertical collectible", type: "feature" },
+      { date: "26.03.2026", text: "X and Spotify social icons added to footer on all pages", type: "feature" },
+
+      // 25.03.2026
+      { date: "25.03.2026", text: "v0.3 — story, tagteach, clicker training, AI pages launched", type: "major" },
+      { date: "25.03.2026", text: "Mobile product layout optimized", type: "fix" },
+      { date: "25.03.2026", text: "AI page rewritten — paid services, no free guide", type: "feature" },
+      { date: "25.03.2026", text: "Contact email added across all service pages", type: "feature" },
+      { date: "25.03.2026", text: "All tool/builder references removed from site", type: "fix" },
+
+      // 24.03.2026
+      { date: "24.03.2026", text: "v0.2 redesign: light mode, glassmorphic cards, floating nav, bento grid, grain texture", type: "major" },
+      { date: "24.03.2026", text: "Email subscribe + daily WHOOP automation setup", type: "feature" },
+      { date: "24.03.2026", text: "SIGNAL section with XRP YouTube sources", type: "feature" },
+      { date: "24.03.2026", text: "Tweet embed + terminal Catppuccin theme", type: "feature" },
+      { date: "24.03.2026", text: "Roadmap, X feed, and log entries added", type: "feature" },
+      { date: "24.03.2026", text: "Spotify playlist + WHOOP history tracking + history page", type: "feature" },
+      { date: "24.03.2026", text: "WHOOP integration — live biometric data on site", type: "major" },
+      { date: "24.03.2026", text: "Privacy policy page for WHOOP API", type: "feature" },
+      { date: "24.03.2026", text: "v0.2 shipped — glitch effect, scroll reveals, hidden terminal", type: "major" },
+      { date: "24.03.2026", text: "v0.1 — initial commit. protocol initiated. site live.", type: "major" }
+    ];
+
+    // Stats
+    document.getElementById('totalChanges').textContent = entries.length;
+    var uniqueDates = {};
+    entries.forEach(function(e) { uniqueDates[e.date] = true; });
+    document.getElementById('totalDays').textContent = Object.keys(uniqueDates).length;
+
+    // Group by date
+    var grouped = {};
+    entries.forEach(function(e) {
+      if (!grouped[e.date]) grouped[e.date] = [];
+      grouped[e.date].push(e);
+    });
+
+    var container = document.getElementById('logContainer');
+    var dates = Object.keys(grouped);
+
+    dates.forEach(function(date) {
+      var group = document.createElement('div');
+      group.className = 'date-group';
+
+      var header = document.createElement('div');
+      header.className = 'date-header';
+      header.textContent = date;
+      group.appendChild(header);
+
+      grouped[date].forEach(function(entry) {
+        var item = document.createElement('div');
+        item.className = 'log-item ' + entry.type;
+
+        var dot = document.createElement('div');
+        dot.className = 'log-dot';
+
+        var text = document.createElement('div');
+        text.className = 'log-text';
+        text.textContent = entry.text;
+
+        if (entry.type === 'major') {
+          var tag = document.createElement('span');
+          tag.className = 'log-tag tag-version';
+          tag.textContent = 'RELEASE';
+          text.appendChild(tag);
+        }
+
+        item.appendChild(dot);
+        item.appendChild(text);
+        group.appendChild(item);
+      });
+
+      container.appendChild(group);
+    });
+  </script>
+</body>
+</html>
