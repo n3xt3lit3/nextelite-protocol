@@ -290,35 +290,23 @@
     .stack-name { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; }
     .stack-value { font-size:0.68rem; color:var(--text-dim); }
 
-    /* ── NFT DROP ── */
-    .drop { position:relative; }
-    .drop-image-wrap { position:relative; overflow:hidden; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.4s; }
-    .drop-image { width:100%; display:block; filter:grayscale(20%); transition:filter 0.5s; }
-    .drop-image-wrap:hover .drop-image { filter:grayscale(0%); }
-    .drop-overlay { position:absolute; bottom:0; left:0; right:0; padding:2rem; background:linear-gradient(transparent,var(--overlay-gradient)); }
-    .drop-number { font-size:0.5rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:0.5rem; }
-    .drop-title { font-size:1.2rem; font-weight:700; }
-
-    .drop-meta { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1rem; }
-    .drop-meta-cell {
+    /* ── NFT DROP (compact) ── */
+    .drop-card {
+      display:grid; grid-template-columns:180px 1fr; gap:0;
       background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-      border:1px solid var(--card-border); border-radius:12px; padding:1.25rem; text-align:center;
-      transition:background 0.3s, border-color 0.4s;
+      border:1px solid var(--card-border); border-radius:12px; overflow:hidden;
+      transition:background 0.3s, border-color 0.3s, transform 0.3s;
     }
-    .drop-meta-label { font-size:0.48rem; letter-spacing:2px; color:var(--text-muted); margin-bottom:0.35rem; }
-    .drop-meta-val { font-size:0.75rem; font-weight:700; }
-
-    .drop-rights { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-top:1rem; }
-    @media (max-width:540px) { .drop-rights { grid-template-columns:1fr; } .drop-meta { grid-template-columns:1fr; } }
-    .drop-right {
-      background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-      border:1px solid var(--card-border); border-radius:8px; padding:1rem 1.25rem;
-      font-size:0.62rem; color:var(--text-dim); letter-spacing:0.5px; transition:background 0.3s, border-color 0.4s;
-    }
-
-    .drop-status { text-align:center; padding:1.5rem; margin-top:1rem; border:1px solid var(--card-border); border-radius:12px; transition:border-color 0.4s; }
-    .drop-status-text { font-size:0.55rem; letter-spacing:3px; color:var(--yellow); display:flex; align-items:center; justify-content:center; gap:0.5rem; }
-    .drop-status-dot { width:5px; height:5px; background:var(--yellow); border-radius:50%; animation:pulse 2s infinite; }
+    .drop-card:hover { background:var(--card); transform:translateY(-2px); }
+    .drop-card-img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(20%); transition:filter 0.5s; }
+    .drop-card:hover .drop-card-img { filter:grayscale(0%); }
+    .drop-card-info { padding:1.5rem; display:flex; flex-direction:column; justify-content:center; gap:0.4rem; }
+    .drop-card-number { font-size:0.48rem; letter-spacing:3px; color:var(--text-muted); }
+    .drop-card-title { font-size:0.82rem; font-weight:700; letter-spacing:1px; }
+    .drop-card-meta { font-size:0.55rem; color:var(--text-dim); line-height:1.6; margin-top:0.3rem; }
+    .drop-card-status { display:flex; align-items:center; gap:0.4rem; font-size:0.48rem; letter-spacing:2px; color:var(--yellow); margin-top:0.5rem; }
+    .drop-card-dot { width:5px; height:5px; background:var(--yellow); border-radius:50%; animation:pulse 2s infinite; }
+    @media (max-width:540px) { .drop-card { grid-template-columns:120px 1fr; } .drop-card-info { padding:1rem; } }
 
     /* ── X FEED ── */
     .tweet-embed { margin-bottom:1.5rem; max-width:550px; }
@@ -564,27 +552,13 @@
 
   <section id="drop" class="section reveal">
     <div class="section-label">DROP</div>
-    <div class="drop">
-      <div class="drop-image-wrap">
-        <img src="meme001.png" alt="001" class="drop-image" />
-        <div class="drop-overlay">
-          <div class="drop-number">#001</div>
-          <div class="drop-title">Nememe</div>
-        </div>
-      </div>
-      <div class="drop-meta">
-        <div class="drop-meta-cell"><div class="drop-meta-label">EDITION</div><div class="drop-meta-val">1/1</div></div>
-        <div class="drop-meta-cell"><div class="drop-meta-label">CHAIN</div><div class="drop-meta-val">XRPL</div></div>
-        <div class="drop-meta-cell"><div class="drop-meta-label">PRICE</div><div class="drop-meta-val">--</div></div>
-      </div>
-      <div class="drop-rights">
-        <div class="drop-right">Commercial rights</div>
-        <div class="drop-right">Genesis holder</div>
-        <div class="drop-right">Mint pending</div>
-        <div class="drop-right">Transferable</div>
-      </div>
-      <div class="drop-status">
-        <div class="drop-status-text"><span class="drop-status-dot"></span> NOT YET MINTED</div>
+    <div class="drop-card">
+      <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
+      <div class="drop-card-info">
+        <div class="drop-card-number">#001</div>
+        <div class="drop-card-title">Nememe</div>
+        <div class="drop-card-meta">1/1 -- XRPL</div>
+        <div class="drop-card-status"><span class="drop-card-dot"></span> NOT YET MINTED</div>
       </div>
     </div>
   </section>
