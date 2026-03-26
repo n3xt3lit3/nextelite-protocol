@@ -49,6 +49,7 @@
 
     body {
       background: var(--bg);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(59,110,245,0.03) 0%, transparent 70%);
       color: var(--text);
       font-family: 'Space Mono', monospace;
       -webkit-font-smoothing: antialiased;
@@ -185,7 +186,32 @@
       text-align: center;
       padding: 2rem;
       position: relative;
+      overflow: hidden;
     }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.6;
+      background:
+        radial-gradient(600px circle at 30% 40%, rgba(245,196,0,0.06), transparent 50%),
+        radial-gradient(500px circle at 70% 60%, rgba(0,186,223,0.05), transparent 50%),
+        radial-gradient(400px circle at 50% 30%, rgba(59,110,245,0.04), transparent 50%),
+        radial-gradient(350px circle at 60% 70%, rgba(232,25,122,0.04), transparent 50%);
+      animation: heroMesh 25s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes heroMesh {
+      0% { transform: scale(1) translate(0, 0); }
+      33% { transform: scale(1.05) translate(2%, -1%); }
+      66% { transform: scale(0.97) translate(-1%, 2%); }
+      100% { transform: scale(1.03) translate(1%, -1%); }
+    }
+
+    .hero > * { position: relative; z-index: 1; }
 
     .hero-name {
       font-size: clamp(2rem, 6vw, 3.5rem);
@@ -223,25 +249,62 @@
       animation: fadeUp 1s 0.6s forwards;
     }
 
+    .hero-line {
+      width: 120px; height: 2px; border-radius: 1px; margin-top: 1.5rem;
+      background: linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
     .hero-scroll {
       position: absolute; bottom: 2.5rem;
-      font-size: 0.55rem; letter-spacing: 3px;
-      color: var(--text-muted); opacity: 0;
-      animation: fadeUp 1s 1.2s forwards;
+      opacity: 0; animation: fadeUp 1s 1.2s forwards;
     }
-    .hero-scroll span { display: block; margin-top: 0.5rem; animation: bob 2s infinite; }
+    .hero-scroll-circle {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: center;
+      animation: bob 2.5s infinite;
+      transition: border-color 0.3s;
+    }
+    .hero-scroll-circle svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      text-align: center; padding: 6rem 2rem 2rem;
+      font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 700;
+      color: var(--text-dim); letter-spacing: -0.5px;
+      opacity: 0; animation: fadeUp 1s 1.5s forwards;
+    }
 
     /* ── SCROLL REVEAL ── */
     .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
+    /* ── STAGGERED CHILDREN ── */
+    .reveal .pillar, .reveal .bento-card, .reveal .rm-item, .reveal .signal-item, .reveal .log-entry {
+      opacity:0; transform:translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible .pillar, .reveal.visible .bento-card, .reveal.visible .rm-item, .reveal.visible .signal-item, .reveal.visible .log-entry { opacity:1; transform:translateY(0); }
+    .reveal.visible :nth-child(1) { transition-delay:0s; }
+    .reveal.visible :nth-child(2) { transition-delay:0.08s; }
+    .reveal.visible :nth-child(3) { transition-delay:0.16s; }
+    .reveal.visible :nth-child(4) { transition-delay:0.24s; }
+    .reveal.visible :nth-child(5) { transition-delay:0.32s; }
+    .reveal.visible :nth-child(6) { transition-delay:0.4s; }
+
     /* ── SECTIONS ── */
     .section { max-width:720px; margin:0 auto; padding:6rem 2rem; }
-    .section-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:2.5rem; }
+    .section-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:2.5rem; display:flex; align-items:center; gap:0.6rem; }
+    .section-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
     .div-line { border:none; border-top:1px solid var(--card-border); margin:0; transition:border-color 0.4s; }
+
+    /* ── FULL-BLEED ZONES ── */
+    .zone { background:var(--bg-raised); transition:background 0.4s; }
+    .zone-subscribe { background:var(--bg-raised); transition:background 0.4s; }
 
     /* ── PILLARS (GLASSMORPHIC) ── */
     .pillars { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
@@ -254,7 +317,13 @@
       padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 0.75rem;
       transition: background 0.3s, border-color 0.3s, transform 0.3s; cursor: default;
     }
+    .pillar { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
     .pillar:hover { background:var(--card); transform:translateY(-2px); }
+    .pillar:hover[data-glow="yellow"] { box-shadow: 0 4px 24px rgba(245,196,0,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+    .pillar:hover[data-glow="cyan"] { box-shadow: 0 4px 24px rgba(0,186,223,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+    .pillar:hover[data-glow="blue"] { box-shadow: 0 4px 24px rgba(59,110,245,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+    .pillar:hover[data-glow="pink"] { box-shadow: 0 4px 24px rgba(232,25,122,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+    .pillar:hover[data-glow="purple"] { box-shadow: 0 4px 24px rgba(168,85,247,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
     .pillar-name { font-size:0.68rem; font-weight:700; letter-spacing:2px; }
     .pillar-line { width:20px; height:2px; border-radius:1px; }
     .pillar-hint { font-size:0.65rem; color:var(--text-dim); line-height:1.6; }
@@ -271,8 +340,9 @@
       padding: 2rem 1.5rem; text-align: center;
       transition: background 0.3s, border-color 0.3s, transform 0.3s;
     }
+    .bento-card { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
     .bento-card:hover { transform:translateY(-2px); background:var(--card); }
-    .bento-val { font-size:2rem; font-weight:700; margin-bottom:0.5rem; }
+    .bento-val { font-size:clamp(2.5rem, 5vw, 3.5rem); font-weight:700; margin-bottom:0.5rem; }
     .bento-val.recovery { color:var(--green); }
     .bento-val.strain { color:var(--blue); }
     .bento-val.sleep { color:var(--purple); }
@@ -291,20 +361,23 @@
     .stack-value { font-size:0.68rem; color:var(--text-dim); }
 
     /* ── NFT DROP (collectible card) ── */
+    .drop-wrap { display:flex; justify-content:center; position:relative; }
+    .drop-wrap::before { content:''; position:absolute; width:260px; height:260px; top:50%; left:50%; transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(245,196,0,0.06) 0%, transparent 70%); pointer-events:none; border-radius:50%; }
     .drop-card {
       max-width:220px;
       background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
       border:1px solid var(--card-border); border-radius:12px; overflow:hidden;
-      transition:background 0.3s, border-color 0.3s, transform 0.3s;
+      transition:background 0.3s, border-color 0.3s, transform 0.5s;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
-    .drop-card:hover { background:var(--card); transform:translateY(-4px); }
+    .drop-card:hover { background:var(--card); transform:perspective(600px) rotateY(5deg) translateY(-4px); }
     .drop-card-img-wrap {
       width:100%; aspect-ratio:1/1;
       background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
       display:flex; align-items:center; justify-content:center;
       overflow:hidden;
     }
-    .drop-card-img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(20%); transition:filter 0.5s; background:#0a0a0a; }
+    .drop-card-img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(20%); transition:filter 0.5s; }
     .drop-card:hover .drop-card-img { filter:grayscale(0%); }
     .drop-card-info { padding:1rem 1rem 1.2rem; display:flex; flex-direction:column; gap:0.3rem; }
     .drop-card-number { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); }
@@ -334,7 +407,8 @@
 
     /* ── ROADMAP ── */
     .roadmap { position:relative; padding-left:2rem; }
-    .roadmap::before { content:''; position:absolute; left:4px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--yellow),var(--cyan),var(--blue),var(--purple),var(--pink)); opacity:0.4; }
+    .roadmap::before { content:''; position:absolute; left:4px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--yellow),var(--cyan),var(--blue),var(--purple),var(--pink)); opacity:0.4; transform-origin:top; transform:scaleY(0); transition:transform 1.2s ease; }
+    .reveal.visible .roadmap::before { transform:scaleY(1); }
     .rm-item { position:relative; padding:1rem 0; display:flex; align-items:center; gap:1rem; }
     .rm-dot { position:absolute; left:-2rem; width:9px; height:9px; border-radius:50%; flex-shrink:0; }
     .rm-dot.done { background:var(--green); opacity:0.6; }
@@ -356,7 +430,25 @@
     .log-date { font-size:0.55rem; letter-spacing:1.5px; color:var(--text-muted); min-width:80px; padding-top:0.1rem; }
     .log-text { font-size:0.72rem; color:var(--text-dim); line-height:1.6; }
 
+    /* ── STORY CARD GRADIENT BORDER ── */
+    .story-card {
+      position:relative; border:none; padding:2.6rem 2.1rem;
+      background:var(--card-glass); border-radius:12px;
+    }
+    .story-card::before {
+      content:''; position:absolute; inset:-1px; border-radius:13px; z-index:-1;
+      background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
+      opacity:0.3; transition:opacity 0.3s;
+    }
+    .story-card:hover::before { opacity:0.5; }
+
     /* ── SUBSCRIBE ── */
+    .subscribe-card {
+      background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+      border:1px solid var(--card-border); border-radius:12px; padding:3rem 2rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .subscribe-tagline { font-size:0.82rem; font-weight:700; letter-spacing:1px; text-align:center; margin-bottom:0.5rem; }
     .subscribe-wrap { max-width:400px; margin:0 auto; text-align:center; }
     .subscribe-hint { font-size:0.55rem; letter-spacing:2px; color:var(--text-muted); margin-bottom:1.5rem; }
     .subscribe-form { display:flex; gap:0; border:1px solid var(--card-border); border-radius:12px; overflow:hidden; transition:border-color 0.4s; }
@@ -459,42 +551,47 @@
   <header class="hero">
     <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
-    <div class="hero-scroll"><span>|</span></div>
+    <div class="hero-line"></div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-circle">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
   </header>
 
-  <hr class="div-line" />
+  <div class="manifesto">the protocol is the product.</div>
 
   <section id="protocol">
     <div class="section reveal" style="padding-bottom:2rem;">
-      <div class="section-label">PROTOCOL PILLARS</div>
+      <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> PROTOCOL PILLARS</div>
     </div>
     <div class="section reveal" style="padding-top:0;">
       <div class="pillars">
-        <div class="pillar" style="cursor:pointer;" onclick="location.href='tagteach.html'">
+        <div class="pillar" data-glow="yellow" style="cursor:pointer;" onclick="location.href='tagteach.html'">
           <div class="pillar-name">BOXING</div>
           <div class="pillar-line" style="background:var(--yellow);"></div>
           <div class="pillar-hint">rounds. technique. war.</div>
           <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">ACTIVE <span style="font-size:0.5rem;color:var(--text-muted);">TAGTEACH -></span></div>
         </div>
-        <div class="pillar" style="cursor:pointer;" onclick="location.href='clicker.html'">
+        <div class="pillar" data-glow="cyan" style="cursor:pointer;" onclick="location.href='clicker.html'">
           <div class="pillar-name">CLICKER TRAINING</div>
           <div class="pillar-line" style="background:var(--cyan);"></div>
           <div class="pillar-hint">behavior. precision. bond.</div>
           <div class="pillar-badge">ACTIVE</div>
         </div>
-        <div class="pillar">
+        <div class="pillar" data-glow="blue">
           <div class="pillar-name">XRP</div>
           <div class="pillar-line" style="background:var(--blue);"></div>
           <div class="pillar-hint">ledger. ownership. infrastructure.</div>
           <div class="pillar-badge">BUILDING</div>
         </div>
-        <div class="pillar">
+        <div class="pillar" data-glow="pink">
           <div class="pillar-name">WHOOP</div>
           <div class="pillar-line" style="background:var(--pink);"></div>
           <div class="pillar-hint">recovery. strain. signal.</div>
           <div class="pillar-badge">CONNECTING</div>
         </div>
-        <div class="pillar" style="cursor:pointer;grid-column:1/-1;" onclick="location.href='ai.html'">
+        <div class="pillar" data-glow="purple" style="cursor:pointer;grid-column:1/-1;" onclick="location.href='ai.html'">
           <div class="pillar-name">AI</div>
           <div class="pillar-line" style="background:var(--purple);"></div>
           <div class="pillar-hint">build websites, tools, and ideas — without writing code yourself.</div>
@@ -504,48 +601,44 @@
     </div>
   </section>
 
-  <hr class="div-line" />
-
-  <section id="data" class="section reveal">
-    <div class="section-label">BIOMETRICS</div>
-    <div class="bento">
-      <div class="bento-card">
-        <div class="bento-val recovery" id="whoopRecovery">--</div>
-        <div class="bento-label">RECOVERY</div>
+  <div class="zone">
+    <section id="data" class="section reveal">
+      <div class="section-label"><span class="section-dot" style="background:var(--pink);"></span> BIOMETRICS</div>
+      <div class="bento">
+        <div class="bento-card">
+          <div class="bento-val recovery" id="whoopRecovery">--</div>
+          <div class="bento-label">RECOVERY</div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-val strain" id="whoopStrain">--</div>
+          <div class="bento-label">STRAIN</div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-val sleep" id="whoopSleep">--</div>
+          <div class="bento-label">SLEEP</div>
+        </div>
       </div>
-      <div class="bento-card">
-        <div class="bento-val strain" id="whoopStrain">--</div>
-        <div class="bento-label">STRAIN</div>
+      <div class="whoop-meta">
+        <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
+        <a href="history.html" class="whoop-history-link">VIEW HISTORY</a>
       </div>
-      <div class="bento-card">
-        <div class="bento-val sleep" id="whoopSleep">--</div>
-        <div class="bento-label">SLEEP</div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
+      <div class="stack">
+        <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
+        <div class="stack-item"><div class="stack-name">Boxing</div><div class="stack-value">--:--</div></div>
+        <div class="stack-item"><div class="stack-name">Dog Work</div><div class="stack-value">Daily</div></div>
+        <div class="stack-item"><div class="stack-name">Recovery</div><div class="stack-value">WHOOP-led</div></div>
+        <div class="stack-item"><div class="stack-name">Build</div><div class="stack-value">EVE</div></div>
       </div>
-    </div>
-    <div class="whoop-meta">
-      <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
-      <a href="history.html" class="whoop-history-link">VIEW HISTORY</a>
-    </div>
-  </section>
-
-  <hr class="div-line" />
-
-  <section class="section reveal">
-    <div class="section-label">DAILY STACK</div>
-    <div class="stack">
-      <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
-      <div class="stack-item"><div class="stack-name">Boxing</div><div class="stack-value">--:--</div></div>
-      <div class="stack-item"><div class="stack-name">Dog Work</div><div class="stack-value">Daily</div></div>
-      <div class="stack-item"><div class="stack-name">Recovery</div><div class="stack-value">WHOOP-led</div></div>
-      <div class="stack-item"><div class="stack-name">Build</div><div class="stack-value">EVE</div></div>
-    </div>
-  </section>
-
-  <hr class="div-line" />
+    </section>
+  </div>
 
   <section id="story" class="section reveal">
-    <div class="section-label">STORY</div>
-    <div class="pillar" style="cursor:pointer;" onclick="location.href='story.html'">
+    <div class="section-label"><span class="section-dot" style="background:var(--cyan);"></span> STORY</div>
+    <div class="story-card pillar" style="cursor:pointer;" onclick="location.href='story.html'">
       <div class="pillar-name">BEFORE THE PROTOCOL</div>
       <div class="pillar-line" style="background:var(--cyan);"></div>
       <div class="pillar-hint">the pitch. the camera. everything that led here.</div>
@@ -556,24 +649,24 @@
   <hr class="div-line" />
 
   <section id="drop" class="section reveal">
-    <div class="section-label">DROP</div>
-    <div class="drop-card">
-      <div class="drop-card-img-wrap">
-        <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
-      </div>
-      <div class="drop-card-info">
-        <div class="drop-card-number">#001</div>
-        <div class="drop-card-title">Nememe</div>
-        <div class="drop-card-meta">1/1 -- XRPL</div>
-        <div class="drop-card-status"><span class="drop-card-dot"></span> NOT YET MINTED</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> DROP</div>
+    <div class="drop-wrap">
+      <div class="drop-card">
+        <div class="drop-card-img-wrap">
+          <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
+        </div>
+        <div class="drop-card-info">
+          <div class="drop-card-number">#001</div>
+          <div class="drop-card-title">Nememe</div>
+          <div class="drop-card-meta">1/1 -- XRPL</div>
+          <div class="drop-card-status"><span class="drop-card-dot"></span> NOT YET MINTED</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <hr class="div-line" />
-
   <section id="feed" class="section reveal">
-    <div class="section-label">FEED</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> FEED</div>
     <div class="tweet-embed">
       <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
     </div>
@@ -584,17 +677,13 @@
     </a>
   </section>
 
-  <hr class="div-line" />
-
   <section id="sound" class="section reveal">
-    <div class="section-label">SOUND</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> SOUND</div>
     <iframe style="border-radius:12px;border:none;" src="https://open.spotify.com/embed/playlist/5P44E8xzkRzqSYcNrLEr8V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </section>
 
-  <hr class="div-line" />
-
   <section id="signal" class="section reveal">
-    <div class="section-label">SIGNAL</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> SIGNAL</div>
     <div class="signal-list">
       <a href="https://www.youtube.com/@CryptoSenseii" target="_blank" class="signal-item"><div class="signal-name">Crypto Sensei</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
       <a href="https://www.youtube.com/@CryptoMason" target="_blank" class="signal-item"><div class="signal-name">Crypto Mason</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
@@ -606,7 +695,7 @@
   <hr class="div-line" />
 
   <section id="roadmap" class="section reveal">
-    <div class="section-label">ROADMAP</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> ROADMAP</div>
     <div class="roadmap">
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">01</span><span class="rm-name">Site live</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">02</span><span class="rm-name">WHOOP connected</span><span class="rm-status s-done">DONE</span></div>
@@ -622,10 +711,8 @@
     </div>
   </section>
 
-  <hr class="div-line" />
-
   <section id="log" class="section reveal">
-    <div class="section-label">LOG</div>
+    <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
     <div class="log">
       <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">NFT drop card redesigned. Image fixed.</div></div>
       <div class="log-entry"><div class="log-date">25.03.2026</div><div class="log-text">v0.3 -- story, tagteach, clicker, AI pages. built in public.</div></div>
@@ -636,19 +723,22 @@
     </div>
   </section>
 
-  <hr class="div-line" />
-
-  <section id="subscribe" class="section reveal">
-    <div class="section-label">SUBSCRIBE</div>
-    <div class="subscribe-wrap">
-      <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
-      <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
-        <input type="email" name="email" placeholder="your@email.com" required />
-        <button type="submit">SUBMIT</button>
-      </form>
-      <div class="subscribe-ok" id="subscribeOk">signal received.</div>
-    </div>
-  </section>
+  <div class="zone-subscribe">
+    <section id="subscribe" class="section reveal">
+      <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> SUBSCRIBE</div>
+      <div class="subscribe-card">
+        <div class="subscribe-tagline">first to know. first to move.</div>
+        <div class="subscribe-wrap">
+          <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
+          <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
+            <input type="email" name="email" placeholder="your@email.com" required />
+            <button type="submit">SUBMIT</button>
+          </form>
+          <div class="subscribe-ok" id="subscribeOk">signal received.</div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <footer class="footer">
     <div class="footer-logo">
@@ -684,14 +774,41 @@
     });
 
     /* ── WHOOP ── */
+    var whoopData = {};
     fetch('whoop_data.json').then(function(r){return r.json();}).then(function(d) {
-      if (d.recovery !== null) document.getElementById('whoopRecovery').textContent = d.recovery + '%';
-      if (d.strain !== null) document.getElementById('whoopStrain').textContent = d.strain;
-      if (d.sleep_hours !== null) document.getElementById('whoopSleep').textContent = d.sleep_hours + 'h';
+      whoopData = d;
       var date = new Date(d.updated);
       var t = date.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' + date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
       document.getElementById('whoopNote').textContent = 'LAST SIGNAL: ' + t.toUpperCase();
     }).catch(function(){});
+
+    /* ── COUNT-UP ANIMATION ── */
+    function countUp(el, target, suffix, duration) {
+      var start = 0, startTime = null;
+      var isFloat = String(target).indexOf('.') !== -1;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = isFloat ? (eased * target).toFixed(1) : Math.round(eased * target);
+        el.textContent = current + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    var bentoAnimated = false;
+    var bentoObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting && !bentoAnimated) {
+          bentoAnimated = true;
+          if (whoopData.recovery !== null && whoopData.recovery !== undefined) countUp(document.getElementById('whoopRecovery'), whoopData.recovery, '%', 1500);
+          if (whoopData.strain !== null && whoopData.strain !== undefined) countUp(document.getElementById('whoopStrain'), whoopData.strain, '', 1500);
+          if (whoopData.sleep_hours !== null && whoopData.sleep_hours !== undefined) countUp(document.getElementById('whoopSleep'), whoopData.sleep_hours, 'h', 1500);
+        }
+      });
+    }, {threshold: 0.3});
+    var bentoEl = document.getElementById('data');
+    if (bentoEl) bentoObs.observe(bentoEl);
 
     /* ── SCROLL ── */
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
