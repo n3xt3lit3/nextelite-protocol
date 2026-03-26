@@ -99,26 +99,16 @@
     /* ── LOG ENTRY ── */
     .log-item {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.75rem;
-      padding: 0.6rem 0;
+      padding: 0.7rem 0;
       transition: color 0.2s;
     }
     .log-item:hover { color: var(--text); }
 
-    .log-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-      margin-top: 0.45rem;
-      flex-shrink: 0;
-    }
-    .log-item:nth-child(5n+1) .log-dot { background: var(--yellow); }
-    .log-item:nth-child(5n+2) .log-dot { background: var(--cyan); }
-    .log-item:nth-child(5n+3) .log-dot { background: var(--pink); }
-    .log-item:nth-child(5n+4) .log-dot { background: var(--blue); }
-    .log-item:nth-child(5n+5) .log-dot { background: var(--yellow); }
+    .log-dot { display:none; }
+    .log-status { font-size:0.4rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; margin-left:auto; }
+    .log-status.s-done { color:var(--cyan); background:rgba(0,186,223,0.08); }
 
     .log-text {
       font-size: 0.72rem;
@@ -270,6 +260,10 @@
         text.className = 'log-text';
         text.textContent = entry.text;
 
+        var status = document.createElement('span');
+        status.className = 'log-status s-done';
+        status.textContent = 'DONE';
+
         if (entry.type === 'major') {
           var tag = document.createElement('span');
           tag.className = 'log-tag tag-version';
@@ -277,8 +271,8 @@
           text.appendChild(tag);
         }
 
-        item.appendChild(dot);
         item.appendChild(text);
+        item.appendChild(status);
         group.appendChild(item);
       });
 
