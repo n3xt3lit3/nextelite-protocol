@@ -440,6 +440,28 @@
     .log-date { font-size:0.55rem; letter-spacing:1.5px; color:var(--text-muted); min-width:80px; padding-top:0.1rem; }
     .log-text { font-size:0.72rem; color:var(--text-dim); line-height:1.6; }
 
+    /* ── XRP TIP ── */
+    .xrp-card { position:relative; background:var(--card); border:1px solid transparent; border-radius:16px; padding:2.5rem 2rem; text-align:center; background-clip:padding-box; overflow:hidden; }
+    .xrp-card::before { content:''; position:absolute; inset:-1px; border-radius:17px; padding:1px; background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink)); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:0.25; transition:opacity 0.3s; z-index:0; }
+    .xrp-card:hover::before { opacity:0.45; }
+    .xrp-card > * { position:relative; z-index:1; }
+    .xrp-qr { margin-bottom:1.5rem; display:inline-block; padding:14px; background:#1a1a2e; border-radius:16px; }
+    .xrp-qr img { width:170px; height:170px; display:block; border-radius:0; transition:transform 0.3s; }
+    .xrp-card:hover .xrp-qr img { transform:scale(1.03); }
+    .xrp-title { font-size:1rem; font-weight:700; margin-bottom:0.4rem; letter-spacing:-0.3px; }
+    .xrp-sub { font-size:0.6rem; letter-spacing:1px; color:var(--text-dim); margin-bottom:2rem; line-height:1.8; }
+    .xrp-fields { display:grid; grid-template-columns:1fr auto; gap:0.75rem; max-width:420px; margin:0 auto; text-align:left; }
+    .xrp-field { display:contents; }
+    .xrp-field-inner { display:flex; flex-direction:column; gap:0.2rem; }
+    .xrp-label { font-size:0.4rem; letter-spacing:2px; color:var(--text-muted); }
+    .xrp-addr { font-size:0.58rem; color:var(--text-dim); word-break:break-all; line-height:1.5; }
+    .xrp-copy { background:var(--bg-raised); border:1px solid var(--card-border); cursor:pointer; color:var(--text-muted); transition:all 0.2s; padding:0.5rem; border-radius:8px; display:flex; align-items:center; justify-content:center; align-self:end; }
+    .xrp-copy:hover { color:var(--text); border-color:var(--text-muted); }
+    .xrp-copy svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .xrp-divider { grid-column:1/-1; height:1px; background:var(--card-border); }
+    .xrp-badge { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.45rem; letter-spacing:2px; color:var(--text-muted); margin-top:1.5rem; padding:0.4rem 0.8rem; border:1px solid var(--card-border); border-radius:20px; }
+    @media (max-width:500px) { .xrp-fields { grid-template-columns:1fr; } .xrp-copy { justify-self:start; } }
+
     /* ── STORY CARD GRADIENT BORDER ── */
     .story-card {
       position:relative; padding:2.6rem 2.1rem;
@@ -447,11 +469,13 @@
       background-clip:padding-box;
     }
     .story-card::before {
-      content:''; position:absolute; inset:-1px; border-radius:13px; z-index:-1;
+      content:''; position:absolute; inset:-1px; border-radius:13px; z-index:-1; padding:1px;
       background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
-      opacity:0.15; transition:opacity 0.3s;
+      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+      opacity:0.35; transition:opacity 0.3s;
     }
-    .story-card:hover::before { opacity:0.3; }
+    .story-card:hover::before { opacity:0.6; }
 
     /* ── SUBSCRIBE ── */
     .subscribe-card {
@@ -489,35 +513,36 @@
     .tattoo-left { left:1.2rem; bottom:3rem; transform:rotate(180deg); }
     .tattoo-right { right:1.2rem; top:50%; }
 
-    /* ── TERMINAL ── */
-    /* ── CHATBOT ── */
-    .chat-fab { position:fixed; bottom:1.5rem; right:1.5rem; width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg, var(--cyan), var(--blue)); border:none; cursor:pointer; z-index:9998; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,186,223,0.3); transition:transform 0.2s, box-shadow 0.2s; }
-    .chat-fab:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(0,186,223,0.4); }
-    .chat-fab svg { width:24px; height:24px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    /* ── TERMINAL CHATBOT ── */
+    .chat-fab { position:fixed; bottom:1.5rem; right:1.5rem; width:48px; height:48px; border-radius:10px; background:var(--card); border:1px solid var(--card-border); cursor:pointer; z-index:9998; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, border-color 0.2s; }
+    .chat-fab:hover { transform:scale(1.05); border-color:var(--text-muted); }
+    .chat-fab svg { width:20px; height:20px; fill:none; stroke:var(--text-dim); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
     .chat-fab.open svg.icon-chat { display:none; }
     .chat-fab:not(.open) svg.icon-close { display:none; }
-    .chat-window { position:fixed; bottom:5.5rem; right:1.5rem; width:370px; max-width:calc(100vw - 2rem); height:480px; max-height:calc(100vh - 8rem); background:#1e1e2e; border:1px solid #313244; border-radius:14px; z-index:9999; display:none; flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-    .chat-window.open { display:flex; animation:chatSlideUp 0.25s ease; }
-    @keyframes chatSlideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    .chat-header { display:flex; align-items:center; gap:0.6rem; padding:0.85rem 1rem; background:#181825; border-bottom:1px solid #313244; }
-    .chat-header-dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); animation:pulse 2s infinite; }
-    .chat-header-title { font-size:0.65rem; letter-spacing:2px; color:var(--text-dim); }
-    .chat-messages { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:0.6rem; }
-    .chat-msg { max-width:85%; padding:0.6rem 0.85rem; border-radius:12px; font-family:'Space Mono',monospace; font-size:0.7rem; line-height:1.7; word-break:break-word; }
-    .chat-msg.bot { align-self:flex-start; background:#313244; color:#cdd6f4; border-bottom-left-radius:4px; }
-    .chat-msg.user { align-self:flex-end; background:linear-gradient(135deg, rgba(0,186,223,0.15), rgba(137,180,250,0.15)); color:#cdd6f4; border-bottom-right-radius:4px; border:1px solid rgba(0,186,223,0.2); }
-    .chat-msg.bot .msg-label { font-size:0.5rem; letter-spacing:1.5px; color:#6c7086; margin-bottom:0.25rem; }
-    .chat-input-row { display:flex; align-items:center; padding:0.75rem 1rem; border-top:1px solid #313244; gap:0.5rem; background:#181825; }
-    .chat-input { background:none; border:none; outline:none; color:#cdd6f4; font-family:'Space Mono',monospace; font-size:0.72rem; width:100%; caret-color:var(--cyan); }
-    .chat-input::placeholder { color:#6c7086; }
-    .chat-send { background:none; border:none; cursor:pointer; padding:0.25rem; display:flex; }
-    .chat-send svg { width:18px; height:18px; stroke:var(--cyan); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:stroke 0.2s; }
-    .chat-send:hover svg { stroke:var(--text); }
-    .chat-typing { align-self:flex-start; padding:0.6rem 0.85rem; }
-    .chat-typing span { display:inline-block; width:6px; height:6px; border-radius:50%; background:#6c7086; margin:0 2px; animation:typingBounce 1.2s infinite; }
+    .chat-window { position:fixed; bottom:5rem; right:1.5rem; width:400px; max-width:calc(100vw - 2rem); height:500px; max-height:calc(100vh - 8rem); background:var(--card); border:1px solid var(--card-border); border-radius:12px; z-index:9999; display:none; flex-direction:column; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,0.15); }
+    .chat-side-text { position:absolute; right:0.6rem; top:50%; transform:translateY(-50%); font-family:'Space Mono',monospace; font-size:0.42rem; letter-spacing:2px; color:var(--text-muted); writing-mode:vertical-rl; pointer-events:none; opacity:0.4; }
+    .chat-window.open { display:flex; animation:chatSlideUp 0.2s ease; }
+    @keyframes chatSlideUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .term-bar { display:flex; align-items:center; padding:0.75rem 1.1rem; border-bottom:1px solid var(--card-border); gap:0.5rem; }
+    .term-bar-left { display:flex; align-items:center; gap:0.4rem; }
+    .term-status { display:none; }
+    .term-name { font-size:0.6rem; letter-spacing:1px; color:var(--text); font-weight:700; }
+    .chat-messages { flex:1; overflow-y:auto; padding:1.25rem; font-family:'Space Mono',monospace; font-size:0.7rem; line-height:1.8; color:var(--text-dim); }
+    .chat-line { margin-bottom:0.5rem; white-space:pre-wrap; word-break:break-word; }
+    .chat-line .prompt { color:var(--cyan); }
+    .chat-line .user-cmd { color:var(--text); }
+    .chat-line .response { color:var(--text-dim); }
+    .chat-line .dim { color:var(--text-muted); }
+    .chat-line .accent { color:var(--yellow); }
+    .term-input-row { display:flex; align-items:center; padding:0.7rem 1rem; border-top:1px solid var(--card-border); gap:0.5rem; }
+    .term-prompt { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--cyan); flex-shrink:0; }
+    .term-input { background:none; border:none; outline:none; color:var(--text); font-family:'Space Mono',monospace; font-size:0.7rem; width:100%; caret-color:var(--cyan); }
+    .term-input::placeholder { color:var(--text-muted); }
+    .chat-typing { margin-bottom:0.5rem; }
+    .chat-typing span { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--text-muted); margin:0 2px; animation:typingBounce 1.2s infinite; }
     .chat-typing span:nth-child(2) { animation-delay:0.15s; }
     .chat-typing span:nth-child(3) { animation-delay:0.3s; }
-    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
+    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} }
     @media (max-width:500px) { .chat-window { bottom:0; right:0; width:100%; height:100%; max-width:100%; max-height:100%; border-radius:0; } .chat-fab.open { display:none; } }
 
     /* ── RESPONSIVE ── */
@@ -533,21 +558,24 @@
   <div class="tattoo tattoo-left">next_elite();</div>
   <div class="tattoo tattoo-right">// code your next level</div>
 
-  <!-- Chatbot -->
-  <button class="chat-fab" id="chatFab" aria-label="Open chat">
-    <svg class="icon-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <!-- Terminal Chatbot -->
+  <button class="chat-fab" id="chatFab" aria-label="Open terminal">
+    <svg class="icon-chat" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
     <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-      <span class="chat-header-dot"></span>
-      <span class="chat-header-title">NEXTELITE AI</span>
+    <div class="term-bar">
+      <div class="term-bar-left">
+        <span class="term-status"></span>
+        <span class="term-name">next_elite();</span>
+      </div>
     </div>
+    <div class="chat-side-text">// champions train, losers complain</div>
     <div class="chat-messages" id="chatMessages">
     </div>
-    <div class="chat-input-row">
-      <input type="text" class="chat-input" id="chatInput" placeholder="ask me anything..." autocomplete="off" spellcheck="false" />
-      <button class="chat-send" id="chatSend"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    <div class="term-input-row">
+      <span class="term-prompt">&gt;</span>
+      <input type="text" class="term-input" id="chatInput" placeholder="ask anything..." autocomplete="off" spellcheck="false" />
     </div>
   </div>
 
@@ -669,7 +697,7 @@
     <div class="section-label"><span class="section-dot" style="background:var(--cyan);"></span> STORY</div>
     <div class="story-card pillar" style="cursor:pointer;" onclick="location.href='story.html'">
       <div class="pillar-name">BEFORE THE PROTOCOL</div>
-      <div class="pillar-line" style="background:var(--cyan);"></div>
+      <div class="pillar-line" style="width:80px;background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));"></div>
       <div class="pillar-hint">the pitch. the camera. everything that led here.</div>
       <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">FULL STORY <span style="transition:transform 0.2s;">-></span></div>
     </div>
@@ -691,6 +719,33 @@
           <div class="drop-card-status"><span class="drop-card-dot"></span> NOT YET MINTED</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="tip" class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> SUPPORT</div>
+    <div class="xrp-card">
+      <div class="xrp-qr"><img src="xrp-qr.jpg" alt="XRP QR Code" /></div>
+      <div class="xrp-title">Fund the Protocol</div>
+      <div class="xrp-sub" style="max-width:400px;margin-left:auto;margin-right:auto;">everything here is free. the protocol, the methods, the signal — all open. if it brings you value, send XRP and help me build it further.</div>
+      <div class="xrp-fields">
+        <div class="xrp-field">
+          <div class="xrp-field-inner">
+            <div class="xrp-label">ADDRESS</div>
+            <div class="xrp-addr">rpAi9S1fuq8s8gUSZPY4m6KQ5vh4efyWH2</div>
+          </div>
+          <button class="xrp-copy" onclick="navigator.clipboard.writeText('rpAi9S1fuq8s8gUSZPY4m6KQ5vh4efyWH2');this.innerHTML='✓';var b=this;setTimeout(function(){b.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1&quot;/></svg>';},1500)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+        </div>
+        <div class="xrp-divider"></div>
+        <div class="xrp-field">
+          <div class="xrp-field-inner">
+            <div class="xrp-label">DESTINATION TAG</div>
+            <div class="xrp-addr">1157709</div>
+          </div>
+          <button class="xrp-copy" onclick="navigator.clipboard.writeText('1157709');this.innerHTML='✓';var b=this;setTimeout(function(){b.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1&quot;/></svg>';},1500)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+        </div>
+      </div>
+      <div class="xrp-badge">XRP LEDGER</div>
     </div>
   </section>
 
@@ -748,7 +803,7 @@
   <section id="log" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
     <div class="log">
-      <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Chatbot launched. Roadmap cleaned up. Hero tagline added.</div></div>
+      <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Terminal chatbot. XRP support section. Story gradient border. Full log page.</div></div>
       <div class="log-entry"><div class="log-date">25.03.2026</div><div class="log-text">v0.3 — story, tagteach, clicker, AI pages. built in public.</div></div>
       <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.2 — WHOOP connected. Roadmap public. Signal on.</div></div>
       <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.1 — protocol initiated. site live.</div></div>
@@ -853,8 +908,8 @@
     var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
     reveals.forEach(function(el) { obs.observe(el); });
 
-    /* ── CHATBOT ── */
-    var chatFab=document.getElementById('chatFab'), chatWin=document.getElementById('chatWindow'), chatMsgs=document.getElementById('chatMessages'), chatIn=document.getElementById('chatInput'), chatSend=document.getElementById('chatSend'), chatOpen=false;
+    /* ── TERMINAL CHATBOT ── */
+    var chatFab=document.getElementById('chatFab'), chatWin=document.getElementById('chatWindow'), chatMsgs=document.getElementById('chatMessages'), chatIn=document.getElementById('chatInput'), chatOpen=false;
 
     var knowledge = {
       about: "Nemine Steffensen — the protocol is the product. Boxing, clicker training, biohacking & building on XRPL. Everything else is noise.",
@@ -909,11 +964,10 @@
       return "Interesting question. I know about the protocol, boxing, tagteach, clicker training, dogs, WHOOP, XRP, NFT drops, the daily stack, AI, and the story. Try asking about one of those.";
     }
 
-    function addMsg(text, type) {
+    function addLine(html) {
       var el=document.createElement('div');
-      el.className='chat-msg '+type;
-      if(type==='bot'){el.innerHTML='<div class="msg-label">NEXTELITE</div>'+text;}
-      else{el.textContent=text;}
+      el.className='chat-line';
+      el.innerHTML=html;
       chatMsgs.appendChild(el);
       chatMsgs.scrollTop=chatMsgs.scrollHeight;
     }
@@ -932,13 +986,14 @@
       var q=chatIn.value.trim();
       chatIn.value='';
       if(!q)return;
-      addMsg(q,'user');
+      addLine('<span class="prompt">&gt;</span> <span class="user-cmd">'+q+'</span>');
       showTyping();
       var answer=findAnswer(q);
-      setTimeout(function(){ removeTyping(); addMsg(answer,'bot'); }, 600+Math.random()*400);
+      setTimeout(function(){ removeTyping(); addLine('<span class="response">'+answer+'</span>'); }, 400+Math.random()*300);
     }
 
-    addMsg("Hey — ask me anything about the protocol.","bot");
+    addLine('<span class="accent">nextelite</span> <span class="dim">v0.3 — terminal active</span>');
+    addLine('<span class="dim">type anything to query the protocol</span>');
 
     chatFab.addEventListener('click',function(){
       chatOpen=!chatOpen;
@@ -947,7 +1002,6 @@
       if(chatOpen)setTimeout(function(){chatIn.focus();},100);
     });
     chatIn.addEventListener('keydown',function(e){if(e.key==='Enter')sendChat();});
-    chatSend.addEventListener('click',sendChat);
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&chatOpen){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');}});
   </script>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
