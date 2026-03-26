@@ -440,15 +440,16 @@
 
     /* ── STORY CARD GRADIENT BORDER ── */
     .story-card {
-      position:relative; border:none; padding:2.6rem 2.1rem;
-      background:var(--card-glass); border-radius:12px;
+      position:relative; padding:2.6rem 2.1rem;
+      background:var(--card); border:1px solid transparent; border-radius:12px;
+      background-clip:padding-box;
     }
     .story-card::before {
       content:''; position:absolute; inset:-1px; border-radius:13px; z-index:-1;
       background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
-      opacity:0.3; transition:opacity 0.3s;
+      opacity:0.15; transition:opacity 0.3s;
     }
-    .story-card:hover::before { opacity:0.5; }
+    .story-card:hover::before { opacity:0.3; }
 
     /* ── SUBSCRIBE ── */
     .subscribe-card {
