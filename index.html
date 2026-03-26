@@ -290,23 +290,28 @@
     .stack-name { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; }
     .stack-value { font-size:0.68rem; color:var(--text-dim); }
 
-    /* ── NFT DROP (compact) ── */
+    /* ── NFT DROP (collectible card) ── */
     .drop-card {
-      display:grid; grid-template-columns:180px 1fr; gap:0;
+      max-width:220px;
       background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
       border:1px solid var(--card-border); border-radius:12px; overflow:hidden;
       transition:background 0.3s, border-color 0.3s, transform 0.3s;
     }
-    .drop-card:hover { background:var(--card); transform:translateY(-2px); }
-    .drop-card-img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(20%); transition:filter 0.5s; }
+    .drop-card:hover { background:var(--card); transform:translateY(-4px); }
+    .drop-card-img-wrap {
+      width:100%; aspect-ratio:1/1;
+      background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .drop-card-img { width:85%; height:85%; object-fit:contain; display:block; filter:grayscale(20%); transition:filter 0.5s; }
     .drop-card:hover .drop-card-img { filter:grayscale(0%); }
-    .drop-card-info { padding:1.5rem; display:flex; flex-direction:column; justify-content:center; gap:0.4rem; }
-    .drop-card-number { font-size:0.48rem; letter-spacing:3px; color:var(--text-muted); }
-    .drop-card-title { font-size:0.82rem; font-weight:700; letter-spacing:1px; }
-    .drop-card-meta { font-size:0.55rem; color:var(--text-dim); line-height:1.6; margin-top:0.3rem; }
-    .drop-card-status { display:flex; align-items:center; gap:0.4rem; font-size:0.48rem; letter-spacing:2px; color:var(--yellow); margin-top:0.5rem; }
-    .drop-card-dot { width:5px; height:5px; background:var(--yellow); border-radius:50%; animation:pulse 2s infinite; }
-    @media (max-width:540px) { .drop-card { grid-template-columns:120px 1fr; } .drop-card-info { padding:1rem; } }
+    .drop-card-info { padding:1rem 1rem 1.2rem; display:flex; flex-direction:column; gap:0.3rem; }
+    .drop-card-number { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); }
+    .drop-card-title { font-size:0.72rem; font-weight:700; letter-spacing:1px; }
+    .drop-card-meta { font-size:0.48rem; color:var(--text-dim); }
+    .drop-card-status { display:flex; align-items:center; gap:0.4rem; font-size:0.42rem; letter-spacing:2px; color:var(--yellow); margin-top:0.3rem; }
+    .drop-card-dot { width:4px; height:4px; background:var(--yellow); border-radius:50%; animation:pulse 2s infinite; }
 
     /* ── X FEED ── */
     .tweet-embed { margin-bottom:1.5rem; max-width:550px; }
@@ -553,7 +558,9 @@
   <section id="drop" class="section reveal">
     <div class="section-label">DROP</div>
     <div class="drop-card">
-      <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
+      <div class="drop-card-img-wrap">
+        <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
+      </div>
       <div class="drop-card-info">
         <div class="drop-card-number">#001</div>
         <div class="drop-card-title">Nememe</div>
