@@ -351,11 +351,15 @@
     }
     .order-btn:hover { background: var(--card); transform: translateY(-2px); }
 
+    .product-layout { display:flex; flex-direction:column; }
+
     /* ── MOBILE PRODUCT ── */
     @media (max-width:540px) {
       .product-hero img { aspect-ratio: 4/3; }
       .product-hero-overlay { padding: 1.2rem; }
       .product-name { font-size: 0.72rem; }
+
+      .product-layout .product-strip { order: -1; }
 
       .product-details {
         grid-template-columns: 1fr;
@@ -498,22 +502,24 @@
         </div>
       </div>
 
-      <div class="product-strip">
-        <img src="kennel-7.jpg" alt="Stained wood drying" />
-        <img src="kennel-5.jpg" alt="Frame construction" />
-        <img src="kennel-2.jpg" alt="Assembly" />
-      </div>
-
-      <div class="product-details">
-        <img src="kennel-3.jpg" alt="Kennel exterior detail" class="product-detail-img" />
-        <div class="product-info">
-          <div class="product-line" style="background:var(--cyan);"></div>
-          <div class="product-desc">
-            built by hand. solid wood. stained and insulated.<br>
-            window for light. elevated floor.<br>
-            made to last — not mass produced.
+      <div class="product-layout">
+        <div class="product-details">
+          <img src="kennel-3.jpg" alt="Kennel exterior detail" class="product-detail-img" />
+          <div class="product-info">
+            <div class="product-line" style="background:var(--cyan);"></div>
+            <div class="product-desc">
+              built by hand. solid wood. stained and insulated.<br>
+              window for light. elevated floor.<br>
+              made to last — not mass produced.
+            </div>
+            <div class="product-badge">CUSTOM BUILT TO ORDER</div>
           </div>
-          <div class="product-badge">CUSTOM BUILT TO ORDER</div>
+        </div>
+
+        <div class="product-strip">
+          <img src="kennel-7.jpg" alt="Stained wood drying" />
+          <img src="kennel-5.jpg" alt="Frame construction" />
+          <img src="kennel-2.jpg" alt="Assembly" />
         </div>
       </div>
 
