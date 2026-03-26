@@ -106,7 +106,19 @@
     }
     .log-item:hover { color: var(--text); }
 
-    .log-dot { display:none; }
+    .log-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+    .log-item:nth-child(5n+1) .log-dot { background: var(--yellow); }
+    .log-item:nth-child(5n+2) .log-dot { background: var(--cyan); }
+    .log-item:nth-child(5n+3) .log-dot { background: var(--pink); }
+    .log-item:nth-child(5n+4) .log-dot { background: var(--blue); }
+    .log-item:nth-child(5n+5) .log-dot { background: var(--yellow); }
 
     .log-text {
       font-size: 0.72rem;
