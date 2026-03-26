@@ -408,22 +408,28 @@
     .signal-item:hover .signal-arrow { color:var(--text); transform:translateX(4px); }
 
     /* ── ROADMAP ── */
-    .roadmap { position:relative; padding-left:2rem; }
-    .roadmap::before { content:''; position:absolute; left:4px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--yellow),var(--cyan),var(--blue),var(--purple),var(--pink)); opacity:0.4; transform-origin:top; transform:scaleY(0); transition:transform 1.2s ease; }
+    .rm-progress { height:3px; border-radius:2px; background:var(--card-border); margin-bottom:2.5rem; overflow:hidden; }
+    .rm-progress-bar { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--green), var(--blue)); transition:width 1.5s ease; width:0; }
+    .reveal.visible .rm-progress-bar { width:55%; }
+    .rm-phase-label { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); margin:2rem 0 0.75rem; }
+    .rm-phase-label:first-of-type { margin-top:0; }
+    .roadmap { position:relative; padding-left:2.5rem; }
+    .roadmap::before { content:''; position:absolute; left:5px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--green) 0%, var(--green) 36%, var(--blue) 36%, var(--blue) 55%, var(--card-border) 55%, var(--card-border) 100%); opacity:0.3; transform-origin:top; transform:scaleY(0); transition:transform 1.2s ease; }
     .reveal.visible .roadmap::before { transform:scaleY(1); }
-    .rm-item { position:relative; padding:1rem 0; display:flex; align-items:center; gap:1rem; }
-    .rm-dot { position:absolute; left:-2rem; width:9px; height:9px; border-radius:50%; flex-shrink:0; }
-    .rm-dot.done { background:var(--green); opacity:0.6; }
-    .rm-dot.active { background:var(--blue); box-shadow:0 0 8px var(--blue), 0 0 16px rgba(59,110,245,0.3); animation:pulse 2s infinite; }
-    .rm-dot.upcoming { background:var(--card-border); }
-    .rm-num { font-size:0.5rem; color:var(--text-muted); letter-spacing:1px; min-width:20px; }
-    .rm-name { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; flex:1; }
+    .rm-item { position:relative; padding:0.7rem 1rem; margin:0.25rem 0; display:flex; align-items:center; gap:1rem; border-radius:8px; transition:background 0.2s; }
+    .rm-item:hover { background:var(--card-glass); }
+    .rm-dot { position:absolute; left:-2.5rem; width:12px; height:12px; border-radius:50%; flex-shrink:0; border:2px solid var(--bg); }
+    .rm-dot.done { background:var(--green); box-shadow:0 0 0 2px rgba(34,197,94,0.2); }
+    .rm-dot.active { background:var(--blue); box-shadow:0 0 0 2px rgba(59,110,245,0.2), 0 0 12px rgba(59,110,245,0.3); animation:pulse 2s infinite; }
+    .rm-dot.upcoming { background:var(--card-border); box-shadow:0 0 0 2px transparent; }
+    .rm-num { font-size:0.48rem; color:var(--text-muted); letter-spacing:1px; min-width:22px; }
+    .rm-name { font-size:0.68rem; font-weight:700; letter-spacing:0.5px; flex:1; }
     .rm-item.done .rm-name { color:var(--text-dim); }
     .rm-item.upcoming .rm-name { color:var(--text-muted); }
-    .rm-status { font-size:0.48rem; letter-spacing:2px; flex-shrink:0; }
-    .rm-status.s-done { color:var(--green); opacity:0.6; }
-    .rm-status.s-active { color:var(--blue); }
-    .rm-status.s-upcoming { color:var(--text-muted); }
+    .rm-status { font-size:0.4rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; }
+    .rm-status.s-done { color:var(--green); background:rgba(34,197,94,0.08); }
+    .rm-status.s-active { color:var(--blue); background:rgba(59,110,245,0.08); }
+    .rm-status.s-upcoming { color:var(--text-muted); background:var(--bg-raised); }
 
     /* ── LOG ── */
     .log { display:flex; flex-direction:column; }
@@ -698,13 +704,17 @@
 
   <section id="roadmap" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> ROADMAP</div>
+    <div class="rm-progress"><div class="rm-progress-bar"></div></div>
+    <div class="rm-phase-label">COMPLETED</div>
     <div class="roadmap">
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">01</span><span class="rm-name">Site live</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">02</span><span class="rm-name">WHOOP connected</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">03</span><span class="rm-name">Sound layer</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">04</span><span class="rm-name">Open source</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-phase-label">BUILDING NOW</div>
       <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">05</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
       <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">06</span><span class="rm-name">Story + TagTeach pages</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-phase-label">NEXT UP</div>
       <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">07</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
       <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">08</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
       <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">09</span><span class="rm-name">Protocol app</span><span class="rm-status s-upcoming">UPCOMING</span></div>
