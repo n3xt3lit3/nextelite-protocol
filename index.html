@@ -758,7 +758,7 @@
   <section id="feed" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> FEED</div>
     <div class="tweet-embed">
-      <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
+      <blockquote class="twitter-tweet" id="tweetEmbed" data-theme="light"><p lang="en" dir="ltr">220 days of Whoop data.<br>121 boxing sessions.<br>403 workouts.<br>51 bpm resting heart rate.<br><br>building the protocol. tracking everything. optimizing in public.<br><br>this is NextElite<a href="https://twitter.com/hashtag/biohack?src=hash&amp;ref_src=twsrc%5Etfw">#biohack</a> <a href="https://twitter.com/hashtag/bryanjohnson?src=hash&amp;ref_src=twsrc%5Etfw">#bryanjohnson</a> <a href="https://t.co/aOIHSjnv4L">pic.twitter.com/aOIHSjnv4L</a></p>&mdash; neminee (@N3XT3LIT3) <a href="https://twitter.com/N3XT3LIT3/status/2034309359971299803?ref_src=twsrc%5Etfw">March 18, 2026</a></blockquote>
     </div>
     <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="x-card" style="margin-bottom:1rem;">
       <div>
@@ -859,10 +859,16 @@
     var html = document.documentElement;
     var saved = localStorage.getItem('nextelite-theme');
     if (saved) html.setAttribute('data-theme', saved);
+    var te = document.getElementById('tweetEmbed');
+    if (te && saved) te.setAttribute('data-theme', saved);
+    function reloadTweet() {
+      if (window.twttr && twttr.widgets) { var c = document.querySelector('.tweet-embed'); if(c) twttr.widgets.load(c); }
+    }
     toggle.addEventListener('click', function() {
       var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('nextelite-theme', next);
+      if (te) { te.setAttribute('data-theme', next); reloadTweet(); }
     });
 
     /* ── SUBSCRIBE ── */
