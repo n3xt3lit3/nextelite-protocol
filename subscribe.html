@@ -113,7 +113,7 @@
     /* ── PLANS ── */
     .plans {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       margin-bottom: 4rem;
     }
@@ -387,7 +387,7 @@
         free gets you the signal.<br>
         paid gets you the system.
       </div>
-      <div class="coming-badge">LAUNCHING SOON</div>
+      <div class="coming-badge">MORE PLANS COMING SOON</div>
     </div>
 
     <!-- PLANS -->
@@ -412,25 +412,6 @@
         <a href="index.html" class="plan-btn">BROWSE FREE</a>
       </div>
 
-      <!-- PAID -->
-      <div class="plan-card">
-        <div class="plan-tag">FULL ACCESS</div>
-        <div class="plan-name">Protocol Member</div>
-        <div class="plan-price">99 NOK <span>/ MONTH</span></div>
-        <div class="plan-desc">the full system. every protocol. every breakdown. direct access.</div>
-        <ul class="plan-features">
-          <li><span class="check yes">+</span> Everything in Observer</li>
-          <li><span class="check yes">+</span> Full protocol breakdowns</li>
-          <li><span class="check yes">+</span> Boxing technique deep dives</li>
-          <li><span class="check yes">+</span> Clicker training methodology</li>
-          <li><span class="check yes">+</span> AI build tutorials</li>
-          <li><span class="check yes">+</span> Private community</li>
-          <li><span class="check yes">+</span> Direct Q&A with Nemine</li>
-          <li><span class="check yes">+</span> Early drops & allowlist</li>
-        </ul>
-        <div class="plan-btn locked">COMING SOON</div>
-      </div>
-
       <!-- LOCAL GYM -->
       <div class="plan-card featured">
         <div class="plan-tag">LOCAL — ØKSNES</div>
@@ -442,16 +423,18 @@
           <li><span class="check yes">+</span> Boxing equipment</li>
           <li><span class="check yes">+</span> Flexible hours</li>
           <li><span class="check yes">+</span> Small & focused environment</li>
-          <li><span class="check yes">+</span> Everything in Protocol Member</li>
+          <li><span class="check yes">+</span> Full protocol breakdowns</li>
+          <li><span class="check yes">+</span> Boxing technique deep dives</li>
+          <li><span class="check yes">+</span> AI build tutorials</li>
           <li><span class="check yes">+</span> Private community</li>
-          <li><span class="check yes">+</span> Direct Q&A</li>
+          <li><span class="check yes">+</span> Direct Q&A with Nemine</li>
           <li><span class="check yes">+</span> Early drops & allowlist</li>
         </ul>
         <label class="gym-confirm" id="gymConfirm">
           <input type="checkbox" id="gymCheck" />
           <span>I'm located in the Øksnes / Vesterålen area and want physical gym access</span>
         </label>
-        <div class="plan-btn locked">COMING SOON</div>
+        <a href="#" class="plan-btn primary" id="gymBtn" style="pointer-events:none;opacity:0.4;">CHECK THE BOX ABOVE</a>
       </div>
     </div>
 
@@ -531,6 +514,23 @@
       });
     }, { threshold: 0.1 });
     els.forEach(function(el) { observer.observe(el); });
+
+    /* ── GYM CHECKBOX ── */
+    var gymCheck = document.getElementById('gymCheck');
+    var gymBtn = document.getElementById('gymBtn');
+    gymCheck.addEventListener('change', function() {
+      if (this.checked) {
+        gymBtn.style.pointerEvents = 'auto';
+        gymBtn.style.opacity = '1';
+        gymBtn.textContent = 'GET ACCESS';
+        gymBtn.href = '#'; // REPLACE WITH STRIPE LINK
+      } else {
+        gymBtn.style.pointerEvents = 'none';
+        gymBtn.style.opacity = '0.4';
+        gymBtn.textContent = 'CHECK THE BOX ABOVE';
+        gymBtn.href = '#';
+      }
+    });
   </script>
 </body>
 </html>
