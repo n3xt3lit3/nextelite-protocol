@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Protocol History — NextElite</title>
+  <script>var s=localStorage.getItem('nextelite-theme');if(s)document.documentElement.setAttribute('data-theme',s);</script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
@@ -12,14 +13,28 @@
       --cyan: #00BADF;
       --blue: #3B6EF5;
       --pink: #E8197A;
+      --green: #22c55e;
+      --purple: #a855f7;
+    }
+
+    [data-theme="dark"] {
       --dark: #050505;
       --card: #0c0c0e;
       --card-border: #1a1a1e;
       --text: #e4e4e7;
       --text-dim: #52525b;
       --text-muted: #3f3f46;
-      --green: #22c55e;
-      --purple: #a855f7;
+      --tooltip-bg: #18181b;
+    }
+
+    [data-theme="light"] {
+      --dark: #fafafa;
+      --card: #ffffff;
+      --card-border: #e4e4e7;
+      --text: #18181b;
+      --text-dim: #71717a;
+      --text-muted: #a1a1aa;
+      --tooltip-bg: #e4e4e7;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -163,7 +178,7 @@
       transform: translateX(-50%);
       font-size: 0.5rem;
       color: var(--text);
-      background: #18181b;
+      background: var(--tooltip-bg);
       padding: 2px 6px;
       border-radius: 3px;
       white-space: nowrap;
