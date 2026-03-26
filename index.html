@@ -527,6 +527,8 @@
     .term-bar-left { display:flex; align-items:center; gap:0.4rem; }
     .term-status { display:none; }
     .term-name { font-size:0.6rem; letter-spacing:1px; color:var(--text); font-weight:700; }
+    .term-close { background:none; border:none; cursor:pointer; color:var(--text-muted); padding:0.2rem; display:flex; transition:color 0.2s; }
+    .term-close:hover { color:var(--text); }
     .chat-messages { flex:1; overflow-y:auto; padding:1.25rem; font-family:'Space Mono',monospace; font-size:0.7rem; line-height:1.8; color:var(--text-dim); }
     .chat-line { margin-bottom:0.5rem; white-space:pre-wrap; word-break:break-word; }
     .chat-line .prompt { color:var(--cyan); }
@@ -567,9 +569,9 @@
   <div class="chat-window" id="chatWindow">
     <div class="term-bar">
       <div class="term-bar-left">
-        <span class="term-status"></span>
         <span class="term-name">next_elite();</span>
       </div>
+      <button class="term-close" id="termClose" aria-label="Close terminal"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="chat-side-text">// champions train, losers complain</div>
     <div class="chat-messages" id="chatMessages">
@@ -996,6 +998,9 @@
     addLine('<span class="accent">nextelite</span> <span class="dim">v0.3 — terminal active</span>');
     addLine('<span class="dim">type anything to query the protocol</span>');
 
+    document.getElementById('termClose').addEventListener('click',function(){
+      chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');
+    });
     chatFab.addEventListener('click',function(){
       chatOpen=!chatOpen;
       chatFab.classList.toggle('open',chatOpen);
