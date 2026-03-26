@@ -468,18 +468,18 @@
 
     /* ── STORY CARD GRADIENT BORDER ── */
     .story-card {
-      position:relative; padding:2.6rem 2.1rem;
-      background:var(--card); border:1px solid transparent; border-radius:12px;
-      background-clip:padding-box;
+      position:relative; padding:2.8rem 2.4rem;
+      background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+      overflow:hidden; transition:transform 0.3s, box-shadow 0.3s;
     }
     .story-card::before {
-      content:''; position:absolute; inset:-1px; border-radius:13px; z-index:-1; padding:1px;
-      background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
-      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-      opacity:0.35; transition:opacity 0.3s;
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
     }
-    .story-card:hover::before { opacity:0.6; }
+    .story-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.08); }
+    .story-card .pillar-name { font-size:1.1rem; letter-spacing:-0.5px; margin-bottom:0.6rem; }
+    .story-card .pillar-hint { font-size:0.72rem; color:var(--text-dim); line-height:1.7; margin-bottom:1.5rem; }
+    .story-card .pillar-badge { font-size:0.5rem; letter-spacing:2.5px; color:var(--text-muted); padding-top:1.2rem; border-top:1px solid var(--card-border); }
 
     /* ── SUBSCRIBE ── */
     .subscribe-card {
