@@ -260,6 +260,23 @@
       border-color: var(--card-border);
     }
 
+    .gym-confirm {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .gym-confirm input {
+      margin-top: 2px;
+      accent-color: var(--pink);
+      flex-shrink: 0;
+    }
+
     .coming-badge {
       display: inline-block;
       margin-top: 1.5rem;
@@ -427,6 +444,10 @@
           <li><span class="check yes">+</span> Direct Q&A</li>
           <li><span class="check yes">+</span> Early drops & allowlist</li>
         </ul>
+        <label class="gym-confirm" id="gymConfirm">
+          <input type="checkbox" id="gymCheck" />
+          <span>I'm located in the Øksnes / Vesterålen area and want physical gym access</span>
+        </label>
         <div class="plan-btn locked">COMING SOON</div>
       </div>
     </div>
