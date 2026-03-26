@@ -249,6 +249,12 @@
       animation: fadeUp 1s 0.6s forwards;
     }
 
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; letter-spacing: 1px;
+      color: var(--text-dim); margin-top: 1rem; opacity: 0;
+      animation: fadeUp 1s 0.75s forwards;
+    }
+
     .hero-line {
       width: 120px; height: 2px; border-radius: 1px; margin-top: 1.5rem;
       background: linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
@@ -413,15 +419,11 @@
     .reveal.visible .rm-progress-bar { width:33%; }
     .rm-phase-label { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); margin:2rem 0 0.75rem; }
     .rm-phase-label:first-of-type { margin-top:0; }
-    .roadmap { position:relative; padding-left:2.5rem; }
-    .roadmap::before { content:''; position:absolute; left:5px; top:0; bottom:0; width:2px; border-radius:1px; background:linear-gradient(var(--cyan) 0%, var(--cyan) 30%, var(--yellow) 30%, var(--yellow) 65%, var(--card-border) 65%, var(--card-border) 100%); opacity:0.3; transform-origin:top; transform:scaleY(0); transition:transform 1.2s ease; }
-    .reveal.visible .roadmap::before { transform:scaleY(1); }
+    .roadmap { position:relative; padding-left:0; }
+    .roadmap::before { display:none; }
     .rm-item { position:relative; padding:0.7rem 1rem; margin:0.25rem 0; display:flex; align-items:center; gap:1rem; border-radius:8px; transition:background 0.2s; }
     .rm-item:hover { background:var(--card-glass); }
-    .rm-dot { position:absolute; left:-2.5rem; width:10px; height:10px; border-radius:50%; flex-shrink:0; transform:translateX(-0.5px); }
-    .rm-dot.done { background:var(--cyan); box-shadow:0 0 0 3px rgba(0,186,223,0.15); }
-    .rm-dot.active { background:var(--yellow); box-shadow:0 0 0 3px rgba(245,196,0,0.15), 0 0 10px rgba(245,196,0,0.2); animation:pulse 2s infinite; }
-    .rm-dot.upcoming { background:var(--card-border); }
+    .rm-dot { display:none; }
     .rm-num { font-size:0.48rem; color:var(--text-muted); letter-spacing:1px; min-width:22px; }
     .rm-name { font-size:0.68rem; font-weight:700; letter-spacing:0.5px; flex:1; }
     .rm-item.done .rm-name { color:var(--text-dim); }
@@ -560,6 +562,7 @@
   <header class="hero">
     <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
+    <div class="hero-tagline">next_elite( ); <span style="color:var(--text-muted)">// code your next level</span></div>
     <div class="hero-line"></div>
     <a href="#protocol" class="hero-scroll" onclick="event.preventDefault();document.getElementById('protocol').scrollIntoView({behavior:'smooth'});">
       <div class="hero-scroll-circle">
