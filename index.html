@@ -266,7 +266,9 @@
       display: flex; align-items: center; justify-content: center;
       animation: bob 2.5s infinite;
       transition: border-color 0.3s;
+      cursor: pointer;
     }
+    .hero-scroll-circle:hover { border-color: var(--text-dim); }
     .hero-scroll-circle svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
@@ -552,11 +554,11 @@
     <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
     <div class="hero-line"></div>
-    <div class="hero-scroll">
+    <a href="#protocol" class="hero-scroll" onclick="event.preventDefault();document.getElementById('protocol').scrollIntoView({behavior:'smooth'});">
       <div class="hero-scroll-circle">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-    </div>
+    </a>
   </header>
 
   <div class="manifesto">the protocol is the product.</div>
