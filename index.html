@@ -747,6 +747,7 @@
     <a href="tagteach.html" class="mobile-nav-link">TAGTEACH</a>
     <a href="ai.html" class="mobile-nav-link">AI</a>
     <a href="xrp.html" class="mobile-nav-link">XRP</a>
+    <a href="dashboard.html" class="mobile-nav-link">DASHBOARD</a>
     <a href="subscribe.html" class="mobile-nav-link">JOIN</a>
     <a href="#roadmap" class="mobile-nav-link">ROADMAP</a>
     <a href="#log" class="mobile-nav-link">LOG</a>
@@ -818,11 +819,11 @@
           <div class="pillar-hint">ledger. ownership. infrastructure.</div>
           <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">BUILDING <span style="font-size:0.5rem;color:var(--text-muted);">XRPL -></span></div>
         </div>
-        <div class="pillar" data-glow="pink" style="cursor:pointer;" onclick="location.href='history.html'">
+        <div class="pillar" data-glow="pink" style="cursor:pointer;" onclick="location.href='dashboard.html'">
           <div class="pillar-name">WHOOP</div>
           <div class="pillar-line" style="background:var(--pink);"></div>
           <div class="pillar-hint">recovery. strain. signal.</div>
-          <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">CONNECTING <span style="font-size:0.5rem;color:var(--text-muted);">DATA -></span></div>
+          <div class="pillar-badge" style="display:flex;justify-content:space-between;align-items:center;">TRACKING <span style="font-size:0.5rem;color:var(--text-muted);">DASHBOARD -></span></div>
         </div>
         <div class="pillar" data-glow="purple" style="cursor:pointer;grid-column:1/-1;" onclick="location.href='ai.html'">
           <div class="pillar-name">AI</div>
@@ -869,7 +870,8 @@
       <div class="whoop-meta">
         <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
         <div style="display:flex;gap:1.5rem;align-items:center;">
-          <a href="history.html" class="whoop-history-link">VIEW HISTORY</a>
+          <a href="dashboard.html" class="whoop-history-link">DASHBOARD</a>
+          <a href="history.html" class="whoop-history-link">HISTORY</a>
           <a href="https://join.whoop.com/8256086C" target="_blank" class="whoop-history-link" style="color:var(--pink);">JOIN WHOOP</a>
         </div>
       </div>
@@ -1037,6 +1039,7 @@
   <section id="log" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
     <div class="log">
+      <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">WHOOP Dashboard page — live stats, recovery/strain/HRV charts, 10-day averages, recovery log. XRP dedicated page. Pillar cards linked.</div></div>
       <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">Hero overhaul: gradient orb, grid texture, removed gimmicks. Gallery redesign (curated layout). About bio. Favicon. Signal context. Image compression. Daily Stack fix. Design audit — 5 review passes.</div></div>
       <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">SEO meta tags. Expanded biometrics (HRV, RHR, sleep performance). Stats strip. Kennel gallery + lightbox. Mobile hamburger menu. Nav auto-hide. Scroll progress bar. Hero typing effect. DONE badge colors. Chatbot upgrade.</div></div>
       <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Subscription page + Stripe. Membership preview. XRP Playbook. Theme sync. Chatbot polish.</div></div>
@@ -1104,6 +1107,7 @@
     <div class="footer-sub">PROTOCOL v0.3 -- BUILT IN PUBLIC</div>
     <div class="footer-sub" style="margin-top:0.5rem;opacity:0.6;">this site is the process. every version ships raw. watch it evolve.</div>
     <div class="footer-links" style="display:flex;gap:1.5rem;justify-content:center;margin-top:1.5rem;">
+      <a href="dashboard.html" style="font-size:0.45rem;letter-spacing:2px;color:var(--text-muted);transition:color 0.2s;">DASHBOARD</a>
       <a href="history.html" style="font-size:0.45rem;letter-spacing:2px;color:var(--text-muted);transition:color 0.2s;">HISTORY</a>
       <a href="log.html" style="font-size:0.45rem;letter-spacing:2px;color:var(--text-muted);transition:color 0.2s;">LOG</a>
       <a href="privacy.html" style="font-size:0.45rem;letter-spacing:2px;color:var(--text-muted);transition:color 0.2s;">PRIVACY</a>
@@ -1240,7 +1244,8 @@
       tagteach: "TagTeach breaks complex skills into tag points — small, achievable steps marked with an audible 'tag' when done correctly. Used in boxing training here.",
       clicker: "Clicker training uses operant conditioning and a marker signal to shape precise behaviors in dogs. Based on science, not dominance. All training resources are from canis.no.",
       dogs: "Dog training here is 100% clicker-based. Positive reinforcement, marker signals, and shaping. Check the Clicker Training page for more.",
-      whoop: function(){ return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol — training intensity adapts to biometric signals. Current recovery: " + (whoopData.recovery || '--') + "%."; },
+      whoop: function(){ return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol — training intensity adapts to biometric signals. Current recovery: " + (whoopData.recovery || '--') + "%. Check the Dashboard for full charts and trends."; },
+      dashboard: "The Dashboard page shows live WHOOP biometrics — current stats, recovery/strain/HRV bar charts over 10 days, averages with min/max ranges, and a color-coded recovery log.",
       xrp: "Building on XRPL. Nememe #001 is the first NFT drop — 1/1 edition, not yet minted. More drops coming.",
       nft: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
       drop: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
