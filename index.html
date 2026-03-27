@@ -877,8 +877,8 @@
       </div>
     </section>
 
-    <section class="section reveal">
-      <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
+    <div style="margin-top:2.5rem;">
+      <div class="section-label" style="margin-bottom:1.5rem;"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
       <div class="stack">
         <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
         <div class="stack-item"><div class="stack-name">Boxing</div><div class="stack-value">TagTeach sessions</div></div>
@@ -886,7 +886,7 @@
         <div class="stack-item"><div class="stack-name">Recovery</div><div class="stack-value">WHOOP-led</div></div>
         <div class="stack-item"><div class="stack-name">Build</div><div class="stack-value">Code + ship</div></div>
       </div>
-    </section>
+    </div>
   </div>
 
   <section id="feed" class="section reveal">
@@ -933,9 +933,9 @@
   <hr class="div-line" />
 
   <section id="drop" class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> DROP</div>
-    <div class="drop-wrap">
-      <div class="drop-card">
+    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> XRP & DROPS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div class="drop-card" style="margin:0;">
         <div class="drop-card-img-wrap">
           <img src="meme001.png" alt="Nememe #001" class="drop-card-img" loading="lazy" />
         </div>
@@ -946,59 +946,17 @@
           <div class="drop-card-status"><span class="drop-card-dot"></span> NOT YET MINTED</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="tip" class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> SUPPORT</div>
-    <div class="xrp-card">
-      <div class="xrp-qr"><img src="xrp-qr.jpg" alt="XRP QR Code" loading="lazy" /></div>
-      <div class="xrp-title">fund the protocol.</div>
-      <div class="xrp-sub" style="max-width:400px;margin-left:auto;margin-right:auto;">scan the QR or copy the address below to send XRP directly to the protocol. no middlemen. no banks. every coin goes into building this further.</div>
-      <div class="xrp-fields">
-        <div class="xrp-field">
-          <div class="xrp-field-inner">
-            <div class="xrp-label">ADDRESS</div>
-            <div class="xrp-addr">rpAi9S1fuq8s8gUSZPY4m6KQ5vh4efyWH2</div>
-          </div>
-          <button class="xrp-copy" onclick="navigator.clipboard.writeText('rpAi9S1fuq8s8gUSZPY4m6KQ5vh4efyWH2');this.innerHTML='✓';var b=this;setTimeout(function(){b.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1&quot;/></svg>';},1500)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="x-card xrp-playbook-card" style="margin:0;display:flex;flex-direction:column;justify-content:center;">
+        <div class="xrp-playbook-content">
+          <div class="x-handle">The XRP Playbook</div>
+          <div class="xrp-playbook-line"></div>
+          <div class="x-hint">MEME EDITION — where memes teach better than textbooks</div>
         </div>
-        <div class="xrp-divider"></div>
-        <div class="xrp-field">
-          <div class="xrp-field-inner">
-            <div class="xrp-label">DESTINATION TAG</div>
-            <div class="xrp-addr">1157709</div>
-          </div>
-          <button class="xrp-copy" onclick="navigator.clipboard.writeText('1157709');this.innerHTML='✓';var b=this;setTimeout(function(){b.innerHTML='<svg viewBox=&quot;0 0 24 24&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1&quot;/></svg>';},1500)"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
-        </div>
-      </div>
-      <div class="xrp-badge">XRP LEDGER</div>
+        <div class="x-arrow">-></div>
+      </a>
     </div>
-  </section>
-
-  <section class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> COMMUNITY</div>
-    <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="x-card xrp-playbook-card" style="margin-bottom:1rem;">
-      <div class="xrp-playbook-content">
-        <div class="x-handle">The XRP Playbook</div>
-        <div class="xrp-playbook-line"></div>
-        <div class="x-hint">MEME EDITION — where memes teach better than textbooks</div>
-      </div>
-      <div class="x-arrow">-></div>
-    </a>
-    <div class="tweet-embed" style="max-width:400px;">
-      <blockquote class="twitter-tweet" data-theme="light"><a href="https://twitter.com/Bitstamp/status/1887159272049394156">February 5, 2025</a></blockquote>
-    </div>
-  </section>
-
-  <section id="signal" class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> SIGNAL</div>
-    <p style="font-size:0.62rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.7;">sources I follow for XRP signal. do your own research.</p>
-    <div class="signal-list">
-      <a href="https://www.youtube.com/@CryptoSenseii" target="_blank" class="signal-item"><div class="signal-name">Crypto Sensei</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
-      <a href="https://www.youtube.com/@CryptoMason" target="_blank" class="signal-item"><div class="signal-name">Crypto Mason</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
-      <a href="https://www.youtube.com/@jakeclaver" target="_blank" class="signal-item"><div class="signal-name">Jake Claver</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
-      <a href="https://www.youtube.com/@MickleXRP" target="_blank" class="signal-item"><div class="signal-name">Mickle</div><div class="signal-tag">XRP</div><div class="signal-arrow">-></div></a>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="xrp.html" style="font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;transition:color 0.2s;">SIGNAL • WALLET • THESIS &rarr;</a>
     </div>
   </section>
 
@@ -1025,63 +983,61 @@
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">07</span><span class="rm-name">Terminal chatbot</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">08</span><span class="rm-name">Theme sync across all pages</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">09</span><span class="rm-name">XRP Playbook article</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">10</span><span class="rm-name">WHOOP Dashboard</span><span class="rm-status s-done">DONE</span></div>
+      <div class="rm-item done"><span class="rm-dot done"></span><span class="rm-num">11</span><span class="rm-name">XRP dedicated page</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-phase-label">BUILDING NOW</div>
-      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">10</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
-      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">11</span><span class="rm-name">Stripe + email integration</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">12</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-item"><span class="rm-dot active"></span><span class="rm-num">13</span><span class="rm-name">Stripe + email integration</span><span class="rm-status s-active">IN PROGRESS</span></div>
       <div class="rm-phase-label">NEXT UP</div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">12</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">13</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">14</span><span class="rm-name">Gated content</span><span class="rm-status s-upcoming">UPCOMING</span></div>
-      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">15</span><span class="rm-name">More drops</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">14</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">15</span><span class="rm-name">Custom domain</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">16</span><span class="rm-name">Gated content</span><span class="rm-status s-upcoming">UPCOMING</span></div>
+      <div class="rm-item upcoming"><span class="rm-dot upcoming"></span><span class="rm-num">17</span><span class="rm-name">More drops</span><span class="rm-status s-upcoming">UPCOMING</span></div>
     </div>
-  </section>
 
-  <section id="log" class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
-    <div class="log">
-      <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">WHOOP Dashboard page — live stats, recovery/strain/HRV charts, 10-day averages, recovery log. XRP dedicated page. Pillar cards linked.</div></div>
-      <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">Hero overhaul: gradient orb, grid texture, removed gimmicks. Gallery redesign (curated layout). About bio. Favicon. Signal context. Image compression. Daily Stack fix. Design audit — 5 review passes.</div></div>
-      <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">SEO meta tags. Expanded biometrics (HRV, RHR, sleep performance). Stats strip. Kennel gallery + lightbox. Mobile hamburger menu. Nav auto-hide. Scroll progress bar. Hero typing effect. DONE badge colors. Chatbot upgrade.</div></div>
-      <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Subscription page + Stripe. Membership preview. XRP Playbook. Theme sync. Chatbot polish.</div></div>
-      <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Terminal chatbot. XRP support section. Story gradient border. Full log page.</div></div>
-      <div class="log-entry"><div class="log-date">25.03.2026</div><div class="log-text">v0.3 — story, tagteach, clicker, AI pages. built in public.</div></div>
-      <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.2 — WHOOP connected. Roadmap public. Signal on.</div></div>
-      <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.1 — protocol initiated. site live.</div></div>
-    </div>
-    <a href="log.html" style="display:inline-block;margin-top:1.5rem;font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;transition:color 0.2s;">VIEW FULL LOG &rarr;</a>
-  </section>
-
-  <section class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--pink);"></span> MEMBERSHIP</div>
-    <div style="text-align:center;margin-bottom:2rem;">
-      <div style="font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;margin-bottom:0.5rem;">join the protocol.</div>
-      <div style="font-size:0.62rem;color:var(--text-dim);line-height:1.8;">free gets you the signal. paid gets you the system.</div>
-      <div style="display:inline-block;margin-top:1rem;font-size:0.45rem;letter-spacing:3px;padding:0.4rem 1.2rem;border:1px dashed var(--text-muted);border-radius:100px;color:var(--text-muted);">LAUNCHING SOON</div>
-    </div>
-    <div class="membership-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
-      <div style="border:1px solid var(--card-border);border-radius:16px;padding:2rem 1.5rem;background:var(--card);">
-        <div style="font-size:0.42rem;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:1rem;">OPEN ACCESS</div>
-        <div style="font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;">Observer</div>
-        <div style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;">Free</div>
-        <div style="font-size:0.55rem;color:var(--text-dim);line-height:1.7;">biometrics. roadmap. signal. story. all public.</div>
+    <div id="log" style="margin-top:3rem;">
+      <div class="section-label" style="margin-bottom:1.5rem;"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
+      <div class="log">
+        <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">WHOOP Dashboard page — live stats, recovery/strain/HRV charts, 10-day averages, recovery log. XRP dedicated page. Pillar cards linked.</div></div>
+        <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">Hero overhaul: gradient orb, grid texture, removed gimmicks. Gallery redesign (curated layout). About bio. Favicon. Signal context. Image compression. Daily Stack fix. Design audit — 5 review passes.</div></div>
+        <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">SEO meta tags. Expanded biometrics (HRV, RHR, sleep performance). Stats strip. Kennel gallery + lightbox. Mobile hamburger menu. Nav auto-hide. Scroll progress bar. Hero typing effect. DONE badge colors. Chatbot upgrade.</div></div>
+        <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Subscription page + Stripe. Membership preview. XRP Playbook. Theme sync. Chatbot polish.</div></div>
+        <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Terminal chatbot. XRP support section. Story gradient border. Full log page.</div></div>
+        <div class="log-entry"><div class="log-date">25.03.2026</div><div class="log-text">v0.3 — story, tagteach, clicker, AI pages. built in public.</div></div>
+        <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.2 — WHOOP connected. Roadmap public. Signal on.</div></div>
+        <div class="log-entry"><div class="log-date">24.03.2026</div><div class="log-text">v0.1 — protocol initiated. site live.</div></div>
       </div>
-      <div style="position:relative;border:1px solid var(--card-border);border-radius:16px;padding:2rem 1.5rem;background:var(--card);overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));"></div>
-        <div style="font-size:0.42rem;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:1rem;">LOCAL — ØKSNES</div>
-        <div style="font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;">Gym Access</div>
-        <div style="font-size:1.4rem;font-weight:700;margin-bottom:0.3rem;">199 NOK <span style="font-size:0.55rem;font-weight:400;color:var(--text-muted);">/ MONTH</span></div>
-        <div style="font-size:0.55rem;color:var(--text-dim);line-height:1.7;">gym + full protocol. breakdowns. community. Q&A.</div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:1.5rem;">
-      <a href="subscribe.html" style="font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;transition:color 0.2s;">VIEW ALL PLANS &rarr;</a>
+      <a href="log.html" style="display:inline-block;margin-top:1.5rem;font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;transition:color 0.2s;">VIEW FULL LOG &rarr;</a>
     </div>
   </section>
 
   <div class="zone-subscribe">
     <section id="subscribe" class="section reveal">
-      <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> SUBSCRIBE</div>
-      <div class="subscribe-card">
+      <div class="section-label"><span class="section-dot" style="background:var(--pink);"></span> JOIN</div>
+      <div style="text-align:center;margin-bottom:2rem;">
+        <div style="font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;margin-bottom:0.5rem;">join the protocol.</div>
+        <div style="font-size:0.62rem;color:var(--text-dim);line-height:1.8;">free gets you the signal. paid gets you the system.</div>
+        <div style="display:inline-block;margin-top:1rem;font-size:0.45rem;letter-spacing:3px;padding:0.4rem 1.2rem;border:1px dashed var(--text-muted);border-radius:100px;color:var(--text-muted);">LAUNCHING SOON</div>
+      </div>
+      <div class="membership-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+        <div style="border:1px solid var(--card-border);border-radius:16px;padding:2rem 1.5rem;background:var(--card);">
+          <div style="font-size:0.42rem;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:1rem;">OPEN ACCESS</div>
+          <div style="font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;">Observer</div>
+          <div style="font-size:1.4rem;font-weight:700;margin-bottom:0.5rem;">Free</div>
+          <div style="font-size:0.55rem;color:var(--text-dim);line-height:1.7;">biometrics. roadmap. signal. story. all public.</div>
+        </div>
+        <div style="position:relative;border:1px solid var(--card-border);border-radius:16px;padding:2rem 1.5rem;background:var(--card);overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));"></div>
+          <div style="font-size:0.42rem;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:1rem;">LOCAL — ØKSNES</div>
+          <div style="font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;">Gym Access</div>
+          <div style="font-size:1.4rem;font-weight:700;margin-bottom:0.3rem;">199 NOK <span style="font-size:0.55rem;font-weight:400;color:var(--text-muted);">/ MONTH</span></div>
+          <div style="font-size:0.55rem;color:var(--text-dim);line-height:1.7;">gym + full protocol. breakdowns. community. Q&A.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1.5rem;">
+        <a href="subscribe.html" style="font-size:0.55rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;transition:color 0.2s;">VIEW ALL PLANS &rarr;</a>
+      </div>
+      <div class="subscribe-card" style="margin-top:2.5rem;">
         <div class="subscribe-tagline">first to know. first to move.</div>
         <div class="subscribe-wrap">
           <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
