@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NextElite Protocol</title>
+  <title>NextElite Protocol — Nemine Steffensen</title>
+  <meta name="description" content="NextElite Protocol — boxing, clicker training, biohacking & XRPL. Built in public by Nemine Steffensen." />
+  <meta name="author" content="Nemine Steffensen" />
+  <meta property="og:title" content="NextElite Protocol" />
+  <meta property="og:description" content="Boxing. Clicker Training. Biohacking. XRPL. The protocol is the product." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://n3xt3lit3.github.io/nextelite-protocol/" />
+  <meta property="og:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@N3XT3LIT3" />
+  <meta name="twitter:title" content="NextElite Protocol" />
+  <meta name="twitter:description" content="Boxing. Clicker Training. Biohacking. XRPL. The protocol is the product." />
+  <meta name="twitter:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
@@ -29,6 +42,9 @@
       --nav-bg: rgba(5,5,5,0.8);
       --grain-opacity: 0.03;
       --overlay-gradient: rgba(5,5,5,0.9);
+      --orb-opacity: 0.7;
+      --orb-blur: 90px;
+      --grid-opacity: 0.06;
     }
 
     [data-theme="light"] {
@@ -43,8 +59,12 @@
       --nav-bg: rgba(250,250,250,0.8);
       --grain-opacity: 0.02;
       --overlay-gradient: rgba(250,250,250,0.9);
+      --orb-opacity: 0.55;
+      --orb-blur: 80px;
+      --grid-opacity: 0.03;
     }
 
+    html { scroll-behavior: smooth; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -77,7 +97,7 @@
       position: fixed;
       top: 1rem;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(0);
       z-index: 100;
       background: var(--nav-bg);
       backdrop-filter: blur(24px);
@@ -85,8 +105,9 @@
       border: 1px solid var(--card-border);
       border-radius: 100px;
       padding: 0.6rem 1.5rem;
-      transition: background 0.4s, border-color 0.4s;
+      transition: background 0.4s, border-color 0.4s, transform 0.35s ease, opacity 0.35s ease;
     }
+    nav.nav-hidden { transform: translateX(-50%) translateY(-120%); opacity: 0; }
 
     .nav-inner {
       display: flex;
@@ -174,7 +195,7 @@
       background: var(--text);
     }
 
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
     /* ── HERO ── */
     .hero {
@@ -189,34 +210,54 @@
       overflow: hidden;
     }
 
-    .hero::after {
+    /* gradient orb — the visual anchor */
+    .hero-orb {
+      position: absolute;
+      width: clamp(320px, 50vw, 560px);
+      aspect-ratio: 1;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(245,196,0,0.35), rgba(0,186,223,0.25), rgba(59,110,245,0.20), rgba(232,25,122,0.18), rgba(245,196,0,0.35));
+      filter: blur(var(--orb-blur));
+      animation: orbPulse 12s ease-in-out infinite alternate, orbDrift 25s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes orbPulse {
+      0% { opacity:var(--orb-opacity); transform:translate(-50%,-50%) scale(1); }
+      100% { opacity:var(--orb-opacity); transform:translate(-50%,-50%) scale(1.12); }
+    }
+    @keyframes orbDrift {
+      0% { border-radius:50%; }
+      25% { border-radius:42% 58% 55% 45% / 55% 42% 58% 45%; }
+      50% { border-radius:55% 45% 42% 58% / 45% 55% 45% 55%; }
+      75% { border-radius:45% 55% 58% 42% / 58% 45% 55% 42%; }
+      100% { border-radius:50%; }
+    }
+
+    /* subtle grid texture behind hero */
+    .hero::before {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 0;
-      opacity: 0.6;
-      background:
-        radial-gradient(600px circle at 30% 40%, rgba(245,196,0,0.06), transparent 50%),
-        radial-gradient(500px circle at 70% 60%, rgba(0,186,223,0.05), transparent 50%),
-        radial-gradient(400px circle at 50% 30%, rgba(59,110,245,0.04), transparent 50%),
-        radial-gradient(350px circle at 60% 70%, rgba(232,25,122,0.04), transparent 50%);
-      animation: heroMesh 25s ease-in-out infinite alternate;
+      opacity: var(--grid-opacity);
+      background-image:
+        linear-gradient(var(--text-muted) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text-muted) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
       pointer-events: none;
     }
 
-    @keyframes heroMesh {
-      0% { transform: scale(1) translate(0, 0); }
-      33% { transform: scale(1.05) translate(2%, -1%); }
-      66% { transform: scale(0.97) translate(-1%, 2%); }
-      100% { transform: scale(1.03) translate(1%, -1%); }
-    }
-
-    .hero > * { position: relative; z-index: 1; }
+    .hero > *:not(.hero-orb) { position: relative; z-index: 1; }
 
     .hero-name {
-      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-size: clamp(2.4rem, 7vw, 4.2rem);
       font-weight: 700;
-      letter-spacing: -1px;
+      letter-spacing: -1.5px;
       margin-bottom: 0.75rem;
       opacity: 0;
       animation: fadeUp 1s 0.3s forwards;
@@ -229,22 +270,22 @@
       position: absolute; top: 0; left: 0;
       width: 100%; height: 100%; opacity: 0;
     }
-    .glitch::before { color: var(--cyan); animation: glitch-1 4s infinite linear; }
-    .glitch::after { color: var(--pink); animation: glitch-2 4s infinite linear; }
+    .glitch::before { color: var(--cyan); animation: glitch-1 8s infinite linear; }
+    .glitch::after { color: var(--pink); animation: glitch-2 8s infinite linear; }
 
     @keyframes glitch-1 {
-      0%,88%,92%,100% { opacity:0; transform:none; }
-      89% { opacity:0.8; transform:translate(-2px,-1px); clip-path:inset(20% 0 60% 0); }
-      91% { opacity:0.8; transform:translate(2px,1px); clip-path:inset(50% 0 20% 0); }
+      0%,94%,96%,100% { opacity:0; transform:none; }
+      94.5% { opacity:0.7; transform:translate(-2px,-1px); clip-path:inset(20% 0 60% 0); }
+      95.5% { opacity:0.7; transform:translate(2px,1px); clip-path:inset(50% 0 20% 0); }
     }
     @keyframes glitch-2 {
-      0%,90%,94%,100% { opacity:0; transform:none; }
-      91% { opacity:0.6; transform:translate(2px,1px); clip-path:inset(40% 0 30% 0); }
-      93% { opacity:0.6; transform:translate(-1px,-2px); clip-path:inset(10% 0 70% 0); }
+      0%,95%,97%,100% { opacity:0; transform:none; }
+      95.5% { opacity:0.5; transform:translate(2px,1px); clip-path:inset(40% 0 30% 0); }
+      96.5% { opacity:0.5; transform:translate(-1px,-2px); clip-path:inset(10% 0 70% 0); }
     }
 
     .hero-sub {
-      font-size: 0.7rem; letter-spacing: 3px;
+      font-size: 0.65rem; letter-spacing: 5px;
       color: var(--text-muted); opacity: 0;
       animation: fadeUp 1s 0.6s forwards;
     }
@@ -256,7 +297,7 @@
     }
 
     .hero-line {
-      width: 120px; height: 2px; border-radius: 1px; margin-top: 1.5rem;
+      width: 160px; height: 2px; border-radius: 1px; margin-top: 1.5rem;
       background: linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
       opacity: 0;
       animation: fadeUp 1s 0.9s forwards;
@@ -278,12 +319,13 @@
     .hero-scroll-circle svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes bob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(4px); } }
 
     /* ── MANIFESTO ── */
     .manifesto {
-      text-align: center; padding: 6rem 2rem 2rem;
-      font-size: clamp(1.1rem, 3vw, 1.6rem); font-weight: 700;
+      text-align: center; padding: 4rem 2rem 2rem;
+      font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 700;
       color: var(--text-dim); letter-spacing: -0.5px;
       opacity: 0; animation: fadeUp 1s 1.5s forwards;
     }
@@ -293,22 +335,24 @@
     .reveal.visible { opacity:1; transform:translateY(0); }
 
     /* ── STAGGERED CHILDREN ── */
-    .reveal .pillar, .reveal .bento-card, .reveal .rm-item, .reveal .signal-item, .reveal .log-entry {
+    .reveal .pillar, .reveal .bento-card, .reveal .rm-item, .reveal .signal-item, .reveal .log-entry, .reveal .gallery > div {
       opacity:0; transform:translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .reveal.visible .pillar, .reveal.visible .bento-card, .reveal.visible .rm-item, .reveal.visible .signal-item, .reveal.visible .log-entry { opacity:1; transform:translateY(0); }
-    .reveal.visible :nth-child(1) { transition-delay:0s; }
-    .reveal.visible :nth-child(2) { transition-delay:0.08s; }
-    .reveal.visible :nth-child(3) { transition-delay:0.16s; }
-    .reveal.visible :nth-child(4) { transition-delay:0.24s; }
-    .reveal.visible :nth-child(5) { transition-delay:0.32s; }
-    .reveal.visible :nth-child(6) { transition-delay:0.4s; }
+    .reveal.visible .pillar, .reveal.visible .bento-card, .reveal.visible .rm-item, .reveal.visible .signal-item, .reveal.visible .log-entry, .reveal.visible .gallery > div { opacity:1; transform:translateY(0); }
+    .reveal.visible .pillars > :nth-child(1), .reveal.visible .bento > :nth-child(1), .reveal.visible .roadmap > :nth-child(1), .reveal.visible .signal-list > :nth-child(1), .reveal.visible .log > :nth-child(1), .reveal.visible .gallery > :nth-child(1) { transition-delay:0s; }
+    .reveal.visible .pillars > :nth-child(2), .reveal.visible .bento > :nth-child(2), .reveal.visible .roadmap > :nth-child(2), .reveal.visible .signal-list > :nth-child(2), .reveal.visible .log > :nth-child(2), .reveal.visible .gallery > :nth-child(2) { transition-delay:0.08s; }
+    .reveal.visible .pillars > :nth-child(3), .reveal.visible .bento > :nth-child(3), .reveal.visible .roadmap > :nth-child(3), .reveal.visible .signal-list > :nth-child(3), .reveal.visible .log > :nth-child(3), .reveal.visible .gallery > :nth-child(3) { transition-delay:0.16s; }
+    .reveal.visible .pillars > :nth-child(4), .reveal.visible .bento > :nth-child(4), .reveal.visible .roadmap > :nth-child(4), .reveal.visible .signal-list > :nth-child(4), .reveal.visible .log > :nth-child(4), .reveal.visible .gallery > :nth-child(4) { transition-delay:0.24s; }
+    .reveal.visible .pillars > :nth-child(5), .reveal.visible .bento > :nth-child(5), .reveal.visible .roadmap > :nth-child(5), .reveal.visible .signal-list > :nth-child(5), .reveal.visible .log > :nth-child(5), .reveal.visible .gallery > :nth-child(5) { transition-delay:0.32s; }
+    .reveal.visible .pillars > :nth-child(6), .reveal.visible .gallery > :nth-child(6) { transition-delay:0.4s; }
+    .reveal.visible .gallery > :nth-child(7) { transition-delay:0.48s; }
+    .reveal.visible .gallery > :nth-child(8) { transition-delay:0.56s; }
 
     /* ── SECTIONS ── */
     .section { max-width:720px; margin:0 auto; padding:6rem 2rem; }
     .section-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:2.5rem; display:flex; align-items:center; gap:0.6rem; }
     .section-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
-    .div-line { border:none; border-top:1px solid var(--card-border); margin:0; transition:border-color 0.4s; }
+    .div-line { border:none; height:1px; margin:0; background:linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent); transition:background 0.4s; }
 
     /* ── FULL-BLEED ZONES ── */
     .zone { background:var(--bg-raised); transition:background 0.4s; }
@@ -339,7 +383,8 @@
 
     /* ── WHOOP (BENTO) ── */
     .bento { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-    @media (max-width:540px) { .bento { grid-template-columns:1fr; } }
+    .bento-bottom { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin:1rem 0 0; }
+    @media (max-width:540px) { .bento { grid-template-columns:1fr; } .bento-bottom { grid-template-columns:1fr; } }
 
     .bento-card {
       background: var(--card-glass);
@@ -354,6 +399,8 @@
     .bento-val.recovery { color:var(--green); }
     .bento-val.strain { color:var(--blue); }
     .bento-val.sleep { color:var(--purple); }
+    .bento-val.hrv { color:var(--cyan); }
+    .bento-val.rhr { color:var(--pink); }
     .bento-label { font-size:0.5rem; letter-spacing:2.5px; color:var(--text-muted); }
 
     .whoop-meta { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; }
@@ -370,7 +417,7 @@
 
     /* ── NFT DROP (collectible card) ── */
     .drop-wrap { display:flex; justify-content:center; position:relative; }
-    .drop-wrap::before { content:''; position:absolute; width:260px; height:260px; top:50%; left:50%; transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(245,196,0,0.06) 0%, transparent 70%); pointer-events:none; border-radius:50%; }
+    .drop-wrap::before { content:''; position:absolute; width:260px; height:260px; top:50%; left:50%; transform:translate(-50%,-50%); background:radial-gradient(circle, rgba(245,196,0,0.03) 0%, transparent 70%); pointer-events:none; border-radius:50%; }
     .drop-card {
       max-width:220px;
       background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
@@ -378,7 +425,7 @@
       transition:background 0.3s, border-color 0.3s, transform 0.5s;
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
-    .drop-card:hover { background:var(--card); transform:perspective(600px) rotateY(5deg) translateY(-4px); }
+    .drop-card:hover { background:var(--card); transform:perspective(800px) rotateY(3deg) translateY(-3px); }
     .drop-card-img-wrap {
       width:100%;
       background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
@@ -420,7 +467,7 @@
     /* ── ROADMAP ── */
     .rm-progress { height:3px; border-radius:2px; background:var(--card-border); margin-bottom:2.5rem; overflow:hidden; }
     .rm-progress-bar { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink)); transition:width 1.5s ease; width:0; }
-    .reveal.visible .rm-progress-bar { width:33%; }
+    .reveal.visible .rm-progress-bar { width:60%; }
     .rm-phase-label { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); margin:2rem 0 0.75rem; }
     .rm-phase-label:first-of-type { margin-top:0; }
     .roadmap { position:relative; padding-left:0; }
@@ -432,8 +479,14 @@
     .rm-name { font-size:0.68rem; font-weight:700; letter-spacing:0.5px; flex:1; }
     .rm-item.done .rm-name { color:var(--text-dim); }
     .rm-item.upcoming .rm-name { color:var(--text-muted); }
-    .rm-status { font-size:0.4rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; }
-    .rm-status.s-done { color:var(--cyan); background:rgba(0,186,223,0.08); }
+    .rm-status { font-size:0.42rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; }
+    .rm-status.s-done { background:rgba(0,186,223,0.08); }
+    .rm-item:nth-child(6n+1) .rm-status.s-done { color:var(--yellow); background:rgba(245,196,0,0.08); }
+    .rm-item:nth-child(6n+2) .rm-status.s-done { color:var(--cyan); background:rgba(0,186,223,0.08); }
+    .rm-item:nth-child(6n+3) .rm-status.s-done { color:var(--blue); background:rgba(59,110,245,0.08); }
+    .rm-item:nth-child(6n+4) .rm-status.s-done { color:var(--pink); background:rgba(232,25,122,0.08); }
+    .rm-item:nth-child(6n+5) .rm-status.s-done { color:var(--green); background:rgba(34,197,94,0.08); }
+    .rm-item:nth-child(6n+6) .rm-status.s-done { color:var(--purple); background:rgba(168,85,247,0.08); }
     .rm-status.s-active { color:var(--yellow); background:rgba(245,196,0,0.08); }
     .rm-status.s-upcoming { color:var(--text-muted); background:var(--bg-raised); }
 
@@ -447,7 +500,7 @@
     /* ── XRP TIP ── */
     .xrp-card { position:relative; background:var(--card); border:1px solid transparent; border-radius:16px; padding:2.5rem 2rem; text-align:center; background-clip:padding-box; overflow:hidden; }
     .xrp-card::before { content:''; position:absolute; inset:-1px; border-radius:17px; padding:1px; background:linear-gradient(135deg, var(--yellow), var(--cyan), var(--blue), var(--pink)); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; opacity:0.25; transition:opacity 0.3s; z-index:0; }
-    .xrp-card:hover::before { opacity:0.45; }
+    .xrp-card:hover::before { opacity:0.35; }
     .xrp-card > * { position:relative; z-index:1; }
     .xrp-qr { margin-bottom:1.5rem; display:inline-block; padding:14px; background:#1a1a2e; border-radius:16px; }
     .xrp-qr img { width:170px; height:170px; display:block; border-radius:0; transition:transform 0.3s; }
@@ -457,7 +510,7 @@
     .xrp-fields { display:grid; grid-template-columns:1fr auto; gap:0.75rem; max-width:420px; margin:0 auto; text-align:left; }
     .xrp-field { display:contents; }
     .xrp-field-inner { display:flex; flex-direction:column; gap:0.2rem; }
-    .xrp-label { font-size:0.4rem; letter-spacing:2px; color:var(--text-muted); }
+    .xrp-label { font-size:0.42rem; letter-spacing:2px; color:var(--text-muted); }
     .xrp-addr { font-size:0.58rem; color:var(--text-dim); word-break:break-all; line-height:1.5; }
     .xrp-copy { background:var(--bg-raised); border:1px solid var(--card-border); cursor:pointer; color:var(--text-muted); transition:all 0.2s; padding:0.5rem; border-radius:8px; display:flex; align-items:center; justify-content:center; align-self:end; }
     .xrp-copy:hover { color:var(--text); border-color:var(--text-muted); }
@@ -465,6 +518,7 @@
     .xrp-divider { grid-column:1/-1; height:1px; background:var(--card-border); }
     .xrp-badge { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.45rem; letter-spacing:2px; color:var(--text-muted); margin-top:1.5rem; padding:0.4rem 0.8rem; border:1px solid var(--card-border); border-radius:20px; }
     @media (max-width:500px) { .xrp-fields { grid-template-columns:1fr; } .xrp-copy { justify-self:start; } }
+    @media (max-width:600px) { .membership-grid { grid-template-columns:1fr !important; } }
 
     /* ── STORY CARD GRADIENT BORDER ── */
     .story-card {
@@ -477,6 +531,26 @@
       background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink));
     }
     .story-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.08); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { display:flex; justify-content:center; gap:3rem; padding:2rem 2rem 4rem; flex-wrap:wrap; }
+    .stat-item { text-align:center; position:relative; }
+    .stat-item::after { content:''; position:absolute; right:-1.5rem; top:50%; transform:translateY(-50%); width:1px; height:24px; background:var(--card-border); }
+    .stat-item:last-child::after { display:none; }
+    .stat-num { font-size:clamp(1.8rem,4vw,2.5rem); font-weight:700; letter-spacing:-1px; }
+    .stat-label { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); margin-top:0.3rem; }
+    @media (max-width:540px) { .stats-strip { gap:2rem; } .stat-item::after { display:none; } }
+
+    /* ── GALLERY (curated: hero + detail + strip) ── */
+    .gallery { display:flex; flex-direction:column; gap:0.75rem; }
+    .gallery img { width:100%; object-fit:cover; border-radius:10px; border:1px solid var(--card-border); filter:grayscale(20%); transition:filter 0.4s, border-color 0.3s; cursor:pointer; }
+    .gallery img:hover { filter:grayscale(0%); border-color:var(--text-muted); }
+    .gallery-hero img { aspect-ratio:16/9; }
+    .gallery-detail { display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; }
+    .gallery-detail img { aspect-ratio:4/3; }
+    .gallery-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; }
+    .gallery-strip img { aspect-ratio:1; border-radius:8px; }
+    @media (max-width:540px) { .gallery-detail { grid-template-columns:1fr 1fr; } .gallery-strip { grid-template-columns:repeat(2,1fr); } }
     .story-card .pillar-name { font-size:1.1rem; letter-spacing:-0.5px; margin-bottom:0.6rem; }
     .story-card .pillar-hint { font-size:0.72rem; color:var(--text-dim); line-height:1.7; margin-bottom:1.5rem; }
     .story-card .pillar-badge { font-size:0.5rem; letter-spacing:2.5px; color:var(--text-muted); padding-top:1.2rem; border-top:1px solid var(--card-border); }
@@ -554,9 +628,48 @@
     @media (max-width:500px) { .chat-window { bottom:0; right:0; width:100%; height:100%; max-width:100%; max-height:100%; border-radius:0; } .chat-fab.open { display:none; } .chat-side-text { display:none; } .term-close { display:flex; } .term-live-dot { display:none; } }
     @media (max-width:420px) { .xrp-card { padding:1.5rem 1.25rem; } .xrp-qr { padding:10px; } .xrp-qr img { width:140px; height:140px; } .xrp-title { font-size:0.85rem; } .hero-tagline { font-size:0.65rem; letter-spacing:0; } }
 
+    /* ── PRELOADER ── */
+    .preloader { position:fixed; inset:0; z-index:99999; background:var(--bg); display:flex; align-items:center; justify-content:center; transition:opacity 0.5s, visibility 0.5s; isolation:isolate; }
+    .preloader.done { opacity:0; visibility:hidden; pointer-events:none; }
+    .preloader-text { font-size:0.8rem; font-weight:700; letter-spacing:2px; animation:preloaderPulse 1s ease-in-out infinite alternate; }
+    @keyframes preloaderPulse { from{opacity:0.3} to{opacity:1} }
+
+    /* ── HAMBURGER MENU ── */
+    .nav-hamburger { display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer; padding:0; background:none; border:none; }
+    .nav-hamburger span { display:block; width:100%; height:2px; background:var(--text-muted); border-radius:1px; transition:transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(9px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-9px) rotate(-45deg); }
+    .mobile-menu { position:fixed; top:0; left:0; right:0; bottom:0; z-index:99; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; opacity:0; visibility:hidden; transition:opacity 0.3s, visibility 0.3s; }
+    .mobile-menu.open { opacity:1; visibility:visible; }
+    .mobile-menu a { font-family:'Space Mono',monospace; font-size:0.9rem; letter-spacing:3px; color:var(--text-dim); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--text); }
+
+    /* ── ACTIVE NAV ── */
+    .nav-links a.active { color:var(--text); }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top { position:fixed; bottom:1.5rem; left:1.5rem; width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--card-border); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:90; opacity:0; pointer-events:none; transition:opacity 0.3s, transform 0.2s, border-color 0.2s; }
+    .back-to-top.visible { opacity:1; pointer-events:auto; }
+    .back-to-top:hover { transform:translateY(-2px); border-color:var(--text-muted); }
+    .back-to-top svg { width:14px; height:14px; stroke:var(--text-muted); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox { position:fixed; inset:0; z-index:99999; background:rgba(0,0,0,0.92); display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity 0.3s, visibility 0.3s; cursor:pointer; }
+    .lightbox.active { opacity:1; visibility:visible; }
+    .lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain; transform:scale(0.95); transition:transform 0.3s; }
+    .lightbox.active img { transform:scale(1); }
+    .lightbox-close { position:absolute; top:1.5rem; right:1.5rem; color:#fff; font-size:1.5rem; cursor:pointer; opacity:0.6; transition:opacity 0.2s; background:none; border:none; font-family:'Space Mono',monospace; }
+    .lightbox-close:hover { opacity:1; }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    .scroll-progress { position:fixed; top:0; left:0; height:1px; z-index:101; background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink)); width:0; transition:none; }
+
+
     /* ── RESPONSIVE ── */
     @media (max-width:700px) {
       .nav-links { display:none; }
+      .nav-hamburger { display:flex; }
       .tattoo { display:none; }
       nav { padding:0.5rem 1rem; }
     }
@@ -564,11 +677,17 @@
 </head>
 <body>
 
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="preloader" id="preloader">
+    <div class="preloader-text"><span style="color:var(--yellow)">n</span><span style="color:var(--cyan)">e</span><span style="color:var(--blue)">x</span><span>t</span><span>_</span><span style="color:var(--pink)">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span></div>
+  </div>
+
   <div class="tattoo tattoo-left">next_elite();</div>
   <div class="tattoo tattoo-right">// code your next level</div>
 
   <!-- Terminal Chatbot -->
-  <button class="chat-fab" id="chatFab" aria-label="Open terminal">
+  <button class="chat-fab" id="chatFab" aria-label="Open terminal" title="Terminal (press /)">
     <svg class="icon-chat" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
     <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
@@ -611,14 +730,35 @@
       <div class="nav-right">
         <div class="nav-status"><span class="live-dot"></span> v0.3</div>
         <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
 
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#protocol" class="mobile-nav-link">PROTOCOL</a>
+    <a href="#data" class="mobile-nav-link">DATA</a>
+    <a href="#story" class="mobile-nav-link">STORY</a>
+    <a href="#drop" class="mobile-nav-link">DROP</a>
+    <a href="#feed" class="mobile-nav-link">FEED</a>
+    <a href="#sound" class="mobile-nav-link">SOUND</a>
+    <a href="#signal" class="mobile-nav-link">SIGNAL</a>
+    <a href="tagteach.html" class="mobile-nav-link">TAGTEACH</a>
+    <a href="ai.html" class="mobile-nav-link">AI</a>
+    <a href="subscribe.html" class="mobile-nav-link">JOIN</a>
+    <a href="#roadmap" class="mobile-nav-link">ROADMAP</a>
+    <a href="#log" class="mobile-nav-link">LOG</a>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
   <header class="hero">
+    <div class="hero-orb"></div>
     <h1 class="hero-name glitch" data-text="Nemine Steffensen">Nemine Steffensen</h1>
     <div class="hero-sub">THE PROTOCOL</div>
-    <div class="hero-tagline">next_elite( ); <span style="color:var(--text-muted)">// code your next level</span></div>
+    <div class="hero-tagline">next_elite( ); <span style="color:var(--text-muted)" id="heroComment"></span><span class="hero-cursor" style="color:var(--text-muted);animation:blink 1s step-end infinite;">|</span></div>
     <div class="hero-line"></div>
     <a href="#protocol" class="hero-scroll" onclick="event.preventDefault();document.getElementById('protocol').scrollIntoView({behavior:'smooth'});">
       <div class="hero-scroll-circle">
@@ -628,6 +768,25 @@
   </header>
 
   <div class="manifesto">the protocol is the product.</div>
+
+  <div class="stats-strip reveal">
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--yellow);">220</div>
+      <div class="stat-label">DAYS TRACKED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--cyan);">121</div>
+      <div class="stat-label">BOXING SESSIONS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--blue);">403</div>
+      <div class="stat-label">WORKOUTS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--pink);">51</div>
+      <div class="stat-label">BPM RESTING</div>
+    </div>
+  </div>
 
   <section id="protocol">
     <div class="section reveal" style="padding-bottom:2rem;">
@@ -686,6 +845,21 @@
           <div class="bento-label">SLEEP</div>
         </div>
       </div>
+      <div class="bento-bottom">
+        <div class="bento-card">
+          <div class="bento-val hrv" id="whoopHRV">--</div>
+          <div class="bento-label">HRV</div>
+        </div>
+        <div class="bento-card">
+          <div class="bento-val rhr" id="whoopRHR">--</div>
+          <div class="bento-label">RESTING HR</div>
+        </div>
+      </div>
+      <div class="whoop-perf" style="margin-top:1.5rem;padding:1rem 1.5rem;border:1px solid var(--card-border);border-radius:10px;display:flex;align-items:center;gap:1rem;transition:border-color 0.4s;">
+        <div style="font-size:0.45rem;letter-spacing:2.5px;color:var(--text-muted);flex-shrink:0;">SLEEP PERFORMANCE</div>
+        <div style="flex:1;height:4px;background:var(--card-border);border-radius:2px;overflow:hidden;"><div id="sleepPerfBar" style="height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width 1.5s ease;"></div></div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--purple);min-width:35px;text-align:right;" id="sleepPerfVal">--%</div>
+      </div>
       <div class="whoop-meta">
         <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
         <div style="display:flex;gap:1.5rem;align-items:center;">
@@ -728,6 +902,26 @@
     </div>
   </section>
 
+  <section class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> KENNEL</div>
+    <div class="gallery">
+      <div class="gallery-hero">
+        <img src="kennel-4.jpg" alt="Finished kennel — stained wood with door and window" loading="lazy" />
+      </div>
+      <div class="gallery-detail">
+        <img src="kennel-2.jpg" alt="Kennel frame assembly — open structure with window cutout" loading="lazy" />
+        <img src="kennel-3.jpg" alt="Kennel with roof — stained exterior, side view" loading="lazy" />
+        <img src="kennel-1.jpg" alt="Completed kennel on deck — rooftop view with mountains" loading="lazy" />
+      </div>
+      <div class="gallery-strip">
+        <img src="kennel-5.jpg" alt="Building the frame — wood skeleton structure" loading="lazy" />
+        <img src="kennel-6.jpg" alt="Frame from workshop angle" loading="lazy" />
+        <img src="kennel-7.jpg" alt="Stained wood planks — materials" loading="lazy" />
+        <img src="kennel-8.jpg" alt="Raw wood planks — materials prep" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
   <hr class="div-line" />
 
   <section id="drop" class="section reveal">
@@ -735,7 +929,7 @@
     <div class="drop-wrap">
       <div class="drop-card">
         <div class="drop-card-img-wrap">
-          <img src="meme001.png" alt="Nememe #001" class="drop-card-img" />
+          <img src="meme001.png" alt="Nememe #001" class="drop-card-img" loading="lazy" />
         </div>
         <div class="drop-card-info">
           <div class="drop-card-number">#001</div>
@@ -750,8 +944,8 @@
   <section id="tip" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> SUPPORT</div>
     <div class="xrp-card">
-      <div class="xrp-qr"><img src="xrp-qr.jpg" alt="XRP QR Code" /></div>
-      <div class="xrp-title">send XRP or stay broke</div>
+      <div class="xrp-qr"><img src="xrp-qr.jpg" alt="XRP QR Code" loading="lazy" /></div>
+      <div class="xrp-title">fund the protocol.</div>
       <div class="xrp-sub" style="max-width:400px;margin-left:auto;margin-right:auto;">scan the QR or copy the address below to send XRP directly to the protocol. no middlemen. no banks. every coin goes into building this further.</div>
       <div class="xrp-fields">
         <div class="xrp-field">
@@ -836,6 +1030,7 @@
   <section id="log" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> LOG</div>
     <div class="log">
+      <div class="log-entry"><div class="log-date">27.03.2026</div><div class="log-text">SEO meta tags. Expanded biometrics (HRV, RHR, sleep performance). Stats counter. Kennel gallery + lightbox. Mobile hamburger menu. Nav auto-hide. Scroll progress bar. Hero typing effect + rotating status. DONE badge colors. Gradient dividers. Session timer. Chatbot upgrade. Design audit fixes.</div></div>
       <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Subscription page + Stripe. Membership preview. XRP Playbook. Theme sync. Chatbot polish.</div></div>
       <div class="log-entry"><div class="log-date">26.03.2026</div><div class="log-text">Terminal chatbot. XRP support section. Story gradient border. Full log page.</div></div>
       <div class="log-entry"><div class="log-date">25.03.2026</div><div class="log-text">v0.3 — story, tagteach, clicker, AI pages. built in public.</div></div>
@@ -852,7 +1047,7 @@
       <div style="font-size:0.62rem;color:var(--text-dim);line-height:1.8;">free gets you the signal. paid gets you the system.</div>
       <div style="display:inline-block;margin-top:1rem;font-size:0.45rem;letter-spacing:3px;padding:0.4rem 1.2rem;border:1px dashed var(--text-muted);border-radius:100px;color:var(--text-muted);">LAUNCHING SOON</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+    <div class="membership-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
       <div style="border:1px solid var(--card-border);border-radius:16px;padding:2rem 1.5rem;background:var(--card);">
         <div style="font-size:0.42rem;letter-spacing:2.5px;color:var(--text-muted);margin-bottom:1rem;">OPEN ACCESS</div>
         <div style="font-size:0.9rem;font-weight:700;margin-bottom:0.3rem;">Observer</div>
@@ -889,19 +1084,31 @@
     </section>
   </div>
 
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
+
   <footer class="footer">
     <div class="footer-logo">
       <span class="N">n</span><span class="e1">e</span><span class="x">x</span><span>t</span><span>_</span><span class="pk">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span>
     </div>
     <div class="footer-sub">PROTOCOL v0.3 -- BUILT IN PUBLIC</div>
     <div class="footer-sub" style="margin-top:0.5rem;opacity:0.6;">this site is the process. every version ships raw. watch it evolve.</div>
+    <div class="footer-sub" style="margin-top:1.5rem;opacity:0.35;font-size:0.42rem;">&copy; 2026 NEXTELITE PROTOCOL</div>
     <div class="socials">
       <a href="https://x.com/N3XT3LIT3" target="_blank" class="social-link" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       <a href="https://open.spotify.com/user/1154923706" target="_blank" class="social-link" title="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
+      <a href="https://github.com/n3xt3lit3/nextelite-protocol" target="_blank" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
     </div>
   </footer>
 
   <script>
+    /* ── PRELOADER ── */
+    window.addEventListener('load', function() {
+      setTimeout(function() { document.getElementById('preloader').classList.add('done'); }, 400);
+    });
+
     /* ── THEME ── */
     var toggle = document.getElementById('themeToggle');
     var html = document.documentElement;
@@ -934,8 +1141,17 @@
     fetch('whoop_data.json').then(function(r){return r.json();}).then(function(d) {
       whoopData = d;
       var date = new Date(d.updated);
-      var t = date.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' + date.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-      document.getElementById('whoopNote').textContent = 'LAST SIGNAL: ' + t.toUpperCase();
+      var noteEl = document.getElementById('whoopNote');
+      function updateAgo() {
+        var diff = Date.now() - date.getTime();
+        var mins = Math.floor(diff / 60000);
+        var hrs = Math.floor(mins / 60);
+        var days = Math.floor(hrs / 24);
+        var ago = days > 0 ? days + 'd ago' : hrs > 0 ? hrs + 'h ago' : mins + 'm ago';
+        noteEl.textContent = 'LAST SIGNAL: ' + ago.toUpperCase();
+      }
+      updateAgo();
+      setInterval(updateAgo, 60000);
     }).catch(function(){});
 
     /* ── COUNT-UP ANIMATION ── */
@@ -960,6 +1176,12 @@
           if (whoopData.recovery !== null && whoopData.recovery !== undefined) countUp(document.getElementById('whoopRecovery'), whoopData.recovery, '%', 1500);
           if (whoopData.strain !== null && whoopData.strain !== undefined) countUp(document.getElementById('whoopStrain'), whoopData.strain, '', 1500);
           if (whoopData.sleep_hours !== null && whoopData.sleep_hours !== undefined) countUp(document.getElementById('whoopSleep'), whoopData.sleep_hours, 'h', 1500);
+          if (whoopData.hrv !== null && whoopData.hrv !== undefined) countUp(document.getElementById('whoopHRV'), Math.round(whoopData.hrv), '', 1500);
+          if (whoopData.rhr !== null && whoopData.rhr !== undefined) countUp(document.getElementById('whoopRHR'), Math.round(whoopData.rhr), '', 1500);
+          if (whoopData.sleep_performance !== null && whoopData.sleep_performance !== undefined) {
+            document.getElementById('sleepPerfBar').style.width = whoopData.sleep_performance + '%';
+            countUp(document.getElementById('sleepPerfVal'), whoopData.sleep_performance, '%', 1500);
+          }
         }
       });
     }, {threshold: 0.3});
@@ -976,6 +1198,26 @@
     var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
     reveals.forEach(function(el) { obs.observe(el); });
 
+    /* ── HERO TYPING EFFECT ── */
+    (function() {
+      var text = '// code your next level';
+      var el = document.getElementById('heroComment');
+      var cursor = document.querySelector('.hero-cursor');
+      var i = 0;
+      setTimeout(function() {
+        var interval = setInterval(function() {
+          if (i < text.length) {
+            el.textContent += text[i];
+            i++;
+          } else {
+            clearInterval(interval);
+            setTimeout(function() { cursor.style.display = 'none'; }, 2500);
+          }
+        }, 65);
+      }, 1800);
+    })();
+
+
     /* ── TERMINAL CHATBOT ── */
     var chatFab=document.getElementById('chatFab'), chatWin=document.getElementById('chatWindow'), chatMsgs=document.getElementById('chatMessages'), chatIn=document.getElementById('chatInput'), chatOpen=false;
 
@@ -985,17 +1227,22 @@
       tagteach: "TagTeach breaks complex skills into tag points — small, achievable steps marked with an audible 'tag' when done correctly. Used in boxing training here.",
       clicker: "Clicker training uses operant conditioning and a marker signal to shape precise behaviors in dogs. Based on science, not dominance. All training resources are from canis.no.",
       dogs: "Dog training here is 100% clicker-based. Positive reinforcement, marker signals, and shaping. Check the Clicker Training page for more.",
-      whoop: "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol — training intensity adapts to biometric signals.",
+      whoop: function(){ return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol — training intensity adapts to biometric signals. Current recovery: " + (whoopData.recovery || '--') + "%."; },
       xrp: "Building on XRPL. Nememe #001 is the first NFT drop — 1/1 edition, not yet minted. More drops coming.",
       nft: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
       drop: "Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted. It's the first collectible drop from NextElite.",
       stack: "The daily protocol: morning routine at 06:00, boxing, dog work, WHOOP-led recovery in the afternoon, and building in the evening.",
       protocol: "NextElite is a personal protocol — not a product you buy, but a system you live. Boxing, clicker training, biohacking, XRP. Code your next level.",
       ai: "AI services — build with AI, no code required. Automations, agents, and tools crafted for real use cases.",
-      pillars: "Four pillars: Boxing (TagTeach), Clicker Training (dogs), XRP (XRPL building), and WHOOP (biometric data). Each one feeds the protocol.",
+      pillars: "Five pillars: Boxing (TagTeach), Clicker Training (dogs), XRP (XRPL building), WHOOP (biometric data), and AI. Each one feeds the protocol.",
       story: "It started with soccer — Energikampen — and evolved into something bigger. The full origin story is on the Story page.",
-      sound: "The site has an ambient sound layer — subtle audio that adds atmosphere. Toggle it on to experience the full vibe.",
-      site: "This site is built from scratch — no frameworks, no templates. Pure HTML, CSS, and JS. Open source on GitHub."
+      sound: "The Sound section has the protocol playlist — boxing, focus, and grind tracks curated on Spotify.",
+      site: "This site is built from scratch — no frameworks, no templates. Pure HTML, CSS, and JS. Open source on GitHub.",
+      help: "Commands: about, boxing, tagteach, clicker, dogs, whoop, xrp, nft, stack, protocol, ai, pillars, story, sound, site, stats, membership, kennel. Or just ask a question.",
+      stats: "220 days tracked. 121 boxing sessions. 403 workouts. 51 bpm resting heart rate. The numbers don't lie.",
+      membership: "Two tiers: Observer (free — biometrics, roadmap, signal, everything public) and Gym Access (199 NOK/mo — gym + full protocol, breakdowns, Q&A). Launching soon.",
+      kennel: "The kennel gallery shows the dogs in their element. Clicker training, shaping, and daily work — all captured in raw photos.",
+      version: "NextElite Protocol v0.3 — built in public, shipped raw. Every version is a snapshot of the grind."
     };
 
     function findAnswer(q) {
@@ -1008,12 +1255,15 @@
       var keyMap = {
         'boxing':['boxing','box','fight','train'], 'tagteach':['tagteach','tag teach','tag point','marker'],
         'clicker':['clicker','operant','shaping','marker signal'], 'dogs':['dog','dogs','canine','puppy'],
-        'whoop':['whoop','recovery','strain','sleep','biometric','hrv'], 'xrp':['xrp','xrpl','crypto','ledger','ripple'],
+        'whoop':['whoop','recovery','strain','sleep','biometric','hrv','rhr','heart rate'], 'xrp':['xrp','xrpl','crypto','ledger','ripple'],
         'nft':['nft','nememe','mint','collectible'], 'drop':['drop'],
         'stack':['stack','routine','daily','morning','schedule','day'], 'protocol':['protocol','system','method'],
-        'ai':['ai','automation','agent','artificial'], 'pillars':['pillar','pillars','four'],
-        'story':['story','origin','soccer','energikampen','how it started'], 'sound':['sound','audio','music','ambient'],
-        'site':['site','website','code','github','open source','tech']
+        'ai':['ai','automation','agent','artificial'], 'pillars':['pillar','pillars','five'],
+        'story':['story','origin','soccer','energikampen','how it started'], 'sound':['sound','audio','music','spotify','playlist'],
+        'site':['site','website','code','github','open source','tech'],
+        'help':['help','commands','menu','options','what can'], 'stats':['stats','numbers','data','sessions','workouts'],
+        'membership':['membership','member','subscribe','join','tier','price','plan','gym'],
+        'kennel':['kennel','gallery','photos','pictures'], 'version':['version','v0','update','changelog']
       };
 
       var best=null, bestScore=0;
@@ -1024,12 +1274,15 @@
         if(score>bestScore){bestScore=score;best=key;}
       }
 
-      if(best && bestScore>=2) return knowledge[best];
+      if(best && bestScore>=2) { var val = knowledge[best]; return typeof val === 'function' ? val() : val; }
 
       var greetings=['hi','hey','hello','yo','sup','what\'s up','whats up'];
-      if(greetings.some(function(g){return q===g||q.startsWith(g+' ');})) return "Hey. Ask me anything about the protocol — boxing, clicker training, WHOOP, XRP, or the daily stack.";
+      if(greetings.some(function(g){return q===g||q.startsWith(g+' ');})) return "Hey. Ask me anything about the protocol — or type 'help' to see all topics.";
 
-      return "Interesting question. I know about the protocol, boxing, tagteach, clicker training, dogs, WHOOP, XRP, NFT drops, the daily stack, AI, and the story. Try asking about one of those.";
+      if(q==='42') return "The answer to life, the universe, and everything. You get it.";
+      if(q==='gm'||q==='gn') return q==='gm' ? "gm. time to grind." : "gn. recover hard. tomorrow we go again.";
+
+      return "Don't know that one yet. Type 'help' to see what I can answer.";
     }
 
     function addLine(html) {
@@ -1073,7 +1326,80 @@
       if(chatOpen)setTimeout(function(){chatIn.focus();},100);
     });
     chatIn.addEventListener('keydown',function(e){if(e.key==='Enter')sendChat();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&chatOpen){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');}});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&lightbox.classList.contains('active')){lightbox.classList.remove('active');document.body.style.overflow='';return;}
+      if(e.key==='Escape'&&chatOpen){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');}
+      if(e.key==='/'&&!chatOpen&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'){e.preventDefault();chatOpen=true;chatFab.classList.add('open');chatWin.classList.add('open');setTimeout(function(){chatIn.focus();},100);}
+    });
+
+    /* ── HAMBURGER MENU ── */
+    var hamburger = document.getElementById('navHamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    /* ── ACTIVE NAV HIGHLIGHTING ── */
+    var navSections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    var activeObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navLinks.forEach(function(link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+    navSections.forEach(function(sec) { activeObs.observe(sec); });
+
+    /* ── NAV AUTO-HIDE + SCROLL PROGRESS + BACK TO TOP ── */
+    var lastScrollY = 0;
+    var navEl = document.querySelector('nav');
+    var scrollProg = document.getElementById('scrollProgress');
+    var btt = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+      var sy = window.scrollY;
+      if (sy > 200 && sy > lastScrollY) {
+        navEl.classList.add('nav-hidden');
+      } else {
+        navEl.classList.remove('nav-hidden');
+      }
+      lastScrollY = sy;
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProg.style.width = docH > 0 ? (sy / docH * 100) + '%' : '0%';
+      btt.classList.toggle('visible', sy > 600);
+    });
+
+
+    /* ── LIGHTBOX ── */
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('.gallery img').forEach(function(img) {
+      img.addEventListener('click', function() {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    lightbox.addEventListener('click', function() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    /* ── BACK TO TOP ── */
+    btt.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
