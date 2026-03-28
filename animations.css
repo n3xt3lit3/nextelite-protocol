@@ -1,0 +1,188 @@
+/* ══════════════════════════════════════════════
+   NEXTELITE — ANIMATION LIBRARY
+   Drop any of these into a page. Copy the CSS +
+   add the matching class to your HTML.
+   ══════════════════════════════════════════════ */
+
+/* ── RAINBOW GRADIENT TEXT ──
+   Usage: <h1 class="rainbow-text">Text</h1>
+*/
+.rainbow-text {
+  background: linear-gradient(90deg, #F5C400, #00BADF, #3B6EF5, #E8197A, #a855f7, #F5C400);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowShift 6s linear infinite;
+}
+@keyframes rainbowShift { 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
+
+
+/* ── GLITCH EFFECT ──
+   Usage: <span class="glitch" data-text="Your Text">Your Text</span>
+   Requires --cyan and --pink CSS vars
+*/
+.glitch { position: relative; }
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; opacity: 0;
+}
+.glitch::before { color: var(--cyan, #00BADF); animation: glitch-1 8s infinite linear; }
+.glitch::after { color: var(--pink, #E8197A); animation: glitch-2 8s infinite linear; }
+@keyframes glitch-1 {
+  0%,94%,96%,100% { opacity:0; transform:none; }
+  94.5% { opacity:0.7; transform:translate(-2px,-1px); clip-path:inset(20% 0 60% 0); }
+  95.5% { opacity:0.7; transform:translate(2px,1px); clip-path:inset(50% 0 20% 0); }
+}
+@keyframes glitch-2 {
+  0%,95%,97%,100% { opacity:0; transform:none; }
+  95.5% { opacity:0.5; transform:translate(2px,1px); clip-path:inset(40% 0 30% 0); }
+  96.5% { opacity:0.5; transform:translate(-1px,-2px); clip-path:inset(10% 0 70% 0); }
+}
+
+
+/* ── GRADIENT ORB (hero background) ──
+   Usage: <div class="anim-orb"></div> inside a position:relative container
+*/
+.anim-orb {
+  position: absolute;
+  width: clamp(320px, 50vw, 560px);
+  aspect-ratio: 1;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(245,196,0,0.35), rgba(0,186,223,0.25), rgba(59,110,245,0.20), rgba(232,25,122,0.18), rgba(245,196,0,0.35));
+  filter: blur(90px);
+  animation: orbPulse 12s ease-in-out infinite alternate, orbDrift 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes orbPulse {
+  0% { opacity:0.7; transform:translate(-50%,-50%) scale(1); }
+  100% { opacity:0.7; transform:translate(-50%,-50%) scale(1.12); }
+}
+@keyframes orbDrift {
+  0% { border-radius:50%; }
+  25% { border-radius:42% 58% 55% 45% / 55% 42% 58% 45%; }
+  50% { border-radius:55% 45% 42% 58% / 45% 55% 45% 55%; }
+  75% { border-radius:45% 55% 58% 42% / 58% 45% 55% 42%; }
+  100% { border-radius:50%; }
+}
+
+
+/* ── FADE UP (staggered entry) ──
+   Usage: add class="fadeup" and optionally style="--delay: 0.2s"
+*/
+.fadeup { opacity:0; transform:translateY(20px); animation: fadeUp 1s var(--delay, 0s) forwards; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+
+/* ── CLIP-PATH REVEAL (Norris-style) ──
+   Usage: add class="clip-reveal", trigger .visible via IntersectionObserver
+*/
+.clip-reveal {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: clip-path 1s cubic-bezier(0.65, 0.05, 0, 1);
+}
+.clip-reveal.visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+
+/* ── SCROLL REVEAL (basic) ──
+   Usage: add class="reveal", trigger .visible via IntersectionObserver
+   JS: new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1}).observe(el)
+*/
+.reveal { opacity:0; transform:translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+
+/* ── INFINITE MARQUEE ──
+   Usage: <div class="marquee-wrap"><div class="marquee-track">content duplicated</div></div>
+*/
+.marquee-wrap { overflow:hidden; white-space:nowrap; }
+.marquee-track { display:inline-flex; animation: marqueeScroll 20s linear infinite; }
+@keyframes marqueeScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+
+/* ── PULSE DOT ──
+   Usage: <span class="pulse-dot"></span>
+*/
+.pulse-dot { width:5px; height:5px; border-radius:50%; background:#22c55e; animation: pulse 2.5s infinite; display:inline-block; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+
+/* ── TYPING CURSOR ──
+   Usage: <span class="typing-cursor">|</span>
+*/
+.typing-cursor { animation: blink 1s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+
+/* ── BOB (scroll indicator) ──
+   Usage: add class="bob" to a scroll chevron
+*/
+.bob { animation: bob 2.5s infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)} }
+
+
+/* ── NEON GLOW HOVER ──
+   Usage: add data-glow="yellow|cyan|blue|pink|purple" to a card
+*/
+[data-glow="yellow"]:hover { box-shadow: 0 4px 24px rgba(245,196,0,0.12); }
+[data-glow="cyan"]:hover { box-shadow: 0 4px 24px rgba(0,186,223,0.12); }
+[data-glow="blue"]:hover { box-shadow: 0 4px 24px rgba(59,110,245,0.12); }
+[data-glow="pink"]:hover { box-shadow: 0 4px 24px rgba(232,25,122,0.12); }
+[data-glow="purple"]:hover { box-shadow: 0 4px 24px rgba(168,85,247,0.12); }
+
+
+/* ── SCROLL LINE (Norris-style hero indicator) ──
+   Usage: <div class="scroll-line"></div>
+*/
+.scroll-line { width:1px; height:40px; background:var(--card-border, #1a1a1e); margin:0 auto; position:relative; overflow:hidden; }
+.scroll-line::after { content:''; position:absolute; top:-40px; left:0; width:1px; height:40px; background:var(--accent, #00BADF); animation: scrollLine 2s infinite; }
+@keyframes scrollLine { 0%{top:-40px} 100%{top:40px} }
+
+
+/* ── PRELOADER PULSE ──
+   Usage: wrap text in .preloader-text inside a .preloader container
+*/
+.preloader { position:fixed; inset:0; z-index:99999; background:var(--bg, #0a0a0a); display:flex; align-items:center; justify-content:center; transition:opacity 0.5s, visibility 0.5s; }
+.preloader.done { opacity:0; visibility:hidden; pointer-events:none; }
+.preloader-text { font-size:0.8rem; font-weight:700; letter-spacing:2px; animation: preloaderPulse 1s ease-in-out infinite alternate; }
+@keyframes preloaderPulse { from{opacity:0.3} to{opacity:1} }
+
+
+/* ── GRAIN TEXTURE OVERLAY ──
+   Usage: apply to body::before or any ::before pseudo-element
+   Already in body::before in most variants — this is just the reference
+*/
+.grain-overlay::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px;
+}
+
+
+/* ── SNAP-SETTLE EASING (Norris timing) ──
+   Usage: transition: all 0.75s var(--snap-ease);
+*/
+:root {
+  --snap-ease: cubic-bezier(0.65, 0.05, 0, 1);
+}
+
+
+/* ── CHAT SLIDE UP ──
+   Usage: applied to chat window on open
+*/
+@keyframes chatSlideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+
+/* ── TYPING BOUNCE (chatbot dots) ──
+   Usage: <span></span><span></span><span></span> inside .chat-typing
+*/
+@keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} }
