@@ -16,7 +16,7 @@
   <meta name="twitter:title" content="NextElite Protocol" />
   <meta name="twitter:description" content="Boxing. Clicker Training. Biohacking. XRPL. The protocol is the product." />
   <meta name="twitter:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
@@ -304,7 +304,7 @@
     }
 
     .hero-scroll {
-      position: absolute; bottom: 2.5rem;
+      position: absolute; bottom: 1.5rem;
       opacity: 0; animation: fadeUp 1s 1.2s forwards;
     }
     .hero-scroll-circle {
@@ -467,7 +467,7 @@
     /* ── ROADMAP ── */
     .rm-progress { height:3px; border-radius:2px; background:var(--card-border); margin-bottom:2.5rem; overflow:hidden; }
     .rm-progress-bar { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink)); transition:width 1.5s ease; width:0; }
-    .reveal.visible .rm-progress-bar { width:60%; }
+    .reveal.visible .rm-progress-bar { width:65%; }
     .rm-phase-label { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); margin:2rem 0 0.75rem; }
     .rm-phase-label:first-of-type { margin-top:0; }
     .roadmap { position:relative; padding-left:0; }
@@ -626,6 +626,7 @@
     .chat-typing span:nth-child(3) { animation-delay:0.3s; }
     @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} }
     @media (max-width:500px) { .chat-window { bottom:0; right:0; width:100%; height:100%; max-width:100%; max-height:100%; border-radius:0; } .chat-fab.open { display:none; } .chat-side-text { display:none; } .term-close { display:flex; } .term-live-dot { display:none; } }
+    @media (max-width:540px) { .drop-grid-2col { grid-template-columns:1fr !important; } }
     @media (max-width:420px) { .xrp-card { padding:1.5rem 1.25rem; } .xrp-qr { padding:10px; } .xrp-qr img { width:140px; height:140px; } .xrp-title { font-size:0.85rem; } .hero-tagline { font-size:0.65rem; letter-spacing:0; } }
 
     /* ── PRELOADER ── */
@@ -720,7 +721,6 @@
         <li><a href="#drop">DROP</a></li>
         <li><a href="#feed">FEED</a></li>
         <li><a href="#sound">SOUND</a></li>
-        <li><a href="#signal">SIGNAL</a></li>
         <li><a href="tagteach.html">TAGTEACH</a></li>
         <li><a href="ai.html">AI</a></li>
         <li><a href="xrp.html">XRP</a></li>
@@ -743,11 +743,9 @@
     <a href="#drop" class="mobile-nav-link">DROP</a>
     <a href="#feed" class="mobile-nav-link">FEED</a>
     <a href="#sound" class="mobile-nav-link">SOUND</a>
-    <a href="#signal" class="mobile-nav-link">SIGNAL</a>
     <a href="tagteach.html" class="mobile-nav-link">TAGTEACH</a>
     <a href="ai.html" class="mobile-nav-link">AI</a>
     <a href="xrp.html" class="mobile-nav-link">XRP</a>
-    <a href="dashboard.html" class="mobile-nav-link">DASHBOARD</a>
     <a href="subscribe.html" class="mobile-nav-link">JOIN</a>
     <a href="#roadmap" class="mobile-nav-link">ROADMAP</a>
     <a href="#log" class="mobile-nav-link">LOG</a>
@@ -763,7 +761,8 @@
     <div class="hero-sub">THE PROTOCOL</div>
     <div class="hero-tagline">next_elite( ); <span style="color:var(--text-muted)" id="heroComment"></span><span class="hero-cursor" style="color:var(--text-muted);animation:blink 1s step-end infinite;">|</span></div>
     <div class="hero-line"></div>
-    <a href="#protocol" class="hero-scroll" onclick="event.preventDefault();document.getElementById('protocol').scrollIntoView({behavior:'smooth'});">
+    <div style="height:3rem;"></div>
+    <a href="#protocol" class="hero-scroll" style="position:relative;bottom:auto;" onclick="event.preventDefault();document.getElementById('protocol').scrollIntoView({behavior:'smooth'});">
       <div class="hero-scroll-circle">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
@@ -877,8 +876,8 @@
       </div>
     </section>
 
-    <div style="margin-top:2.5rem;">
-      <div class="section-label" style="margin-bottom:1.5rem;"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
+    <div class="section" style="padding-top:0;">
+      <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
       <div class="stack">
         <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
         <div class="stack-item"><div class="stack-name">Boxing</div><div class="stack-value">TagTeach sessions</div></div>
@@ -910,31 +909,9 @@
     </div>
   </section>
 
-  <section class="section reveal">
-    <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> KENNEL</div>
-    <div class="gallery">
-      <div class="gallery-hero">
-        <img src="kennel-4.jpg" alt="Finished kennel — stained wood with door and window" loading="lazy" />
-      </div>
-      <div class="gallery-detail">
-        <img src="kennel-2.jpg" alt="Kennel frame assembly — open structure with window cutout" loading="lazy" />
-        <img src="kennel-3.jpg" alt="Kennel with roof — stained exterior, side view" loading="lazy" />
-        <img src="kennel-1.jpg" alt="Completed kennel on deck — rooftop view with mountains" loading="lazy" />
-      </div>
-      <div class="gallery-strip">
-        <img src="kennel-5.jpg" alt="Building the frame — wood skeleton structure" loading="lazy" />
-        <img src="kennel-6.jpg" alt="Frame from workshop angle" loading="lazy" />
-        <img src="kennel-7.jpg" alt="Stained wood planks — materials" loading="lazy" />
-        <img src="kennel-8.jpg" alt="Raw wood planks — materials prep" loading="lazy" />
-      </div>
-    </div>
-  </section>
-
-  <hr class="div-line" />
-
   <section id="drop" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> XRP & DROPS</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+    <div class="drop-grid-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
       <div class="drop-card" style="margin:0;">
         <div class="drop-card-img-wrap">
           <img src="meme001.png" alt="Nememe #001" class="drop-card-img" loading="lazy" />
@@ -952,7 +929,7 @@
           <div class="xrp-playbook-line"></div>
           <div class="x-hint">MEME EDITION — where memes teach better than textbooks</div>
         </div>
-        <div class="x-arrow">-></div>
+        <div class="x-arrow" style="align-self:flex-end;">-></div>
       </a>
     </div>
     <div style="text-align:center;margin-top:2rem;">
