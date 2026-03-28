@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextElite Protocol — Nemine Steffensen</title>
+  <meta name="description" content="NextElite Protocol — boxing, clicker training, biohacking & XRPL. Built in public by Nemine Steffensen." />
+  <meta property="og:title" content="NextElite Protocol" />
+  <meta property="og:description" content="Boxing. Clicker Training. Biohacking. XRPL. The protocol is the product." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@N3XT3LIT3" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #00BADF; }
+    [data-theme="dark"] {
+      --bg: #0a0a0f; --bg-raised: #111118; --card: #16161d;
+      --card-border: #1e1e28; --text: #f0f0f2; --text-dim: #8a8a9a;
+      --text-muted: #4a4a5a; --nav-bg: rgba(10,10,15,0.9);
+    }
+    [data-theme="light"] {
+      --bg: #fafafa; --bg-raised: #f0f0f2; --card: #ffffff;
+      --card-border: #e0e0e4; --text: #0a0a0f; --text-dim: #6a6a7a;
+      --text-muted: #9a9aa8; --nav-bg: rgba(250,250,250,0.9);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; transition:background 0.4s, color 0.4s; }
+    a { color:inherit; text-decoration:none; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--card-border); padding:0 3rem; height:4rem; display:flex; align-items:center; justify-content:space-between; transition:background 0.4s, border-color 0.4s; }
+    .nav-logo { font-size:0.85rem; font-weight:900; letter-spacing:4px; }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { font-size:0.7rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); transition:color 0.2s; }
+    .nav-links a:hover { color:var(--text); }
+    .nav-right { display:flex; align-items:center; gap:1rem; }
+    .theme-toggle { width:36px; height:20px; border-radius:100px; border:1px solid var(--card-border); background:var(--bg-raised); cursor:pointer; position:relative; transition:all 0.3s; flex-shrink:0; }
+    .theme-toggle::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--text-muted); transition:transform 0.3s, background 0.3s; }
+    [data-theme="light"] .theme-toggle::after { transform:translateX(16px); background:var(--text); }
+    .nav-hamburger { display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer; background:none; border:none; padding:0; }
+    .nav-hamburger span { display:block; width:100%; height:2px; background:var(--text-muted); border-radius:1px; transition:transform 0.3s, opacity 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(9px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-9px) rotate(-45deg); }
+    .mobile-menu { position:fixed; inset:0; z-index:99; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2rem; opacity:0; visibility:hidden; transition:all 0.3s; }
+    .mobile-menu.open { opacity:1; visibility:visible; }
+    .mobile-menu a { font-size:1rem; font-weight:700; letter-spacing:4px; color:var(--text-dim); transition:color 0.2s; }
+    @media(max-width:700px) { .nav-links{display:none;} .nav-hamburger{display:flex;} nav{padding:0 1.5rem;} }
+
+    /* HERO */
+    .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6rem 2rem; }
+    .hero-label { font-size:0.65rem; font-weight:700; letter-spacing:6px; color:var(--text-muted); margin-bottom:1.5rem; }
+    .hero-name { font-size:clamp(2.5rem, 7vw, 5rem); font-weight:900; letter-spacing:-0.02em; line-height:1; margin-bottom:1.5rem; }
+    .hero-tagline { font-size:0.85rem; color:var(--text-dim); letter-spacing:1px; line-height:1.8; }
+    .hero-tagline .accent { color:var(--accent); }
+
+    /* SECTIONS */
+    .section { max-width:720px; margin:0 auto; padding:8rem 2rem; }
+    .section-large { padding:10rem 2rem; }
+    .section-label { font-size:0.6rem; font-weight:700; letter-spacing:4px; color:var(--text-muted); margin-bottom:3rem; text-transform:uppercase; }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(20px); transition:opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ABOUT */
+    .about { font-size:1.1rem; color:var(--text-dim); line-height:2; text-align:center; max-width:520px; margin:0 auto; }
+
+    /* PILLAR ROWS */
+    .pillar-row { display:flex; align-items:center; justify-content:space-between; padding:1.8rem 0; border-bottom:1px solid var(--card-border); transition:all 0.2s; cursor:pointer; text-decoration:none; }
+    .pillar-row:first-child { border-top:1px solid var(--card-border); }
+    .pillar-row:hover { padding-left:0.5rem; }
+    .pillar-row:hover .pillar-arrow { transform:translateX(4px); color:var(--accent); }
+    .pillar-name { font-size:1rem; font-weight:700; letter-spacing:1px; }
+    .pillar-desc { font-size:0.75rem; color:var(--text-dim); flex:1; text-align:right; margin:0 2rem; }
+    .pillar-arrow { font-size:0.85rem; color:var(--text-muted); transition:all 0.2s; }
+    @media(max-width:540px) { .pillar-desc{display:none;} }
+
+    /* STORY CARD */
+    .story-block { padding:3rem 2.5rem; border:1px solid var(--card-border); transition:all 0.3s; cursor:pointer; }
+    .story-block:hover { border-color:var(--accent); }
+    .story-block h3 { font-size:1.2rem; font-weight:700; margin-bottom:0.5rem; }
+    .story-block p { font-size:0.8rem; color:var(--text-dim); line-height:1.8; margin-bottom:1.5rem; }
+    .story-block .arrow { font-size:0.7rem; letter-spacing:3px; color:var(--text-muted); transition:color 0.2s; }
+    .story-block:hover .arrow { color:var(--accent); }
+
+    /* DROP GRID */
+    .drop-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    @media(max-width:540px) { .drop-grid{grid-template-columns:1fr;} }
+    .drop-card { border:1px solid var(--card-border); overflow:hidden; transition:border-color 0.3s; }
+    .drop-card:hover { border-color:var(--accent); }
+    .drop-card-img-wrap { background:#0a0a14; padding:1rem; }
+    .drop-card-img-wrap img { width:100%; display:block; }
+    .drop-card-info { padding:1.2rem; }
+    .drop-card-number { font-size:0.5rem; letter-spacing:3px; color:var(--text-muted); }
+    .drop-card-title { font-size:0.85rem; font-weight:700; margin-top:0.3rem; }
+    .drop-card-meta { font-size:0.6rem; color:var(--text-dim); margin-top:0.3rem; }
+    .drop-card-status { font-size:0.5rem; letter-spacing:2px; color:var(--accent); margin-top:0.5rem; }
+
+    /* LINK CARD */
+    .link-card { display:flex; align-items:center; justify-content:space-between; padding:2rem 2.5rem; border:1px solid var(--card-border); transition:all 0.3s; text-decoration:none; }
+    .link-card:hover { border-color:var(--accent); }
+    .link-card-title { font-size:1.1rem; font-weight:700; }
+    .link-card-hint { font-size:0.7rem; color:var(--text-dim); margin-top:0.3rem; }
+    .link-card-arrow { font-size:0.85rem; color:var(--text-muted); transition:all 0.2s; }
+    .link-card:hover .link-card-arrow { transform:translateX(4px); color:var(--accent); }
+
+    /* PILL BUTTON */
+    .pill-btn { display:inline-block; padding:0.8rem 2rem; border-radius:9999px; font-size:0.65rem; font-weight:700; letter-spacing:2px; border:1px solid var(--text); color:var(--text); transition:all 0.2s; cursor:pointer; background:none; font-family:'Inter',sans-serif; }
+    .pill-btn:hover { background:var(--text); color:var(--bg); }
+    .pill-btn-accent { border-color:var(--accent); color:var(--accent); }
+    .pill-btn-accent:hover { background:var(--accent); color:#000; }
+
+    /* SUBSCRIBE */
+    .subscribe-form { display:flex; border:1px solid var(--card-border); overflow:hidden; max-width:420px; margin:1.5rem auto 0; }
+    .subscribe-form input { flex:1; background:transparent; border:none; color:var(--text); font-family:'Inter',sans-serif; font-size:0.8rem; padding:1rem 1.2rem; outline:none; }
+    .subscribe-form input::placeholder { color:var(--text-muted); }
+    .subscribe-form button { background:var(--accent); border:none; color:#000; font-family:'Inter',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:2px; padding:1rem 1.5rem; cursor:pointer; transition:opacity 0.2s; }
+    .subscribe-form button:hover { opacity:0.85; }
+    .subscribe-ok { font-size:0.7rem; color:var(--accent); margin-top:1rem; display:none; text-align:center; }
+
+    /* SOCIALS */
+    .socials { display:flex; justify-content:center; gap:1.5rem; margin-top:2rem; }
+    .social-link { width:36px; height:36px; display:flex; align-items:center; justify-content:center; border:1px solid var(--card-border); border-radius:50%; color:var(--text-muted); transition:all 0.2s; }
+    .social-link:hover { color:var(--text); border-color:var(--text-dim); }
+    .social-link svg { width:14px; height:14px; fill:currentColor; }
+
+    /* FOOTER */
+    .footer { text-align:center; padding:6rem 2rem 4rem; border-top:1px solid var(--card-border); }
+    .footer-logo { font-size:0.75rem; font-weight:900; letter-spacing:4px; margin-bottom:0.75rem; }
+    .footer-sub { font-size:0.55rem; color:var(--text-muted); letter-spacing:2px; }
+
+    /* DIVIDER */
+    .div-line { border:none; height:1px; background:var(--card-border); margin:0; }
+
+    /* CHATBOT */
+    .chat-fab { position:fixed; bottom:1.5rem; right:1.5rem; width:48px; height:48px; border-radius:50%; background:var(--card); border:1px solid var(--card-border); cursor:pointer; z-index:9998; display:flex; align-items:center; justify-content:center; transition:transform 0.2s, border-color 0.2s; }
+    .chat-fab:hover { transform:scale(1.05); border-color:var(--text-muted); }
+    .chat-fab svg { width:20px; height:20px; fill:none; stroke:var(--text-dim); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+    .chat-fab.open svg.icon-chat { display:none; }
+    .chat-fab:not(.open) svg.icon-close { display:none; }
+    .chat-window { position:fixed; bottom:5rem; right:1.5rem; width:400px; max-width:calc(100vw - 2rem); height:500px; max-height:calc(100vh - 8rem); background:var(--card); border:1px solid var(--card-border); z-index:9999; display:none; flex-direction:column; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,0.2); }
+    .chat-window.open { display:flex; animation:chatSlideUp 0.2s ease; }
+    @keyframes chatSlideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .term-bar { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1.1rem; border-bottom:1px solid var(--card-border); }
+    .term-name { font-size:0.7rem; font-weight:700; letter-spacing:1px; }
+    .term-close { background:none; border:none; cursor:pointer; color:var(--text-muted); display:none; padding:0.2rem; }
+    .chat-messages { flex:1; overflow-y:auto; padding:1.25rem; font-family:'Inter',sans-serif; font-size:0.75rem; line-height:1.8; color:var(--text-dim); }
+    .chat-line { margin-bottom:0.5rem; white-space:pre-wrap; word-break:break-word; }
+    .chat-line .prompt { color:var(--accent); }
+    .chat-line .user-cmd { color:var(--text); }
+    .chat-line .response { color:var(--text-dim); }
+    .chat-line .dim { color:var(--text-muted); }
+    .chat-line .accent { color:var(--accent); }
+    .term-input-row { display:flex; align-items:center; padding:0.7rem 1rem; border-top:1px solid var(--card-border); gap:0.5rem; }
+    .term-prompt { font-size:0.75rem; color:var(--accent); flex-shrink:0; }
+    .term-input { background:none; border:none; outline:none; color:var(--text); font-family:'Inter',sans-serif; font-size:0.75rem; width:100%; }
+    .term-input::placeholder { color:var(--text-muted); }
+    .chat-typing { margin-bottom:0.5rem; }
+    .chat-typing span { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--text-muted); margin:0 2px; animation:typingBounce 1.2s infinite; }
+    .chat-typing span:nth-child(2) { animation-delay:0.15s; }
+    .chat-typing span:nth-child(3) { animation-delay:0.3s; }
+    @keyframes typingBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} }
+    @media(max-width:500px) { .chat-window{bottom:0;right:0;width:100%;height:100%;max-width:100%;max-height:100%;} .chat-fab.open{display:none;} .term-close{display:flex;} }
+
+    /* BACK TO TOP */
+    .back-to-top { position:fixed; bottom:1.5rem; left:1.5rem; width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--card-border); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:90; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+    .back-to-top.visible { opacity:1; pointer-events:auto; }
+    .back-to-top svg { width:14px; height:14px; stroke:var(--text-muted); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* SCROLL PROGRESS */
+    .scroll-progress { position:fixed; top:0; left:0; height:1px; z-index:101; background:var(--accent); width:0; }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <button class="chat-fab" id="chatFab" aria-label="Open terminal">
+    <svg class="icon-chat" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="chat-window" id="chatWindow">
+    <div class="term-bar">
+      <span class="term-name">NEXTELITE</span>
+      <button class="term-close" id="termClose" aria-label="Close"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="term-input-row">
+      <span class="term-prompt">&gt;</span>
+      <input type="text" class="term-input" id="chatInput" placeholder="ask anything..." autocomplete="off" spellcheck="false" />
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-logo">NEXTELITE</div>
+    <ul class="nav-links">
+      <li><a href="#protocol">PROTOCOL</a></li>
+      <li><a href="#story">STORY</a></li>
+      <li><a href="#drop">XRP</a></li>
+      <li><a href="#subscribe">JOIN</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#protocol" class="mobile-nav-link">PROTOCOL</a>
+    <a href="#story" class="mobile-nav-link">STORY</a>
+    <a href="#drop" class="mobile-nav-link">XRP</a>
+    <a href="#subscribe" class="mobile-nav-link">JOIN</a>
+    <a href="tagteach.html" class="mobile-nav-link">TAGTEACH</a>
+    <a href="ai.html" class="mobile-nav-link">AI</a>
+    <a href="dashboard.html" class="mobile-nav-link">DASHBOARD</a>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <header class="hero">
+    <div class="hero-label">THE PROTOCOL</div>
+    <h1 class="hero-name">Nemine Steffensen</h1>
+    <p class="hero-tagline">boxer. dog trainer. biohacker. <span class="accent">XRPL</span>.</p>
+  </header>
+
+  <hr class="div-line" />
+
+  <div class="section section-large reveal">
+    <p class="about">Boxer. Dog trainer. Biohacker. Building on XRPL from Vesterålen, Norway. Training everything from jabs to neural networks. This site is the system — updated daily, shipped raw.</p>
+  </div>
+
+  <hr class="div-line" />
+
+  <section id="protocol" class="section reveal">
+    <div class="section-label">PROTOCOL</div>
+    <a href="tagteach.html" class="pillar-row">
+      <div class="pillar-name">BOXING</div>
+      <div class="pillar-desc">rounds. technique. war.</div>
+      <div class="pillar-arrow">→</div>
+    </a>
+    <a href="clicker.html" class="pillar-row">
+      <div class="pillar-name">CLICKER TRAINING</div>
+      <div class="pillar-desc">behavior. precision. bond.</div>
+      <div class="pillar-arrow">→</div>
+    </a>
+    <a href="xrp.html" class="pillar-row">
+      <div class="pillar-name">XRP</div>
+      <div class="pillar-desc">ledger. ownership. infrastructure.</div>
+      <div class="pillar-arrow">→</div>
+    </a>
+    <a href="dashboard.html" class="pillar-row">
+      <div class="pillar-name">WHOOP</div>
+      <div class="pillar-desc">recovery. strain. signal.</div>
+      <div class="pillar-arrow">→</div>
+    </a>
+    <a href="ai.html" class="pillar-row">
+      <div class="pillar-name">AI</div>
+      <div class="pillar-desc">build without code.</div>
+      <div class="pillar-arrow">→</div>
+    </a>
+  </section>
+
+  <hr class="div-line" />
+
+  <section id="story" class="section section-large reveal">
+    <div class="section-label">STORY</div>
+    <div class="story-block" onclick="location.href='story.html'">
+      <h3>Before the Protocol</h3>
+      <p>The pitch. The camera. Everything that led here.</p>
+      <div class="arrow">FULL STORY →</div>
+    </div>
+  </section>
+
+  <hr class="div-line" />
+
+  <section id="drop" class="section reveal">
+    <div class="section-label">XRP & DROPS</div>
+    <div class="drop-grid">
+      <div class="drop-card">
+        <div class="drop-card-img-wrap">
+          <img src="meme001.png" alt="Nememe #001" loading="lazy" />
+        </div>
+        <div class="drop-card-info">
+          <div class="drop-card-number">#001</div>
+          <div class="drop-card-title">Nememe</div>
+          <div class="drop-card-meta">1/1 — XRPL</div>
+          <div class="drop-card-status">NOT YET MINTED</div>
+        </div>
+      </div>
+      <a href="https://x.com/N3XT3LIT3/status/1988964055592108237" target="_blank" class="link-card" style="flex-direction:column;align-items:flex-start;justify-content:center;">
+        <div class="link-card-title">The XRP Playbook</div>
+        <div class="link-card-hint">MEME EDITION — where memes teach better than textbooks</div>
+      </a>
+    </div>
+  </section>
+
+  <hr class="div-line" />
+
+  <section id="sound" class="section reveal">
+    <div class="section-label">SOUND</div>
+    <a href="https://open.spotify.com/playlist/5P44E8xzkRzqSYcNrLEr8V" target="_blank" class="link-card">
+      <div>
+        <div class="link-card-title">Protocol Playlist</div>
+        <div class="link-card-hint">boxing. focus. grind.</div>
+      </div>
+      <div class="link-card-arrow">→</div>
+    </a>
+  </section>
+
+  <hr class="div-line" />
+
+  <section id="subscribe" class="section section-large reveal" style="text-align:center;">
+    <div class="section-label" style="text-align:center;">JOIN</div>
+    <h2 style="font-size:1.8rem;font-weight:900;margin-bottom:0.5rem;">Join the protocol.</h2>
+    <p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:2rem;">Free gets you the signal. Paid gets you the system.</p>
+    <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required />
+      <button type="submit">SUBMIT</button>
+    </form>
+    <div class="subscribe-ok" id="subscribeOk">signal received.</div>
+    <div style="margin-top:2rem;">
+      <a href="subscribe.html" style="font-size:0.6rem;letter-spacing:2px;color:var(--text-muted);border-bottom:1px solid var(--card-border);padding-bottom:2px;">VIEW ALL PLANS →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-logo">NEXTELITE</div>
+    <div class="footer-sub">PROTOCOL v0.3 — BUILT IN PUBLIC</div>
+    <div class="footer-sub" style="margin-top:0.5rem;opacity:0.5;">© 2026 NEXTELITE PROTOCOL</div>
+    <div class="socials">
+      <a href="https://x.com/N3XT3LIT3" target="_blank" class="social-link" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://open.spotify.com/user/1154923706" target="_blank" class="social-link" title="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
+      <a href="https://github.com/n3xt3lit3/nextelite-protocol" target="_blank" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+    </div>
+  </footer>
+
+  <script>
+    /* THEME */
+    var toggle=document.getElementById('themeToggle'),html=document.documentElement;
+    var saved=localStorage.getItem('nextelite-theme');
+    if(saved)html.setAttribute('data-theme',saved);
+    toggle.addEventListener('click',function(){
+      var next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+      html.setAttribute('data-theme',next);localStorage.setItem('nextelite-theme',next);
+    });
+
+    /* SUBSCRIBE */
+    document.getElementById('subscribeForm').addEventListener('submit',function(e){
+      e.preventDefault();var form=this;
+      fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+        .then(function(r){if(r.ok){form.style.display='none';document.getElementById('subscribeOk').style.display='block';}}).catch(function(){});
+    });
+
+    /* REVEAL */
+    var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+    /* SCROLL PROGRESS + BACK TO TOP */
+    var scrollProg=document.getElementById('scrollProgress'),btt=document.getElementById('backToTop');
+    window.addEventListener('scroll',function(){
+      var sy=window.scrollY,docH=document.documentElement.scrollHeight-window.innerHeight;
+      scrollProg.style.width=docH>0?(sy/docH*100)+'%':'0%';
+      btt.classList.toggle('visible',sy>600);
+    });
+    btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+    /* HAMBURGER */
+    var hamburger=document.getElementById('navHamburger'),mobileMenu=document.getElementById('mobileMenu');
+    hamburger.addEventListener('click',function(){hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');});
+    document.querySelectorAll('.mobile-nav-link').forEach(function(l){l.addEventListener('click',function(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');});});
+
+    /* SMOOTH SCROLL */
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});
+    });
+
+    /* CHATBOT */
+    var chatFab=document.getElementById('chatFab'),chatWin=document.getElementById('chatWindow'),chatMsgs=document.getElementById('chatMessages'),chatIn=document.getElementById('chatInput'),chatOpen=false;
+    var knowledge={
+      about:"Nemine Steffensen — the protocol is the product. Boxing, clicker training, biohacking & building on XRPL.",
+      boxing:"Boxing is trained using TagTeach — precision coaching built on positive reinforcement and audible markers.",
+      tagteach:"TagTeach breaks complex skills into tag points — small, achievable steps marked with an audible 'tag' when done correctly.",
+      clicker:"Clicker training uses operant conditioning and a marker signal to shape precise behaviors in dogs.",
+      dogs:"Dog training here is 100% clicker-based. Positive reinforcement, marker signals, and shaping.",
+      whoop:function(){return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol.";},
+      dashboard:"The Dashboard page shows live WHOOP biometrics — current stats, recovery/strain/HRV charts over 10 days.",
+      xrp:"Building on XRPL. Nememe #001 is the first NFT drop — 1/1 edition, not yet minted.",
+      nft:"Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted.",
+      stack:"The daily protocol: morning routine at 06:00, boxing, dog work, WHOOP-led recovery, and building.",
+      protocol:"NextElite is a personal protocol — not a product you buy, but a system you live.",
+      ai:"AI services — build with AI, no code required.",
+      pillars:"Five pillars: Boxing, Clicker Training, XRP, WHOOP, and AI.",
+      story:"It started with soccer — Energikampen — and evolved into something bigger.",
+      sound:"The Sound section has the protocol playlist — boxing, focus, and grind tracks on Spotify.",
+      site:"This site is built from scratch — no frameworks, no templates. Pure HTML, CSS, and JS.",
+      help:"Topics: about, boxing, tagteach, clicker, dogs, whoop, xrp, nft, stack, protocol, ai, story, sound, site, stats, membership.",
+      stats:"220 days tracked. 121 boxing sessions. 403 workouts. 51 bpm resting heart rate.",
+      membership:"Two tiers: Observer (free) and Gym Access (199 NOK/mo). Launching soon.",
+      version:"NextElite Protocol v0.3 — built in public, shipped raw."
+    };
+    function findAnswer(q){
+      q=q.toLowerCase().replace(/[?!.,]/g,'');var words=q.split(/\s+/);
+      if(/who (are you|is|made|built)/.test(q)||/what is (this|nextelite)/.test(q))return knowledge.protocol;
+      if(/who is nemi/.test(q))return knowledge.about;
+      var keyMap={'boxing':['boxing','box','fight'],'tagteach':['tagteach','tag teach','tag point'],'clicker':['clicker','operant','shaping'],'dogs':['dog','dogs','canine'],'whoop':['whoop','recovery','strain','sleep','biometric','hrv'],'xrp':['xrp','xrpl','crypto','ledger'],'nft':['nft','nememe','mint'],'stack':['stack','routine','daily','morning'],'protocol':['protocol','system'],'ai':['ai','automation','agent'],'pillars':['pillar','pillars'],'story':['story','origin','soccer'],'sound':['sound','music','spotify','playlist'],'site':['site','website','code','github'],'help':['help','commands','menu'],'stats':['stats','numbers','data'],'membership':['membership','subscribe','join','tier','price'],'version':['version','v0','changelog']};
+      var best=null,bestScore=0;
+      for(var key in keyMap){var score=0;keyMap[key].forEach(function(kw){if(q.indexOf(kw)!==-1)score+=2;});words.forEach(function(w){keyMap[key].forEach(function(kw){if(kw.indexOf(w)!==-1&&w.length>2)score+=1;});});if(score>bestScore){bestScore=score;best=key;}}
+      if(best&&bestScore>=2){var val=knowledge[best];return typeof val==='function'?val():val;}
+      var greetings=['hi','hey','hello','yo','sup'];
+      if(greetings.some(function(g){return q===g||q.startsWith(g+' ');}))return "Hey. Ask me anything about the protocol — or type 'help'.";
+      return "Don't know that one yet. Type 'help' to see topics.";
+    }
+    function addLine(h){var el=document.createElement('div');el.className='chat-line';el.innerHTML=h;chatMsgs.appendChild(el);chatMsgs.scrollTop=chatMsgs.scrollHeight;}
+    function showTyping(){var el=document.createElement('div');el.className='chat-typing';el.id='chatTyping';el.innerHTML='<span></span><span></span><span></span>';chatMsgs.appendChild(el);chatMsgs.scrollTop=chatMsgs.scrollHeight;}
+    function removeTyping(){var t=document.getElementById('chatTyping');if(t)t.remove();}
+    function sendChat(){var q=chatIn.value.trim();chatIn.value='';if(!q)return;addLine('<span class="prompt">&gt;</span> <span class="user-cmd">'+q+'</span>');showTyping();var answer=findAnswer(q);setTimeout(function(){removeTyping();addLine('<span class="response">'+answer+'</span>');},400+Math.random()*300);}
+    addLine('<span class="accent">nextelite</span> <span class="dim">v0.3 — terminal active</span>');
+    addLine('<span class="dim">type anything to query the protocol</span>');
+    document.getElementById('termClose').addEventListener('click',function(){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');});
+    chatFab.addEventListener('click',function(){chatOpen=!chatOpen;chatFab.classList.toggle('open',chatOpen);chatWin.classList.toggle('open',chatOpen);if(chatOpen)setTimeout(function(){chatIn.focus();},100);});
+    chatIn.addEventListener('keydown',function(e){if(e.key==='Enter')sendChat();});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&chatOpen){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');}
+      if(e.key==='/'&&!chatOpen&&document.activeElement.tagName!=='INPUT'){e.preventDefault();chatOpen=true;chatFab.classList.add('open');chatWin.classList.add('open');setTimeout(function(){chatIn.focus();},100);}
+    });
+  </script>
+</body>
+</html>
