@@ -396,11 +396,7 @@
     .bento-card { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
     .bento-card:hover { transform:translateY(-2px); background:var(--card); }
     .bento-val { font-size:clamp(2.5rem, 5vw, 3.5rem); font-weight:700; margin-bottom:0.5rem; }
-    .bento-val.recovery { color:var(--green); }
-    .bento-val.strain { color:var(--blue); }
-    .bento-val.sleep { color:var(--purple); }
-    .bento-val.hrv { color:var(--cyan); }
-    .bento-val.rhr { color:var(--pink); }
+    .bento-val.recovery, .bento-val.strain, .bento-val.sleep, .bento-val.hrv, .bento-val.rhr { color:var(--text); }
     .bento-label { font-size:0.5rem; letter-spacing:2.5px; color:var(--text-muted); }
 
     .whoop-meta { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; }
@@ -835,48 +831,7 @@
   </section>
 
   <div class="zone">
-    <section id="data" class="section reveal">
-      <div class="section-label"><span class="section-dot" style="background:var(--pink);"></span> BIOMETRICS</div>
-      <div class="bento">
-        <div class="bento-card">
-          <div class="bento-val recovery" id="whoopRecovery">--</div>
-          <div class="bento-label">RECOVERY</div>
-        </div>
-        <div class="bento-card">
-          <div class="bento-val strain" id="whoopStrain">--</div>
-          <div class="bento-label">STRAIN</div>
-        </div>
-        <div class="bento-card">
-          <div class="bento-val sleep" id="whoopSleep">--</div>
-          <div class="bento-label">SLEEP</div>
-        </div>
-      </div>
-      <div class="bento-bottom">
-        <div class="bento-card">
-          <div class="bento-val hrv" id="whoopHRV">--</div>
-          <div class="bento-label">HRV</div>
-        </div>
-        <div class="bento-card">
-          <div class="bento-val rhr" id="whoopRHR">--</div>
-          <div class="bento-label">RESTING HR</div>
-        </div>
-      </div>
-      <div class="whoop-perf" style="margin-top:1.5rem;padding:1rem 1.5rem;border:1px solid var(--card-border);border-radius:10px;display:flex;align-items:center;gap:1rem;transition:border-color 0.4s;">
-        <div style="font-size:0.45rem;letter-spacing:2.5px;color:var(--text-muted);flex-shrink:0;">SLEEP PERFORMANCE</div>
-        <div style="flex:1;height:4px;background:var(--card-border);border-radius:2px;overflow:hidden;"><div id="sleepPerfBar" style="height:100%;width:0;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width 1.5s ease;"></div></div>
-        <div style="font-size:0.65rem;font-weight:700;color:var(--purple);min-width:35px;text-align:right;" id="sleepPerfVal">--%</div>
-      </div>
-      <div class="whoop-meta">
-        <div class="whoop-note" id="whoopNote">SIGNAL INCOMING</div>
-        <div style="display:flex;gap:1.5rem;align-items:center;">
-          <a href="dashboard.html" class="whoop-history-link">DASHBOARD</a>
-          <a href="history.html" class="whoop-history-link">HISTORY</a>
-          <a href="https://join.whoop.com/8256086C" target="_blank" class="whoop-history-link" style="color:var(--pink);">JOIN WHOOP</a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section" style="padding-top:0;">
+    <div class="section">
       <div class="section-label"><span class="section-dot" style="background:var(--text-muted);"></span> DAILY STACK</div>
       <div class="stack">
         <div class="stack-item"><div class="stack-name">Morning Protocol</div><div class="stack-value">06:00</div></div>
@@ -941,7 +896,11 @@
 
   <section id="sound" class="section reveal">
     <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> SOUND</div>
-    <iframe style="border-radius:12px;border:none;" src="https://open.spotify.com/embed/playlist/5P44E8xzkRzqSYcNrLEr8V?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <a href="https://open.spotify.com/playlist/5P44E8xzkRzqSYcNrLEr8V" target="_blank" class="x-card">
+      <div class="x-handle">Protocol Playlist</div>
+      <div class="x-hint">boxing. focus. grind.</div>
+      <div class="x-arrow">-></div>
+    </a>
   </section>
 
   <hr class="div-line" />
