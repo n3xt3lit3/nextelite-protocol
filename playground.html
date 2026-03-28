@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextElite — Animation Playground</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="animations.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+    :root { --yellow:#F5C400; --cyan:#00BADF; --blue:#3B6EF5; --pink:#E8197A; --green:#22c55e; --purple:#a855f7; }
+    [data-theme="dark"] { --bg:#0a0a0a; --bg-raised:#111113; --card:#141416; --card-border:#1e1e22; --text:#e4e4e7; --text-dim:#71717a; --text-muted:#3f3f46; --accent:#00BADF; }
+    [data-theme="light"] { --bg:#fafafa; --bg-raised:#f4f4f5; --card:#ffffff; --card-border:#e4e4e7; --text:#18181b; --text-dim:#71717a; --text-muted:#a1a1aa; --accent:#00BADF; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Space Mono',monospace; -webkit-font-smoothing:antialiased; overflow-x:hidden; transition:background 0.4s, color 0.4s; }
+    a { color:var(--accent); text-decoration:none; }
+
+    .top { position:fixed; top:0; left:0; right:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--card-border); padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; }
+    .top-title { font-size:0.7rem; font-weight:700; letter-spacing:2px; }
+    .top-title span { color:var(--pink); }
+    .top-right { display:flex; gap:1rem; align-items:center; }
+    .top-right a { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); }
+    .theme-toggle { width:36px; height:20px; border-radius:100px; border:1px solid var(--card-border); background:var(--bg-raised); cursor:pointer; position:relative; }
+    .theme-toggle::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--text-muted); transition:transform 0.3s; }
+    [data-theme="light"] .theme-toggle::after { transform:translateX(16px); background:var(--text); }
+
+    .container { max-width:800px; margin:0 auto; padding:5rem 2rem 4rem; }
+    .intro { font-size:0.65rem; color:var(--text-dim); line-height:1.8; margin-bottom:3rem; text-align:center; }
+
+    /* COMPONENT CARD */
+    .comp { margin-bottom:3rem; border:1px solid var(--card-border); background:var(--card); overflow:hidden; }
+    .comp-header { padding:1rem 1.5rem; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center; }
+    .comp-name { font-size:0.65rem; font-weight:700; letter-spacing:2px; }
+    .comp-class { font-size:0.5rem; color:var(--accent); letter-spacing:1px; }
+    .comp-preview { padding:2.5rem 1.5rem; display:flex; align-items:center; justify-content:center; min-height:120px; position:relative; overflow:hidden; }
+    .comp-preview.tall { min-height:200px; }
+    .comp-preview.dark-only { background:#050505; }
+    .comp-notes { padding:0.75rem 1.5rem; border-top:1px solid var(--card-border); font-size:0.5rem; color:var(--text-muted); letter-spacing:0.5px; line-height:1.8; }
+
+    /* DEMO HELPERS */
+    .demo-text-lg { font-size:clamp(1.5rem,4vw,2.5rem); font-weight:700; letter-spacing:-1px; }
+    .demo-text-md { font-size:1.2rem; font-weight:700; }
+    .demo-card { padding:1.5rem; border:1px solid var(--card-border); border-radius:12px; background:var(--bg-raised); text-align:center; width:200px; transition:all 0.3s; }
+    .demo-card-label { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); margin-top:0.5rem; }
+    .demo-row { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+    .trigger-btn { font-family:'Space Mono',monospace; font-size:0.5rem; letter-spacing:2px; padding:0.5rem 1rem; background:none; border:1px solid var(--card-border); color:var(--text-muted); cursor:pointer; transition:all 0.2s; }
+    .trigger-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* MARQUEE DEMO */
+    .marquee-demo .marquee-track span { font-size:0.6rem; font-weight:700; letter-spacing:3px; color:var(--text-muted); padding:0 1.5rem; }
+    .marquee-demo .num { color:var(--accent); font-size:1rem; }
+
+    /* SECTION DIVIDERS */
+    .section-label { font-size:0.42rem; letter-spacing:4px; color:var(--text-muted); margin:3rem 0 1.5rem; text-align:center; }
+  </style>
+</head>
+<body>
+
+  <div class="top">
+    <div class="top-title"><span>NEXTELITE</span> PLAYGROUND</div>
+    <div class="top-right">
+      <a href="index.html">← BACK TO SITE</a>
+      <div class="theme-toggle" id="themeToggle"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="intro">
+      Animation library preview. Every effect is reusable via <code>animations.css</code>.<br>
+      Add the class, trigger <code>.visible</code> where needed, done.
+    </div>
+
+    <!-- RAINBOW TEXT -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">RAINBOW TEXT</div>
+        <div class="comp-class">.rainbow-text</div>
+      </div>
+      <div class="comp-preview">
+        <div class="demo-text-lg rainbow-text">NextElite Protocol</div>
+      </div>
+      <div class="comp-notes">Animated gradient cycling through all brand colors. Works on any text element.</div>
+    </div>
+
+    <!-- GLITCH -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">GLITCH</div>
+        <div class="comp-class">.glitch + data-text</div>
+      </div>
+      <div class="comp-preview">
+        <div class="demo-text-lg glitch" data-text="NextElite">NextElite</div>
+      </div>
+      <div class="comp-notes">Cyan/pink glitch flicker. Fires every ~8s. Requires data-text attribute matching inner text.</div>
+    </div>
+
+    <!-- GRADIENT ORB -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">GRADIENT ORB</div>
+        <div class="comp-class">.anim-orb</div>
+      </div>
+      <div class="comp-preview tall dark-only" style="position:relative;">
+        <div class="anim-orb" style="filter:blur(60px);width:250px;"></div>
+        <div style="position:relative;z-index:1;color:#e4e4e7;font-size:0.6rem;letter-spacing:3px;">CONTENT ABOVE ORB</div>
+      </div>
+      <div class="comp-notes">Conic-gradient blob with pulse + organic shape drift. Use as hero background.</div>
+    </div>
+
+    <!-- FADE UP -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">FADE UP</div>
+        <div class="comp-class">.fadeup + --delay</div>
+      </div>
+      <div class="comp-preview">
+        <div class="demo-row" id="fadeDemo">
+          <div class="demo-text-md" style="opacity:0;" id="fade1">One</div>
+          <div class="demo-text-md" style="opacity:0;" id="fade2">Two</div>
+          <div class="demo-text-md" style="opacity:0;" id="fade3">Three</div>
+        </div>
+      </div>
+      <div class="comp-notes">
+        <button class="trigger-btn" onclick="replayFade()">REPLAY</button>
+        &nbsp; Staggered entry with --delay custom property.
+      </div>
+    </div>
+
+    <!-- CLIP-PATH REVEAL -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">CLIP-PATH REVEAL</div>
+        <div class="comp-class">.clip-reveal → .visible</div>
+      </div>
+      <div class="comp-preview">
+        <div id="clipDemo" class="clip-reveal" style="transition:clip-path 1s cubic-bezier(0.65, 0.05, 0, 1);">
+          <div class="demo-text-lg">Revealed.</div>
+        </div>
+      </div>
+      <div class="comp-notes">
+        <button class="trigger-btn" onclick="replayClip()">REPLAY</button>
+        &nbsp; Norris-style polygon mask reveal. Triggered by IntersectionObserver.
+      </div>
+    </div>
+
+    <!-- SCROLL REVEAL -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">SCROLL REVEAL</div>
+        <div class="comp-class">.reveal → .visible</div>
+      </div>
+      <div class="comp-preview">
+        <div id="revealDemo" class="reveal">
+          <div class="demo-text-md">Scroll-triggered content</div>
+        </div>
+      </div>
+      <div class="comp-notes">
+        <button class="trigger-btn" onclick="replayReveal()">REPLAY</button>
+        &nbsp; Basic opacity + translateY. Good for sections and cards.
+      </div>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">INFINITE MARQUEE</div>
+        <div class="comp-class">.marquee-wrap + .marquee-track</div>
+      </div>
+      <div class="comp-preview marquee-demo" style="padding:1rem 0;overflow:hidden;">
+        <div class="marquee-wrap" style="width:100%;">
+          <div class="marquee-track">
+            <span><span class="num">220</span> DAYS</span><span>•</span>
+            <span><span class="num">121</span> SESSIONS</span><span>•</span>
+            <span><span class="num">403</span> WORKOUTS</span><span>•</span>
+            <span><span class="num">51</span> BPM</span><span>•</span>
+            <span><span class="num">220</span> DAYS</span><span>•</span>
+            <span><span class="num">121</span> SESSIONS</span><span>•</span>
+            <span><span class="num">403</span> WORKOUTS</span><span>•</span>
+            <span><span class="num">51</span> BPM</span><span>•</span>
+          </div>
+        </div>
+      </div>
+      <div class="comp-notes">Duplicate content inside track for seamless loop. 20s default speed.</div>
+    </div>
+
+    <!-- NEON GLOW -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">NEON GLOW HOVER</div>
+        <div class="comp-class">data-glow="color"</div>
+      </div>
+      <div class="comp-preview">
+        <div class="demo-row">
+          <div class="demo-card" data-glow="yellow"><div style="font-size:1.2rem;font-weight:700;color:var(--yellow);">Y</div><div class="demo-card-label">YELLOW</div></div>
+          <div class="demo-card" data-glow="cyan"><div style="font-size:1.2rem;font-weight:700;color:var(--cyan);">C</div><div class="demo-card-label">CYAN</div></div>
+          <div class="demo-card" data-glow="blue"><div style="font-size:1.2rem;font-weight:700;color:var(--blue);">B</div><div class="demo-card-label">BLUE</div></div>
+          <div class="demo-card" data-glow="pink"><div style="font-size:1.2rem;font-weight:700;color:var(--pink);">P</div><div class="demo-card-label">PINK</div></div>
+          <div class="demo-card" data-glow="purple"><div style="font-size:1.2rem;font-weight:700;color:var(--purple);">P</div><div class="demo-card-label">PURPLE</div></div>
+        </div>
+      </div>
+      <div class="comp-notes">Hover each card. Colored box-shadow glow on hover.</div>
+    </div>
+
+    <!-- PULSE DOT -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">PULSE DOT</div>
+        <div class="comp-class">.pulse-dot</div>
+      </div>
+      <div class="comp-preview">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <span class="pulse-dot"></span>
+          <span style="font-size:0.6rem;letter-spacing:2px;color:var(--text-muted);">LIVE</span>
+        </div>
+      </div>
+      <div class="comp-notes">Breathing green dot. Great for status indicators.</div>
+    </div>
+
+    <!-- TYPING CURSOR -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">TYPING CURSOR</div>
+        <div class="comp-class">.typing-cursor</div>
+      </div>
+      <div class="comp-preview">
+        <div style="font-size:0.85rem;">next_elite( ); <span style="color:var(--text-muted);">// code your next level</span><span class="typing-cursor" style="color:var(--text-muted);">|</span></div>
+      </div>
+      <div class="comp-notes">Blinking cursor. Pair with a JS typing effect for full animation.</div>
+    </div>
+
+    <!-- BOB -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">BOB</div>
+        <div class="comp-class">.bob</div>
+      </div>
+      <div class="comp-preview">
+        <div class="bob" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="12" height="12" stroke="var(--text-muted)" fill="none" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="comp-notes">Gentle vertical bounce. Use for scroll-down indicators.</div>
+    </div>
+
+    <!-- SCROLL LINE -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">SCROLL LINE</div>
+        <div class="comp-class">.scroll-line</div>
+      </div>
+      <div class="comp-preview" style="min-height:80px;">
+        <div class="scroll-line"></div>
+      </div>
+      <div class="comp-notes">Norris-style animated line. Accent-colored bar travels down continuously.</div>
+    </div>
+
+    <!-- SNAP-SETTLE EASING -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">SNAP-SETTLE EASING</div>
+        <div class="comp-class">--snap-ease</div>
+      </div>
+      <div class="comp-preview">
+        <div id="easeDemo" style="width:40px;height:40px;background:var(--accent);transition:transform 0.75s var(--snap-ease);cursor:pointer;" onclick="this.style.transform=this.style.transform==='translateX(200px)'?'translateX(0)':'translateX(200px)'"></div>
+      </div>
+      <div class="comp-notes">Click the box. Fast start, slow settle — the Norris timing. cubic-bezier(0.65, 0.05, 0, 1).</div>
+    </div>
+
+    <!-- GRAIN -->
+    <div class="comp">
+      <div class="comp-header">
+        <div class="comp-name">GRAIN TEXTURE</div>
+        <div class="comp-class">.grain-overlay</div>
+      </div>
+      <div class="comp-preview grain-overlay" style="min-height:100px;position:relative;">
+        <div style="font-size:0.6rem;letter-spacing:2px;color:var(--text-muted);position:relative;z-index:1;">LOOK CLOSELY — SUBTLE NOISE</div>
+      </div>
+      <div class="comp-notes">SVG fractal noise overlay. Adds analog texture. Opacity ~0.03.</div>
+    </div>
+
+    <div style="text-align:center;padding:3rem 0;font-size:0.45rem;letter-spacing:3px;color:var(--text-muted);">
+      NEXTELITE ANIMATION LIBRARY — animations.css
+    </div>
+  </div>
+
+  <script>
+    /* THEME */
+    var toggle=document.getElementById('themeToggle'),html=document.documentElement;
+    var saved=localStorage.getItem('nextelite-theme');
+    if(saved)html.setAttribute('data-theme',saved);
+    toggle.addEventListener('click',function(){
+      var next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+      html.setAttribute('data-theme',next);localStorage.setItem('nextelite-theme',next);
+    });
+
+    /* FADE REPLAY */
+    function replayFade(){
+      ['fade1','fade2','fade3'].forEach(function(id,i){
+        var el=document.getElementById(id);
+        el.className='';el.style.opacity='0';el.style.transform='translateY(20px)';
+        setTimeout(function(){
+          el.className='fadeup';
+          el.style='';
+          el.style.setProperty('--delay',i*0.2+'s');
+        },50);
+      });
+    }
+    replayFade();
+
+    /* CLIP REPLAY */
+    function replayClip(){
+      var el=document.getElementById('clipDemo');
+      el.classList.remove('visible');
+      setTimeout(function(){el.classList.add('visible');},100);
+    }
+    setTimeout(function(){document.getElementById('clipDemo').classList.add('visible');},500);
+
+    /* REVEAL REPLAY */
+    function replayReveal(){
+      var el=document.getElementById('revealDemo');
+      el.classList.remove('visible');
+      setTimeout(function(){el.classList.add('visible');},100);
+    }
+    setTimeout(function(){document.getElementById('revealDemo').classList.add('visible');},800);
+  </script>
+</body>
+</html>
