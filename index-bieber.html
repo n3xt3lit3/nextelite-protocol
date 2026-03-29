@@ -12,6 +12,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@N3XT3LIT3" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="canonical" href="https://n3xt3lit3.github.io/nextelite-protocol/" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root { --accent: #00BADF; }
@@ -320,7 +321,8 @@
     <h2 style="font-size:1.8rem;font-weight:900;margin-bottom:0.5rem;">Join the protocol.</h2>
     <p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:2rem;">Free gets you the signal. Paid gets you the system.</p>
     <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
-      <input type="email" name="email" placeholder="your@email.com" required />
+      <label for="subscribeEmail" class="sr-only">Email address</label>
+      <input type="email" name="email" id="subscribeEmail" placeholder="your@email.com" required />
       <button type="submit">SUBMIT</button>
     </form>
     <div class="subscribe-ok" id="subscribeOk">signal received.</div>
@@ -363,10 +365,14 @@
 
     /* SCROLL PROGRESS + BACK TO TOP */
     var scrollProg=document.getElementById('scrollProgress'),btt=document.getElementById('backToTop');
+    var scrollTicking=false;
     window.addEventListener('scroll',function(){
-      var sy=window.scrollY,docH=document.documentElement.scrollHeight-window.innerHeight;
-      scrollProg.style.width=docH>0?(sy/docH*100)+'%':'0%';
-      btt.classList.toggle('visible',sy>600);
+      if(!scrollTicking){requestAnimationFrame(function(){
+        var sy=window.scrollY,docH=document.documentElement.scrollHeight-window.innerHeight;
+        scrollProg.style.width=docH>0?(sy/docH*100)+'%':'0%';
+        btt.classList.toggle('visible',sy>600);
+        scrollTicking=false;
+      });scrollTicking=true;}
     });
     btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 
