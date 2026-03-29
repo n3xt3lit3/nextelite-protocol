@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NextElite — Animation Playground</title>
+  <title>NextElite — Playground</title>
+  <meta name="description" content="NextElite Protocol playground — animations, experiments, and plugin arsenal." />
+  <meta property="og:title" content="NextElite — Playground" />
+  <meta property="og:description" content="NextElite Protocol playground — animations, experiments, and plugin arsenal." />
+  <meta property="og:image" content="1500x500.jpeg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="animations.css" />
   <style>
@@ -57,7 +63,7 @@
 <body>
 
   <div class="top">
-    <div class="top-title"><span>NEXTELITE</span> PLAYGROUND</div>
+    <div class="top-title" style="font-size:0.85rem;font-weight:900;letter-spacing:4px">NEXTELITE <span style="font-weight:400;letter-spacing:2px;color:var(--text-muted)">PLAYGROUND</span></div>
     <div class="top-right">
       <a href="index.html">← BACK TO SITE</a>
       <div class="theme-toggle" id="themeToggle"></div>
@@ -65,8 +71,138 @@
   </div>
 
   <div class="container">
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- PLUGIN ARSENAL (FIRST) -->
+    <!-- ═══════════════════════════════════════════════ -->
+
+    <div class="section-label" style="margin-top:1rem">PLAYGROUND</div>
+
+    <div class="ascii-hero" style="font-family:'SF Mono','Fira Code','Courier New',monospace;font-size:clamp(0.3rem,0.9vw,0.65rem);line-height:1.2;white-space:pre;text-align:center;margin-bottom:2rem;user-select:none;"><span style="color:#e6c43c"> ███╗   ██╗</span><span style="color:#50c8dc">███████╗</span><span style="color:#3c64e6">██╗  ██╗</span><span style="color:#7846dc">████████╗</span><span style="color:#d25abe">███████╗</span><span style="color:#e678c8">██╗     </span><span style="color:#f0aade">██╗</span><span style="color:#b8b0be">████████╗</span><span style="color:#9990a3">███████╗</span>
+<span style="color:#e6c43c"> ████╗  ██║</span><span style="color:#50c8dc">██╔════╝</span><span style="color:#3c64e6">╚██╗██╔╝</span><span style="color:#7846dc">╚══██╔══╝</span><span style="color:#d25abe">██╔════╝</span><span style="color:#e678c8">██║     </span><span style="color:#f0aade">██║</span><span style="color:#b8b0be">╚══██╔══╝</span><span style="color:#9990a3">██╔════╝</span>
+<span style="color:#e6c43c"> ██╔██╗ ██║</span><span style="color:#50c8dc">█████╗  </span><span style="color:#3c64e6"> ╚███╔╝ </span><span style="color:#7846dc">   ██║   </span><span style="color:#d25abe">█████╗  </span><span style="color:#e678c8">██║     </span><span style="color:#f0aade">██║</span><span style="color:#b8b0be">   ██║   </span><span style="color:#9990a3">█████╗  </span>
+<span style="color:#e6c43c"> ██║╚██╗██║</span><span style="color:#50c8dc">██╔══╝  </span><span style="color:#3c64e6"> ██╔██╗ </span><span style="color:#7846dc">   ██║   </span><span style="color:#d25abe">██╔══╝  </span><span style="color:#e678c8">██║     </span><span style="color:#f0aade">██║</span><span style="color:#b8b0be">   ██║   </span><span style="color:#9990a3">██╔══╝  </span>
+<span style="color:#e6c43c"> ██║ ╚████║</span><span style="color:#50c8dc">███████╗</span><span style="color:#3c64e6">██╔╝ ██╗</span><span style="color:#7846dc">   ██║   </span><span style="color:#d25abe">███████╗</span><span style="color:#e678c8">███████╗</span><span style="color:#f0aade">██║</span><span style="color:#b8b0be">   ██║   </span><span style="color:#9990a3">███████╗</span>
+<span style="color:#e6c43c"> ╚═╝  ╚═══╝</span><span style="color:#50c8dc">╚══════╝</span><span style="color:#3c64e6">╚═╝  ╚═╝</span><span style="color:#7846dc">   ╚═╝   </span><span style="color:#d25abe">╚══════╝</span><span style="color:#e678c8">╚══════╝</span><span style="color:#f0aade">╚═╝</span><span style="color:#b8b0be">   ╚═╝   </span><span style="color:#9990a3">╚══════╝</span></div>
+
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div style="font-size:0.55rem;letter-spacing:3px;color:var(--text-muted);margin-bottom:0.5rem;">CLAUDE CODE</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);">Opus 4.6 (1M context) · <span style="color:var(--accent)">Claude Max</span></div>
+    </div>
+
+    <div style="font-size:0.42rem;letter-spacing:4px;color:var(--text-muted);margin-bottom:1.5rem;">INSTALLED PLUGINS</div>
+
+    <a href="https://github.com/thedotmack/claude-mem" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#e6c43c;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">claude-mem</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Persistent memory across sessions</span>
+    </a>
+    <a href="https://github.com/jarrodwatts/claude-hud" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#50c8dc;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">claude-hud</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Real-time status bar</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#3B6EF5;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">frontend-design</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Production-grade UI generation</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-review" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#7846dc;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">code-review</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Multi-agent PR review</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/commit-commands" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#d25abe;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">commit-commands</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Smart git workflow</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/typescript-lsp" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#e678c8;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">typescript-lsp</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Real type checking</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-simplifier" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#f0aade;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">code-simplifier</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Code cleanup</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#9990a3;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">security-guidance</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Security analysis on every edit</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/feature-dev" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="width:7px;height:7px;border-radius:1px;background:#e6c43c;flex-shrink:0"></span>
+      <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">feature-dev</span>
+      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">End-to-end feature implementation</span>
+    </a>
+
+    <!-- STATS -->
+    <div style="display:flex;justify-content:center;gap:3rem;margin:3rem 0;font-family:'Inter',sans-serif;">
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="9">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">PLUGINS</div></div>
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="5">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">HOOKS</div></div>
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="13">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">MCP TOOLS</div></div>
+    </div>
+
+    <!-- NEXT UP -->
+    <div style="font-size:0.42rem;letter-spacing:4px;color:var(--text-muted);margin:3rem 0 1.5rem;">RECOMMENDED NEXT</div>
+
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/hookify" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">hookify</span>
+      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Create hooks from natural language</span>
+      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--accent);border:1px solid var(--accent);padding:0.2rem 0.5rem">HIGH</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">pr-review-toolkit</span>
+      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Deeper PR analysis</span>
+      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-md-management" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">claude-md-management</span>
+      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Auto-maintain CLAUDE.md files</span>
+      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+    </a>
+    <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
+      <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">skill-creator</span>
+      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Build your own slash commands</span>
+      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+    </a>
+
+    <!-- PRO TIPS -->
+    <div style="margin-top:2.5rem;padding:1.5rem 0;border-top:1px solid var(--card-border);font-size:0.65rem;color:var(--text-dim);line-height:2;font-family:'Inter',sans-serif;">
+      <strong style="color:var(--text)">Pro tip:</strong> Install with <code style="color:var(--accent)">/plugin install PLUGIN_NAME</code><br>
+      <strong style="color:var(--text)">Pro tip:</strong> feature-dev + claude-mem is the strongest combo — one plans and builds, the other remembers every decision.<br>
+      <strong style="color:var(--text)">Pro tip:</strong> hookify lets you create hooks from plain English. Say "block commits without tests" and it writes the hook.
+    </div>
+
+    <!-- BOOT TERMINAL -->
+    <div style="border:1px solid var(--card-border);margin-top:2rem;overflow:hidden">
+      <div style="display:flex;align-items:center;padding:0.6rem 1rem;border-bottom:1px solid var(--card-border);background:var(--card)">
+        <div style="display:flex;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#ff5f57"></span><span style="width:9px;height:9px;border-radius:50%;background:#febc2e"></span><span style="width:9px;height:9px;border-radius:50%;background:#28c840"></span></div>
+        <div style="flex:1;text-align:center;font-size:0.45rem;letter-spacing:2px;color:var(--text-muted)">claude code</div>
+      </div>
+      <div id="arsenal-term" style="padding:1.2rem;font-family:'SF Mono','Fira Code',monospace;font-size:0.65rem;line-height:2;color:var(--text-dim);min-height:220px;background:var(--bg)"></div>
+    </div>
+
+    <div style="text-align:center;padding:3rem 0 1rem;font-size:0.45rem;letter-spacing:3px;color:var(--text-muted);">
+      NEXTELITE PLUGIN ARSENAL — 9 ACTIVE
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- ANIMATIONS (COLLAPSED) -->
+    <!-- ═══════════════════════════════════════════════ -->
+
+    <div style="text-align:center;margin:2rem 0 3rem;">
+      <button id="showAnimations" class="trigger-btn" style="padding:0.7rem 1.5rem;font-size:0.5rem;letter-spacing:3px;">ANIMATION LIBRARY</button>
+    </div>
+
+    <div id="animSection" style="display:none;">
+
+    <div class="section-label">ANIMATION LIBRARY</div>
+
     <div class="intro">
-      Animation library preview. Every effect is reusable via <code>animations.css</code>.<br>
+      Every effect is reusable via <code>animations.css</code>.<br>
       Add the class, trigger <code>.visible</code> where needed, done.
     </div>
 
@@ -281,6 +417,8 @@
     <div style="text-align:center;padding:3rem 0;font-size:0.45rem;letter-spacing:3px;color:var(--text-muted);">
       NEXTELITE ANIMATION LIBRARY — animations.css
     </div>
+
+    </div><!-- /animSection -->
   </div>
 
   <script>
@@ -322,6 +460,60 @@
       setTimeout(function(){el.classList.add('visible');},100);
     }
     setTimeout(function(){document.getElementById('revealDemo').classList.add('visible');},800);
+
+    /* SHOW ANIMATIONS */
+    document.getElementById('showAnimations').addEventListener('click',function(){
+      var sec=document.getElementById('animSection');
+      if(sec.style.display==='none'){sec.style.display='block';this.textContent='HIDE ANIMATIONS';replayFade();}
+      else{sec.style.display='none';this.textContent='ANIMATION LIBRARY';}
+    });
+
+    /* ARSENAL BOOT */
+    var bootLines=[
+      '<span style="color:var(--text)">$ claude --plugins loaded</span>',
+      '  <span style="color:#22c55e">ok</span> claude-mem v10.6.2 — memory engine',
+      '  <span style="color:#22c55e">ok</span> claude-hud — statusline',
+      '  <span style="color:#22c55e">ok</span> frontend-design — design mode',
+      '  <span style="color:#22c55e">ok</span> code-review — 5 review agents',
+      '  <span style="color:#22c55e">ok</span> commit-commands — git workflow',
+      '  <span style="color:#22c55e">ok</span> typescript-lsp — type checking',
+      '  <span style="color:#22c55e">ok</span> code-simplifier — cleanup engine',
+      '  <span style="color:#22c55e">ok</span> security-guidance — shield raised',
+      '  <span style="color:#22c55e">ok</span> feature-dev — end-to-end features',
+      '',
+      '  <span style="color:var(--accent)">9 active. 0 conflicts. ready.</span>',
+      '',
+      '<span style="color:var(--text)">$ _</span>'
+    ];
+    var aTerm=document.getElementById('arsenal-term');
+    var bootObs=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){
+        bootObs.disconnect();
+        bootLines.forEach(function(html,i){
+          setTimeout(function(){
+            var d=document.createElement('div');
+            d.style.opacity='0';d.style.transform='translateY(6px)';d.style.transition='all 0.3s';
+            d.innerHTML=html;aTerm.appendChild(d);
+            setTimeout(function(){d.style.opacity='1';d.style.transform='translateY(0)';},30);
+            aTerm.scrollTop=aTerm.scrollHeight;
+          },i*250);
+        });
+      }
+    },{threshold:0.3});
+    bootObs.observe(aTerm);
+
+    /* ARSENAL COUNTERS */
+    var cObs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          cObs.unobserve(e.target);
+          var t=parseInt(e.target.getAttribute('data-t'));
+          var c=0,inc=t/40;
+          var timer=setInterval(function(){c+=inc;if(c>=t){c=t;clearInterval(timer);}e.target.textContent=Math.floor(c);},30);
+        }
+      });
+    },{threshold:0.5});
+    document.querySelectorAll('.arsenal-count').forEach(function(el){cObs.observe(el);});
   </script>
 </body>
 </html>

@@ -17,6 +17,7 @@
   <meta name="twitter:description" content="Boxing. Clicker Training. Biohacking. XRPL. The protocol is the product." />
   <meta name="twitter:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="canonical" href="https://n3xt3lit3.github.io/nextelite-protocol/" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
@@ -978,7 +979,8 @@
         <div class="subscribe-wrap">
           <div class="subscribe-hint">GET PROTOCOL UPDATES</div>
           <form class="subscribe-form" id="subscribeForm" action="https://formspree.io/f/xkgwqzpd" method="POST">
-            <input type="email" name="email" placeholder="your@email.com" required />
+            <label for="subscribeEmail" class="sr-only">Email address</label>
+            <input type="email" name="email" id="subscribeEmail" placeholder="your@email.com" required />
             <button type="submit">SUBMIT</button>
           </form>
           <div class="subscribe-ok" id="subscribeOk">signal received.</div>
@@ -1276,17 +1278,21 @@
     var navEl = document.querySelector('nav');
     var scrollProg = document.getElementById('scrollProgress');
     var btt = document.getElementById('backToTop');
+    var scrollTicking = false;
     window.addEventListener('scroll', function() {
-      var sy = window.scrollY;
-      if (sy > 200 && sy > lastScrollY) {
-        navEl.classList.add('nav-hidden');
-      } else {
-        navEl.classList.remove('nav-hidden');
-      }
-      lastScrollY = sy;
-      var docH = document.documentElement.scrollHeight - window.innerHeight;
-      scrollProg.style.width = docH > 0 ? (sy / docH * 100) + '%' : '0%';
-      btt.classList.toggle('visible', sy > 600);
+      if (!scrollTicking) { requestAnimationFrame(function() {
+        var sy = window.scrollY;
+        if (sy > 200 && sy > lastScrollY) {
+          navEl.classList.add('nav-hidden');
+        } else {
+          navEl.classList.remove('nav-hidden');
+        }
+        lastScrollY = sy;
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProg.style.width = docH > 0 ? (sy / docH * 100) + '%' : '0%';
+        btt.classList.toggle('visible', sy > 600);
+        scrollTicking = false;
+      }); scrollTicking = true; }
     });
 
 

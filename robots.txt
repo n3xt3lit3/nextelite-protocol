@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://n3xt3lit3.github.io/nextelite-protocol/sitemap.xml

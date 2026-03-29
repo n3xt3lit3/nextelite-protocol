@@ -94,8 +94,7 @@
    Usage: add class="reveal", trigger .visible via IntersectionObserver
    JS: new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1}).observe(el)
 */
-.reveal { opacity:0; transform:translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.visible { opacity:1; transform:translateY(0); }
+/* .reveal is defined in style.css — use that version */
 
 
 /* ── INFINITE MARQUEE ──
