@@ -1,0 +1,382 @@
+/* ── NEXTELITE COMING SOON — EDITORIAL STATEMENT ── */
+/* Mission: Challenger — l1ft0ff */
+/* Big type. Asymmetric. Magazine cover energy. */
+
+/* ── TOKENS ── */
+:root {
+  --gold: #F5C400;
+  --cyan: #00BADF;
+  --cobalt: #3B6EF5;
+  --magenta: #E8197A;
+
+  --bg: #ffffff;
+  --text: #0a0a0a;
+  --text-dim: #3f3f46;
+  --text-muted: #a1a1aa;
+  --border: #e4e4e7;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'SF Mono', 'Cascadia Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
+
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── ACCESSIBILITY ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* ── BASE ── */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── PAGE LAYOUT ── */
+.page {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  position: relative;
+  min-height: calc(100vh - 60px);
+}
+
+/* ── LOGO — top left corner ── */
+.logo {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  user-select: none;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 0.8s 0.3s var(--ease) forwards;
+}
+
+.c-gold { color: var(--gold); }
+.c-cyan { color: var(--cyan); }
+.c-cobalt { color: var(--cobalt); }
+.c-magenta { color: var(--magenta); }
+.c-muted { color: var(--text-muted); }
+
+/* ── STATEMENT — the big text ── */
+.statement-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 3rem 6rem 3rem;
+  opacity: 0;
+  animation: fadeIn 1s 0.5s var(--ease) forwards;
+}
+
+.statement {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  max-width: 90vw;
+  text-transform: uppercase;
+}
+
+.statement-line {
+  display: block;
+}
+
+.statement-line:nth-child(2) {
+  padding-left: clamp(1rem, 5vw, 6rem);
+}
+
+.statement-line:nth-child(3) {
+  padding-left: clamp(0.5rem, 2vw, 3rem);
+}
+
+.statement-line:nth-child(4) {
+  padding-left: clamp(2rem, 8vw, 10rem);
+}
+
+/* ── SECONDARY LINE ── */
+.substatement {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  color: var(--text-muted);
+  margin-top: 3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── STATUS — inline with substatement ── */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 1.5rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* ── VERTICAL TEXT — right side ── */
+.vertical-text {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transform-origin: center center;
+  opacity: 0;
+  animation: fadeIn 0.8s 1s var(--ease) forwards;
+}
+
+/* ── FOOTER — bottom edge with socials ── */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeIn 0.8s 1.2s var(--ease) forwards;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-copy,
+.footer-norway {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.footer-sep {
+  color: var(--border);
+  font-size: 0.75rem;
+}
+
+.footer-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-link:hover {
+  color: var(--text);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ── SOCIAL LINKS — along bottom edge ── */
+.social-link {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.social-link:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.social-link svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ── EMAIL — positioned near socials ── */
+.email-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  transition: color 0.2s var(--ease);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.email-link:hover {
+  color: var(--text);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fix for vertical text - it has its own transform */
+.vertical-text {
+  animation: fadeInVertical 0.8s 1s var(--ease) forwards;
+}
+
+@keyframes fadeInVertical {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .statement {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+  }
+
+  .statement-line:nth-child(2) {
+    padding-left: 1rem;
+  }
+
+  .statement-line:nth-child(3) {
+    padding-left: 0.5rem;
+  }
+
+  .statement-line:nth-child(4) {
+    padding-left: 1.5rem;
+  }
+
+  .statement-area {
+    padding: 5rem 1.5rem 5rem 1.5rem;
+  }
+
+  .vertical-text {
+    display: none;
+  }
+
+  .logo {
+    top: 1.5rem;
+    left: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .statement {
+    font-size: clamp(2rem, 14vw, 3.5rem);
+  }
+
+  .statement-area {
+    padding: 4.5rem 1.25rem 5rem 1.25rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .footer-left {
+    order: 2;
+  }
+
+  .footer-right {
+    order: 1;
+  }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
