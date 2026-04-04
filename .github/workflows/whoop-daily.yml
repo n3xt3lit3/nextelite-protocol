@@ -24,6 +24,7 @@ jobs:
       - name: Fetch WHOOP data
         env:
           WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+          WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
         run: python whoop_fetch.py
 
       - name: Commit and push

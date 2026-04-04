@@ -14,7 +14,9 @@ DIR = os.path.dirname(os.path.abspath(__file__))
 TOKEN_FILE = os.path.join(DIR, ".whoop_tokens.json")
 DATA_FILE = os.path.join(DIR, "whoop_data.json")
 
-CLIENT_ID = "***REDACTED_CLIENT_ID***"
+CLIENT_ID = os.environ.get("WHOOP_CLIENT_ID", "")
+if not CLIENT_ID:
+    raise SystemExit("Set WHOOP_CLIENT_ID environment variable before running.")
 TOKEN_URL = "https://api.prod.whoop.com/oauth/oauth2/token"
 API_BASE = "https://api.prod.whoop.com/developer"
 

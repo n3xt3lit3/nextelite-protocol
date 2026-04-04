@@ -1,2 +1,6 @@
 .whoop_tokens.json
+whoop_data.json
+whoop_history.json
+whoop_raw.json
 preview.html
+index-*.html

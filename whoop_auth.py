@@ -11,7 +11,9 @@ import webbrowser
 import getpass
 import os
 
-CLIENT_ID = "***REDACTED_CLIENT_ID***"
+CLIENT_ID = os.environ.get("WHOOP_CLIENT_ID", "")
+if not CLIENT_ID:
+    CLIENT_ID = input("Paste your WHOOP Client ID: ").strip()
 REDIRECT_URI = "http://localhost:3000/callback"
 AUTH_URL = "https://api.prod.whoop.com/oauth/oauth2/auth"
 TOKEN_URL = "https://api.prod.whoop.com/oauth/oauth2/token"
