@@ -2,5 +2,7 @@
 whoop_data.json
 whoop_history.json
 whoop_raw.json
+whoop_auth.py
+whoop_fetch.py
 preview.html
 index-*.html
