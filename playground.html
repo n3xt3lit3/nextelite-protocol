@@ -2,15 +2,17 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NextElite — Playground</title>
-  <meta name="description" content="NextElite Protocol playground — animations, experiments, and plugin arsenal." />
+  <meta name="description" content="NextElite Protocol playground — interactive experiments, UI components, and creative prototypes." />
   <meta property="og:title" content="NextElite — Playground" />
-  <meta property="og:description" content="NextElite Protocol playground — animations, experiments, and plugin arsenal." />
+  <meta property="og:description" content="NextElite Protocol playground — interactive experiments, UI components, and creative prototypes." />
   <meta property="og:image" content="1500x500.jpeg" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="animations.css" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
@@ -25,49 +27,67 @@
     .top-title { font-size:0.7rem; font-weight:700; letter-spacing:2px; }
     .top-title span { color:var(--pink); }
     .top-right { display:flex; gap:1rem; align-items:center; }
-    .top-right a { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); }
+    .top-right a { font-size:0.75rem; letter-spacing:2px; color:var(--text-muted); }
     .theme-toggle { width:36px; height:20px; border-radius:100px; border:1px solid var(--card-border); background:var(--bg-raised); cursor:pointer; position:relative; }
     .theme-toggle::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--text-muted); transition:transform 0.3s; }
     [data-theme="light"] .theme-toggle::after { transform:translateX(16px); background:var(--text); }
 
     .container { max-width:800px; margin:0 auto; padding:5rem 2rem 4rem; }
-    .intro { font-size:0.65rem; color:var(--text-dim); line-height:1.8; margin-bottom:3rem; text-align:center; }
+    .intro { font-size:0.75rem; color:var(--text-dim); line-height:1.8; margin-bottom:3rem; text-align:center; }
 
     /* COMPONENT CARD */
     .comp { margin-bottom:3rem; border:1px solid var(--card-border); background:var(--card); overflow:hidden; }
     .comp-header { padding:1rem 1.5rem; border-bottom:1px solid var(--card-border); display:flex; justify-content:space-between; align-items:center; }
-    .comp-name { font-size:0.65rem; font-weight:700; letter-spacing:2px; }
-    .comp-class { font-size:0.5rem; color:var(--accent); letter-spacing:1px; }
+    .comp-name { font-size:0.75rem; font-weight:700; letter-spacing:2px; }
+    .comp-class { font-size:0.75rem; color:var(--accent); letter-spacing:1px; }
     .comp-preview { padding:2.5rem 1.5rem; display:flex; align-items:center; justify-content:center; min-height:120px; position:relative; overflow:hidden; }
     .comp-preview.tall { min-height:200px; }
     .comp-preview.dark-only { background:#050505; }
-    .comp-notes { padding:0.75rem 1.5rem; border-top:1px solid var(--card-border); font-size:0.5rem; color:var(--text-muted); letter-spacing:0.5px; line-height:1.8; }
+    .comp-notes { padding:0.75rem 1.5rem; border-top:1px solid var(--card-border); font-size:0.75rem; color:var(--text-muted); letter-spacing:0.5px; line-height:1.8; }
 
     /* DEMO HELPERS */
     .demo-text-lg { font-size:clamp(1.5rem,4vw,2.5rem); font-weight:700; letter-spacing:-1px; }
     .demo-text-md { font-size:1.2rem; font-weight:700; }
     .demo-card { padding:1.5rem; border:1px solid var(--card-border); border-radius:12px; background:var(--bg-raised); text-align:center; width:200px; transition:all 0.3s; }
-    .demo-card-label { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); margin-top:0.5rem; }
+    .demo-card-label { font-size:0.75rem; letter-spacing:2px; color:var(--text-muted); margin-top:0.5rem; }
     .demo-row { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
-    .trigger-btn { font-family:'Space Mono',monospace; font-size:0.5rem; letter-spacing:2px; padding:0.5rem 1rem; background:none; border:1px solid var(--card-border); color:var(--text-muted); cursor:pointer; transition:all 0.2s; }
+    .trigger-btn { font-family:'Space Mono',monospace; font-size:0.75rem; letter-spacing:2px; padding:0.5rem 1rem; background:none; border:1px solid var(--card-border); color:var(--text-muted); cursor:pointer; transition:all 0.2s; }
     .trigger-btn:hover { border-color:var(--accent); color:var(--accent); }
 
     /* MARQUEE DEMO */
-    .marquee-demo .marquee-track span { font-size:0.6rem; font-weight:700; letter-spacing:3px; color:var(--text-muted); padding:0 1.5rem; }
+    .marquee-demo .marquee-track span { font-size:0.75rem; font-weight:700; letter-spacing:3px; color:var(--text-muted); padding:0 1.5rem; }
     .marquee-demo .num { color:var(--accent); font-size:1rem; }
 
     /* SECTION DIVIDERS */
-    .section-label { font-size:0.42rem; letter-spacing:4px; color:var(--text-muted); margin:3rem 0 1.5rem; text-align:center; }
+    .section-label { font-size:0.75rem; letter-spacing:4px; color:var(--text-muted); margin:3rem 0 1.5rem; text-align:center; }
   </style>
 </head>
 <body>
 
-  <div class="top">
-    <div class="top-title" style="font-size:0.85rem;font-weight:900;letter-spacing:4px">NEXTELITE <span style="font-weight:400;letter-spacing:2px;color:var(--text-muted)">PLAYGROUND</span></div>
-    <div class="top-right">
-      <a href="index.html">← BACK TO SITE</a>
-      <div class="theme-toggle" id="themeToggle"></div>
+  <nav class="ne-nav" style="background:var(--bg);border-bottom:1px solid var(--card-border);">
+    <div class="ne-nav-inner">
+      <a href="index.html" class="ne-nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span>t_<span class="c4">e</span>lite<span style="color:var(--text-muted)">();</span></a>
+      <ul class="ne-nav-links">
+        <li><a href="index.html">PROTOCOL</a></li>
+        <li><a href="clicker.html">TRAINING</a><div class="ne-nav-dropdown"><a href="clicker.html">CLICKER</a><a href="routines.html">ROUTINES</a><a href="tagteach.html">TAGTEACH</a></div></li>
+        <li><a href="ai.html">AI</a></li>
+        <li><a href="dashboard.html">DASHBOARD</a></li>
+        <li><a href="subscribe.html">JOIN</a></li>
+      </ul>
+      <div class="ne-nav-right">
+        <div class="theme-toggle" id="themeToggle"></div>
+        <button class="ne-nav-hamburger" id="neNavHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
     </div>
+  </nav>
+  <div class="ne-mobile-menu" id="neMobileMenu">
+    <a href="index.html">PROTOCOL</a>
+    <a href="clicker.html">CLICKER</a>
+    <a href="routines.html">ROUTINES</a>
+    <a href="tagteach.html">TAGTEACH</a>
+    <a href="ai.html">AI</a>
+    <a href="dashboard.html">DASHBOARD</a>
+    <a href="subscribe.html">JOIN</a>
   </div>
 
   <div class="container">
@@ -86,91 +106,91 @@
 <span style="color:#e6c43c"> ╚═╝  ╚═══╝</span><span style="color:#50c8dc">╚══════╝</span><span style="color:#3c64e6">╚═╝  ╚═╝</span><span style="color:#7846dc">   ╚═╝   </span><span style="color:#d25abe">╚══════╝</span><span style="color:#e678c8">╚══════╝</span><span style="color:#f0aade">╚═╝</span><span style="color:#b8b0be">   ╚═╝   </span><span style="color:#9990a3">╚══════╝</span></div>
 
     <div style="text-align:center;margin-bottom:3rem;">
-      <div style="font-size:0.55rem;letter-spacing:3px;color:var(--text-muted);margin-bottom:0.5rem;">CLAUDE CODE</div>
+      <div style="font-size:0.75rem;letter-spacing:3px;color:var(--text-muted);margin-bottom:0.5rem;">CLAUDE CODE</div>
       <div style="font-size:0.7rem;color:var(--text-dim);">Opus 4.6 (1M context) · <span style="color:var(--accent)">Claude Max</span></div>
     </div>
 
-    <div style="font-size:0.42rem;letter-spacing:4px;color:var(--text-muted);margin-bottom:1.5rem;">INSTALLED PLUGINS</div>
+    <div style="font-size:0.75rem;letter-spacing:4px;color:var(--text-muted);margin-bottom:1.5rem;">INSTALLED PLUGINS</div>
 
     <a href="https://github.com/thedotmack/claude-mem" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#e6c43c;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">claude-mem</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Persistent memory across sessions</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Persistent memory across sessions</span>
     </a>
     <a href="https://github.com/jarrodwatts/claude-hud" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#50c8dc;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">claude-hud</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Real-time status bar</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Real-time status bar</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#3B6EF5;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">frontend-design</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Production-grade UI generation</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Production-grade UI generation</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-review" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#7846dc;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">code-review</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Multi-agent PR review</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Multi-agent PR review</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/commit-commands" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#d25abe;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">commit-commands</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Smart git workflow</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Smart git workflow</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/typescript-lsp" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#e678c8;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">typescript-lsp</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Real type checking</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Real type checking</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-simplifier" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#f0aade;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">code-simplifier</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Code cleanup</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Code cleanup</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#9990a3;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">security-guidance</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">Security analysis on every edit</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">Security analysis on every edit</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/feature-dev" target="_blank" style="display:flex;align-items:center;padding:1.2rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="width:7px;height:7px;border-radius:1px;background:#e6c43c;flex-shrink:0"></span>
       <span style="margin-left:1rem;font-size:0.85rem;font-weight:700;letter-spacing:1px;font-family:'Inter',sans-serif">feature-dev</span>
-      <span style="flex:1;text-align:right;font-size:0.65rem;color:var(--text-dim)">End-to-end feature implementation</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim)">End-to-end feature implementation</span>
     </a>
 
     <!-- STATS -->
     <div style="display:flex;justify-content:center;gap:3rem;margin:3rem 0;font-family:'Inter',sans-serif;">
-      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="9">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">PLUGINS</div></div>
-      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="5">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">HOOKS</div></div>
-      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="13">0</div><div style="font-size:0.45rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">MCP TOOLS</div></div>
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="9">0</div><div style="font-size:0.75rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">PLUGINS</div></div>
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="5">0</div><div style="font-size:0.75rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">HOOKS</div></div>
+      <div style="text-align:center"><div style="font-size:2rem;font-weight:900" class="arsenal-count" data-t="13">0</div><div style="font-size:0.75rem;font-weight:700;letter-spacing:3px;color:var(--text-muted);margin-top:0.2rem">MCP TOOLS</div></div>
     </div>
 
     <!-- NEXT UP -->
-    <div style="font-size:0.42rem;letter-spacing:4px;color:var(--text-muted);margin:3rem 0 1.5rem;">RECOMMENDED NEXT</div>
+    <div style="font-size:0.75rem;letter-spacing:4px;color:var(--text-muted);margin:3rem 0 1.5rem;">RECOMMENDED NEXT</div>
 
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/hookify" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">hookify</span>
-      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Create hooks from natural language</span>
-      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--accent);border:1px solid var(--accent);padding:0.2rem 0.5rem">HIGH</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim);margin:0 1.5rem">Create hooks from natural language</span>
+      <span style="font-size:0.75rem;font-weight:700;letter-spacing:2px;color:var(--accent);border:1px solid var(--accent);padding:0.2rem 0.5rem">HIGH</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">pr-review-toolkit</span>
-      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Deeper PR analysis</span>
-      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim);margin:0 1.5rem">Deeper PR analysis</span>
+      <span style="font-size:0.75rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-md-management" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">claude-md-management</span>
-      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Auto-maintain CLAUDE.md files</span>
-      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim);margin:0 1.5rem">Auto-maintain CLAUDE.md files</span>
+      <span style="font-size:0.75rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
     </a>
     <a href="https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator" target="_blank" style="display:flex;align-items:center;padding:1rem 0;border-bottom:1px solid var(--card-border);text-decoration:none;color:inherit;transition:padding 0.2s;" onmouseover="this.style.paddingLeft='0.5rem'" onmouseout="this.style.paddingLeft='0'">
       <span style="font-size:0.8rem;font-weight:700;font-family:'Inter',sans-serif">skill-creator</span>
-      <span style="flex:1;text-align:right;font-size:0.6rem;color:var(--text-dim);margin:0 1.5rem">Build your own slash commands</span>
-      <span style="font-size:0.4rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
+      <span style="flex:1;text-align:right;font-size:0.75rem;color:var(--text-dim);margin:0 1.5rem">Build your own slash commands</span>
+      <span style="font-size:0.75rem;font-weight:700;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);padding:0.2rem 0.5rem">MED</span>
     </a>
 
     <!-- PRO TIPS -->
-    <div style="margin-top:2.5rem;padding:1.5rem 0;border-top:1px solid var(--card-border);font-size:0.65rem;color:var(--text-dim);line-height:2;font-family:'Inter',sans-serif;">
+    <div style="margin-top:2.5rem;padding:1.5rem 0;border-top:1px solid var(--card-border);font-size:0.75rem;color:var(--text-dim);line-height:2;font-family:'Inter',sans-serif;">
       <strong style="color:var(--text)">Pro tip:</strong> Install with <code style="color:var(--accent)">/plugin install PLUGIN_NAME</code><br>
       <strong style="color:var(--text)">Pro tip:</strong> feature-dev + claude-mem is the strongest combo — one plans and builds, the other remembers every decision.<br>
       <strong style="color:var(--text)">Pro tip:</strong> hookify lets you create hooks from plain English. Say "block commits without tests" and it writes the hook.
@@ -180,12 +200,12 @@
     <div style="border:1px solid var(--card-border);margin-top:2rem;overflow:hidden">
       <div style="display:flex;align-items:center;padding:0.6rem 1rem;border-bottom:1px solid var(--card-border);background:var(--card)">
         <div style="display:flex;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#ff5f57"></span><span style="width:9px;height:9px;border-radius:50%;background:#febc2e"></span><span style="width:9px;height:9px;border-radius:50%;background:#28c840"></span></div>
-        <div style="flex:1;text-align:center;font-size:0.45rem;letter-spacing:2px;color:var(--text-muted)">claude code</div>
+        <div style="flex:1;text-align:center;font-size:0.75rem;letter-spacing:2px;color:var(--text-muted)">claude code</div>
       </div>
-      <div id="arsenal-term" style="padding:1.2rem;font-family:'SF Mono','Fira Code',monospace;font-size:0.65rem;line-height:2;color:var(--text-dim);min-height:220px;background:var(--bg)"></div>
+      <div id="arsenal-term" style="padding:1.2rem;font-family:'SF Mono','Fira Code',monospace;font-size:0.75rem;line-height:2;color:var(--text-dim);min-height:220px;background:var(--bg)"></div>
     </div>
 
-    <div style="text-align:center;padding:3rem 0 1rem;font-size:0.45rem;letter-spacing:3px;color:var(--text-muted);">
+    <div style="text-align:center;padding:3rem 0 1rem;font-size:0.75rem;letter-spacing:3px;color:var(--text-muted);">
       NEXTELITE PLUGIN ARSENAL — 9 ACTIVE
     </div>
 
@@ -194,7 +214,7 @@
     <!-- ═══════════════════════════════════════════════ -->
 
     <div style="text-align:center;margin:2rem 0 3rem;">
-      <button id="showAnimations" class="trigger-btn" style="padding:0.7rem 1.5rem;font-size:0.5rem;letter-spacing:3px;">ANIMATION LIBRARY</button>
+      <button id="showAnimations" class="trigger-btn" style="padding:0.7rem 1.5rem;font-size:0.75rem;letter-spacing:3px;">ANIMATION LIBRARY</button>
     </div>
 
     <div id="animSection" style="display:none;">
@@ -238,7 +258,7 @@
       </div>
       <div class="comp-preview tall dark-only" style="position:relative;">
         <div class="anim-orb" style="filter:blur(60px);width:250px;"></div>
-        <div style="position:relative;z-index:1;color:#e4e4e7;font-size:0.6rem;letter-spacing:3px;">CONTENT ABOVE ORB</div>
+        <div style="position:relative;z-index:1;color:#e4e4e7;font-size:0.75rem;letter-spacing:3px;">CONTENT ABOVE ORB</div>
       </div>
       <div class="comp-notes">Conic-gradient blob with pulse + organic shape drift. Use as hero background.</div>
     </div>
@@ -346,7 +366,7 @@
       <div class="comp-preview">
         <div style="display:flex;align-items:center;gap:0.6rem;">
           <span class="pulse-dot"></span>
-          <span style="font-size:0.6rem;letter-spacing:2px;color:var(--text-muted);">LIVE</span>
+          <span style="font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);">LIVE</span>
         </div>
       </div>
       <div class="comp-notes">Breathing green dot. Great for status indicators.</div>
@@ -409,12 +429,12 @@
         <div class="comp-class">.grain-overlay</div>
       </div>
       <div class="comp-preview grain-overlay" style="min-height:100px;position:relative;">
-        <div style="font-size:0.6rem;letter-spacing:2px;color:var(--text-muted);position:relative;z-index:1;">LOOK CLOSELY — SUBTLE NOISE</div>
+        <div style="font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);position:relative;z-index:1;">LOOK CLOSELY — SUBTLE NOISE</div>
       </div>
       <div class="comp-notes">SVG fractal noise overlay. Adds analog texture. Opacity ~0.03.</div>
     </div>
 
-    <div style="text-align:center;padding:3rem 0;font-size:0.45rem;letter-spacing:3px;color:var(--text-muted);">
+    <div style="text-align:center;padding:3rem 0;font-size:0.75rem;letter-spacing:3px;color:var(--text-muted);">
       NEXTELITE ANIMATION LIBRARY — animations.css
     </div>
 
@@ -430,6 +450,14 @@
       var next=html.getAttribute('data-theme')==='dark'?'light':'dark';
       html.setAttribute('data-theme',next);localStorage.setItem('nextelite-theme',next);
     });
+
+    /* NAV HAMBURGER */
+    var neHam = document.getElementById('neNavHamburger');
+    var neMob = document.getElementById('neMobileMenu');
+    if (neHam && neMob) {
+      neHam.addEventListener('click', function() { neHam.classList.toggle('open'); neMob.classList.toggle('open'); });
+      neMob.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { neHam.classList.remove('open'); neMob.classList.remove('open'); }); });
+    }
 
     /* FADE REPLAY */
     function replayFade(){

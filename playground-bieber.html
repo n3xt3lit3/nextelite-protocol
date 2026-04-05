@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nemine Steffensen</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: rgb(248, 181, 196);
+      color: rgb(83, 83, 83);
+      font-family: 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+    .nav-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgb(120, 110, 115);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links { display: none; }
+    .nav-socials {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+    .nav-socials a {
+      color: rgb(120, 110, 115);
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-socials a:hover { color: rgb(80, 70, 75); }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero-name {
+      font-size: clamp(3rem, 12vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+    }
+
+    /* === WORKS === */
+    .works {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem 8rem;
+    }
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem 6rem;
+    }
+    .work-item {}
+    .work-date {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: rgb(83, 83, 83);
+      margin-bottom: 0.5rem;
+    }
+    .work-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 900;
+      color: rgb(83, 83, 83);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+    }
+    .work-meta {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgb(83, 83, 83);
+      margin-top: 0.5rem;
+    }
+    .work-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .work-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: rgb(83, 83, 83);
+      text-decoration: none;
+      border-bottom: 2px solid rgb(83, 83, 83);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .work-links a:hover { opacity: 0.5; }
+
+    @media (max-width: 700px) {
+      .nav { padding: 0 1.5rem; }
+      .works-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-name">Nemine Steffensen</div>
+    <ul class="nav-links">
+    </ul>
+    <div class="nav-socials">
+      <a href="routines.html">Routines</a>
+      <a href="index.html">Protocol</a>
+      <a href="https://x.com/N3XT3LIT3" target="_blank">X</a>
+      <a href="https://github.com/n3xt3lit3" target="_blank">Github</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1 class="hero-name">Steffensen</h1>
+  </header>
+
+  <section class="works">
+    <div class="works-grid">
+      <div class="work-item">
+        <div class="work-date">2026</div>
+        <div class="work-title">Painting I</div>
+        <div class="work-meta">Oil on canvas</div>
+        <div class="work-links">
+          <a href="#">View</a>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-date">2026</div>
+        <div class="work-title">Painting II</div>
+        <div class="work-meta">Oil on canvas</div>
+        <div class="work-links">
+          <a href="#">View</a>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-date">2026</div>
+        <div class="work-title">Painting III</div>
+        <div class="work-meta">Oil on canvas</div>
+        <div class="work-links">
+          <a href="#">View</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

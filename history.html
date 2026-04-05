@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Protocol History — NextElite</title>
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -24,7 +25,7 @@
 
     .back {
       display: inline-block;
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       margin-bottom: 3rem;
     }
 
@@ -35,7 +36,7 @@
     }
 
     .subtitle {
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       letter-spacing: 2px;
       color: var(--text-muted);
       margin-bottom: 3rem;
@@ -66,7 +67,7 @@
     .stat-value.sleep { color: var(--purple); }
 
     .stat-label {
-      font-size: 0.45rem;
+      font-size: 0.75rem;
       letter-spacing: 2px;
       color: var(--text-muted);
     }
@@ -84,13 +85,13 @@
     }
 
     .chart-label {
-      font-size: 0.55rem;
+      font-size: 0.75rem;
       letter-spacing: 3px;
       color: var(--text-muted);
     }
 
     .chart-avg {
-      font-size: 0.55rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
     }
 
@@ -138,7 +139,7 @@
       top: -24px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       color: var(--text);
       background: var(--tooltip-bg);
       padding: 2px 6px;
@@ -153,7 +154,7 @@
     }
 
     .chart-date {
-      font-size: 0.45rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-top: 0.5rem;
       transform: rotate(-45deg);
@@ -183,7 +184,7 @@
     }
 
     .history-table th {
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       letter-spacing: 2px;
       color: var(--text-muted);
       text-align: left;
@@ -192,7 +193,7 @@
     }
 
     .history-table td {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       padding: 0.75rem 0.5rem;
       border-bottom: 1px solid var(--card-border);
       color: var(--text-dim);
@@ -209,15 +210,40 @@
     .empty {
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       padding: 4rem 0;
     }
 
   </style>
 </head>
 <body>
+  <nav class="ne-nav">
+    <div class="ne-nav-inner">
+      <a href="index.html" class="ne-nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span>t_<span class="c4">e</span>lite<span style="color:var(--text-muted)">();</span></a>
+      <ul class="ne-nav-links">
+        <li><a href="index.html">PROTOCOL</a></li>
+        <li><a href="clicker.html">TRAINING</a><div class="ne-nav-dropdown"><a href="clicker.html">CLICKER</a><a href="routines.html">ROUTINES</a><a href="tagteach.html">TAGTEACH</a></div></li>
+        <li><a href="ai.html">AI</a></li>
+        <li><a href="dashboard.html">DASHBOARD</a></li>
+        <li><a href="subscribe.html">JOIN</a></li>
+      </ul>
+      <div class="ne-nav-right">
+        <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+        <button class="ne-nav-hamburger" id="neNavHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="ne-mobile-menu" id="neMobileMenu">
+    <a href="index.html">PROTOCOL</a>
+    <a href="clicker.html">CLICKER</a>
+    <a href="routines.html">ROUTINES</a>
+    <a href="tagteach.html">TAGTEACH</a>
+    <a href="ai.html">AI</a>
+    <a href="dashboard.html">DASHBOARD</a>
+    <a href="subscribe.html">JOIN</a>
+  </div>
+
   <div class="container">
-    <a href="index.html" class="back">BACK TO PROTOCOL</a>
 
     <h1>Protocol History</h1>
     <div class="subtitle" id="dayCount">LOADING...</div>
@@ -419,6 +445,8 @@
         document.getElementById('emptyMsg').style.display = 'block';
         document.getElementById('dayCount').textContent = '0 DAYS TRACKED';
       });
+
   </script>
+  <script src="shared.js"></script>
 </body>
 </html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Claude 101 — NextElite Academy</title>
+  <meta name="description" content="Course 1: Claude 101 — the foundation of everything. Learn Claude fundamentals through NextElite project examples." />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+    :root { --yellow:#F5C400; --cyan:#00BADF; --blue:#3B6EF5; --pink:#E8197A; --green:#22c55e; --purple:#a855f7; --accent:var(--yellow); }
+    [data-theme="dark"] {
+      --bg:#0a0a0a; --bg-raised:#111113; --card:#141416; --card-border:#1e1e22;
+      --card-glass:rgba(14,14,16,0.6); --text:#e4e4e7; --text-dim:#71717a; --text-muted:#3f3f46;
+      --nav-bg:rgba(10,10,10,0.85); --grain-opacity:0.03;
+    }
+    [data-theme="light"] {
+      --bg:#fafafa; --bg-raised:#f4f4f5; --card:#ffffff; --card-border:#e4e4e7;
+      --card-glass:rgba(255,255,255,0.6); --text:#18181b; --text-dim:#71717a; --text-muted:#a1a1aa;
+      --nav-bg:rgba(250,250,250,0.85); --grain-opacity:0.02;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Space Mono',monospace; -webkit-font-smoothing:antialiased; overflow-x:hidden; transition:background 0.4s, color 0.4s; }
+    a { color:inherit; text-decoration:none; }
+
+    /* GRAIN */
+    body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:9998; opacity:var(--grain-opacity); background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:128px; }
+
+    /* NAV */
+    nav { position:fixed; top:1rem; left:50%; transform:translateX(-50%); z-index:100; background:var(--nav-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid var(--card-border); border-radius:100px; padding:0.6rem 1.5rem; transition:all 0.35s ease; }
+    .nav-inner { display:flex; align-items:center; gap:1.5rem; }
+    .nav-logo { font-size:0.68rem; font-weight:700; letter-spacing:0.5px; }
+    .nav-logo .c1{color:var(--yellow);} .nav-logo .c2{color:var(--cyan);} .nav-logo .c3{color:var(--blue);} .nav-logo .c4{color:var(--pink);}
+    .nav-links { display:flex; gap:1.2rem; list-style:none; }
+    .nav-links a { font-size:0.5rem; letter-spacing:1.5px; color:var(--text-muted); transition:color 0.2s; }
+    .nav-links a:hover { color:var(--text); }
+    .theme-toggle { width:36px; height:20px; border-radius:100px; border:1px solid var(--card-border); background:var(--bg-raised); cursor:pointer; position:relative; transition:all 0.3s; flex-shrink:0; }
+    .theme-toggle::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--text-muted); transition:transform 0.3s; }
+    [data-theme="light"] .theme-toggle::after { transform:translateX(16px); background:var(--text); }
+
+    /* SCROLL PROGRESS */
+    .scroll-progress { position:fixed; top:0; left:0; height:2px; z-index:101; background:var(--accent); width:0; transition:width 0.1s; }
+
+    /* CONTAINER */
+    .container { max-width:720px; margin:0 auto; padding:2rem; }
+
+    /* HEADER */
+    .course-header { padding-top:6rem; margin-bottom:1rem; }
+    .course-number { font-size:0.45rem; letter-spacing:4px; color:var(--accent); margin-bottom:0.75rem; }
+    .course-title { font-size:clamp(1.6rem,5vw,2.4rem); font-weight:700; letter-spacing:-1px; margin-bottom:0.5rem; }
+    .course-subtitle { font-size:0.65rem; letter-spacing:2px; color:var(--text-muted); }
+
+    /* PROGRESS BAR */
+    .progress-section { margin:2.5rem 0 3.5rem; }
+    .progress-label { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; }
+    .progress-text { font-size:0.45rem; letter-spacing:2px; color:var(--text-muted); }
+    .progress-count { font-size:0.45rem; letter-spacing:1px; color:var(--accent); font-weight:700; }
+    .progress-track { width:100%; height:4px; background:var(--card-border); border-radius:4px; overflow:hidden; }
+    .progress-fill { height:100%; width:0%; background:var(--accent); border-radius:4px; transition:width 0.6s ease; }
+
+    /* LESSON CARD */
+    .lesson-card { background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid var(--card-border); border-radius:12px; padding:2.5rem 2rem; margin-bottom:2rem; transition:background 0.3s, border-color 0.3s, transform 0.3s; }
+    .lesson-card:hover { background:var(--card); transform:translateY(-2px); }
+    .lesson-card.completed { border-color:var(--accent); }
+    .lesson-card.completed .lesson-check { background:var(--accent); border-color:var(--accent); }
+    .lesson-card.completed .lesson-check::after { opacity:1; }
+
+    .lesson-top { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; }
+    .lesson-check { width:22px; height:22px; border-radius:6px; border:2px solid var(--card-border); background:transparent; cursor:pointer; position:relative; transition:all 0.3s; flex-shrink:0; }
+    .lesson-check:hover { border-color:var(--accent); }
+    .lesson-check::after { content:''; position:absolute; top:3px; left:6px; width:5px; height:10px; border:solid var(--bg); border-width:0 2px 2px 0; transform:rotate(45deg); opacity:0; transition:opacity 0.2s; }
+    .lesson-num { font-size:0.42rem; letter-spacing:3px; color:var(--accent); font-weight:700; }
+    .lesson-title { font-size:0.95rem; font-weight:700; letter-spacing:-0.3px; }
+
+    .lesson-content { font-size:0.72rem; line-height:1.8; color:var(--text-dim); margin-bottom:1.5rem; }
+    .lesson-content p { margin-bottom:0.8rem; }
+    .lesson-content strong { color:var(--text); font-weight:700; }
+
+    /* EXERCISE BOX */
+    .exercise-box { border-left:3px solid var(--accent); background:rgba(245,196,0,0.04); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; }
+    [data-theme="light"] .exercise-box { background:rgba(245,196,0,0.06); }
+    .exercise-label { font-size:0.42rem; letter-spacing:3px; color:var(--accent); font-weight:700; margin-bottom:0.6rem; }
+    .exercise-text { font-size:0.68rem; line-height:1.7; color:var(--text-dim); font-style:italic; }
+
+    /* DIVIDER */
+    .divider { border:none; height:1px; background:linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent); margin:0; }
+
+    /* NAV BOTTOM */
+    .course-nav { display:flex; justify-content:space-between; align-items:center; padding:3rem 0 4rem; gap:1rem; }
+    .nav-btn { font-size:0.5rem; letter-spacing:2px; color:var(--text-muted); padding:0.7rem 1.5rem; border:1px solid var(--card-border); border-radius:100px; transition:all 0.3s; background:transparent; font-family:'Space Mono',monospace; cursor:pointer; }
+    .nav-btn:hover { color:var(--text); border-color:var(--text-dim); background:var(--card-glass); }
+    .nav-btn.disabled { opacity:0.3; pointer-events:none; }
+    .nav-btn.accent { border-color:var(--accent); color:var(--accent); }
+    .nav-btn.accent:hover { background:rgba(245,196,0,0.08); }
+
+    /* FOOTER */
+    .footer-note { text-align:center; font-size:0.45rem; letter-spacing:1px; color:var(--text-muted); padding:2rem 0 3rem; border-top:1px solid var(--card-border); }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media(max-width:600px) {
+      .lesson-card { padding:1.8rem 1.4rem; }
+      .exercise-box { padding:1rem 1.2rem; }
+      nav { padding:0.5rem 1rem; }
+      .nav-links { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo"><span class="c1">N</span><span class="c2">X</span><span class="c3">T</span><span class="c4">E</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">ACADEMY</a></li>
+        <li><a href="../index.html">HOME</a></li>
+      </ul>
+      <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle theme"></div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="course-header reveal">
+      <div class="course-number">COURSE 01</div>
+      <h1 class="course-title">Claude 101</h1>
+      <div class="course-subtitle">// the foundation of everything</div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-section reveal">
+      <div class="progress-label">
+        <span class="progress-text">PROGRESS</span>
+        <span class="progress-count" id="progressCount">0 / 6</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- LESSON 1 -->
+    <div class="lesson-card reveal" data-lesson="1" id="lesson-1">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="1" role="checkbox" aria-label="Mark lesson 1 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 01</div>
+          <div class="lesson-title">What is Claude?</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p><strong>Claude</strong> is an AI assistant built by Anthropic, a company focused on AI safety. Unlike generic chatbots, Claude is designed to be helpful, harmless, and honest — trained with constitutional AI principles that make it reason carefully before responding.</p>
+        <p>Claude comes in a family of models, each optimized for different use cases. <strong>Haiku</strong> is the fastest and most cost-effective — ideal for quick tasks and high-volume work. <strong>Sonnet</strong> balances speed and intelligence — the everyday workhorse. <strong>Opus</strong> is the most powerful — deep reasoning, complex analysis, creative work at the highest level.</p>
+        <p>A critical concept is the <strong>context window</strong> — how much information Claude can hold in a single conversation. Standard models support 200K tokens (roughly a full novel). Opus with extended thinking supports up to <strong>1M tokens</strong> — enough to hold an entire codebase, multiple documents, and long conversation history simultaneously.</p>
+        <p>Claude is the AI behind the <strong>NextElite protocol</strong>. Every page on this site, every line of code, every design decision — built in conversation between a human and an AI. No templates. No agencies. Just direct collaboration with Claude.</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Open Claude.ai and ask it to explain what a biohacking protocol is. Compare the response to the NextElite manifesto. Notice how Claude structures information, uses nuance, and adapts to the topic.</div>
+      </div>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="lesson-card reveal" data-lesson="2" id="lesson-2">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="2" role="checkbox" aria-label="Mark lesson 2 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 02</div>
+          <div class="lesson-title">Prompting Fundamentals</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p>The quality of what Claude gives you depends entirely on what you give it. A vague prompt returns a vague response. A <strong>specific, contextualized prompt</strong> returns something you can actually use.</p>
+        <p>The fundamentals: <strong>Be specific</strong> about what you want. Instead of "write me some code," say "write a JavaScript function that toggles a dark/light theme using a data-theme attribute on the html element." <strong>Give context</strong> — tell Claude what the project is, what stack you're using, what style you prefer. <strong>Use examples</strong> — show it what good output looks like.</p>
+        <p><strong>System prompts</strong> set the behavior for an entire conversation. They define Claude's role, tone, constraints, and knowledge base — like a briefing before the mission starts. <strong>User prompts</strong> are your individual messages within that context.</p>
+        <p><strong>Temperature</strong> controls creativity vs consistency. Low temperature (0.0 - 0.3) gives precise, deterministic answers — ideal for code and factual queries. High temperature (0.7 - 1.0) produces more varied, creative responses — better for brainstorming and writing. Default is usually around 1.0.</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Write a prompt that generates a new section description for the NextElite site. Try different temperatures and compare results. Notice how low temperature produces predictable, safe copy while high temperature creates unexpected combinations.</div>
+      </div>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="lesson-card reveal" data-lesson="3" id="lesson-3">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="3" role="checkbox" aria-label="Mark lesson 3 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 03</div>
+          <div class="lesson-title">Multi-turn Conversations</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p>Claude remembers everything within a conversation. Each message builds on the last, creating a <strong>shared context</strong> that grows more powerful with every turn. This is where the real work happens — not in single prompts, but in iterative dialogue.</p>
+        <p><strong>Building on previous responses</strong> is the core skill. Ask Claude to generate something, then refine it. "Make it more concise." "Change the tone to match our brand." "Now add a hover animation." Each instruction layers on top of what came before.</p>
+        <p>Know when to <strong>start fresh vs continue</strong>. If the conversation has drifted off-topic or accumulated confusion, a new conversation with a clear system prompt will be more efficient than trying to correct course. If you're deep in a productive flow, keep going — context is valuable.</p>
+        <p><strong>Managing long conversations</strong> matters because even with large context windows, signal-to-noise ratio degrades over time. Periodically summarize where you are. Restate key decisions. Remove ambiguity. Think of it as maintaining a clean workspace — the cleaner the context, the better the output.</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Start a conversation about improving the NextElite hero section. Iterate through 5 messages, each refining the previous suggestion. Watch how each turn gets sharper and more aligned with your vision.</div>
+      </div>
+    </div>
+
+    <!-- LESSON 4 -->
+    <div class="lesson-card reveal" data-lesson="4" id="lesson-4">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="4" role="checkbox" aria-label="Mark lesson 4 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 04</div>
+          <div class="lesson-title">Working with Code</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p>Claude can <strong>read, write, debug, and explain code</strong> across virtually every programming language. It understands not just syntax but architecture, patterns, performance implications, and best practices. It's a collaborator, not a copy-paste machine.</p>
+        <p><strong>Sharing code effectively</strong>: Give Claude the full file or relevant section, not just a snippet without context. Specify the language and framework. Describe what the code should do and what it currently does (if different). The more context, the better the fix.</p>
+        <p><strong>Asking for modifications</strong>: Be precise. "Add a 300ms ease transition to the nav background" is infinitely better than "make the nav smoother." Point to specific selectors, functions, or lines. Claude works best when the target is clear.</p>
+        <p><strong>Understanding diffs</strong>: When Claude shows you changes, read them carefully. The diff format shows what's removed (old) and what's added (new). This is how you learn — not just from the result, but from understanding what changed and why.</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Share the NextElite nav CSS with Claude and ask it to add a new animation on hover. Iterate until you like the result. Pay attention to how Claude explains its choices and how each iteration gets closer to what you want.</div>
+      </div>
+    </div>
+
+    <!-- LESSON 5 -->
+    <div class="lesson-card reveal" data-lesson="5" id="lesson-5">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="5" role="checkbox" aria-label="Mark lesson 5 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 05</div>
+          <div class="lesson-title">Images, PDFs, and Files</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p>Claude has <strong>vision capabilities</strong> — it can analyze images, read documents, process screenshots, and extract information from visual content. This transforms how you work with design, documentation, and reference material.</p>
+        <p><strong>Image analysis</strong>: Share a screenshot of a design you like, and Claude can describe the layout, colors, typography, and spacing. Share a wireframe, and it can generate code. Share a bug screenshot, and it can identify the issue.</p>
+        <p><strong>PDF and document processing</strong>: Claude can read through PDFs, extract key information, summarize findings, and answer questions about the content. Research papers, contracts, documentation — all fair game.</p>
+        <p><strong>Using vision effectively</strong>: Be specific about what you want extracted or analyzed. "Describe the color palette and typography" is better than "what do you see?" Combine image analysis with text instructions for powerful results — "here's the current design, make it match this reference."</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Share the NextElite logo (1500x500.jpeg) with Claude and ask it to describe the design language and suggest complementary visual elements. See how Claude interprets visual identity and translates it into actionable design direction.</div>
+      </div>
+    </div>
+
+    <!-- LESSON 6 -->
+    <div class="lesson-card reveal" data-lesson="6" id="lesson-6">
+      <div class="lesson-top">
+        <div class="lesson-check" data-check="6" role="checkbox" aria-label="Mark lesson 6 complete"></div>
+        <div>
+          <div class="lesson-num">LESSON 06</div>
+          <div class="lesson-title">Best Practices & What's Next</div>
+        </div>
+      </div>
+      <div class="lesson-content">
+        <p><strong>Common mistakes to avoid</strong>: Vague prompts that give Claude nothing to work with. Not iterating — accepting the first response instead of refining it. Not giving context — Claude can't read your mind, but it can work with everything you share. Trying to do too much in one prompt instead of building incrementally.</p>
+        <p><strong>Power user tips</strong>: Always start with a strong system prompt that defines the project. Save good prompts as templates. Use Claude to review its own output — "what could be better about this?" Chain conversations strategically — use output from one as input to the next. Document your learnings in a living file.</p>
+        <p><strong>What's next</strong>: This course covered Claude as a conversational AI. But Claude goes much further. The <strong>API</strong> lets you integrate Claude into your own applications programmatically. <strong>Claude Code</strong> is an agentic coding tool that reads your codebase, runs commands, and builds alongside you in the terminal. <strong>MCP (Model Context Protocol)</strong> connects Claude to external tools, databases, and services.</p>
+        <p>The NextElite protocol was built entirely with Claude Code. Every page, every animation, every decision — a human-AI collaboration running in the terminal. That's the next level.</p>
+      </div>
+      <div class="exercise-box">
+        <div class="exercise-label">NEXTELITE EXERCISE</div>
+        <div class="exercise-text">Write a CLAUDE.md file that describes the NextElite project to give Claude perfect context every time. Include the tech stack, design system, brand voice, and key decisions. This becomes your permanent bridge between sessions.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- BOTTOM NAV -->
+    <div class="course-nav">
+      <a href="index.html" class="nav-btn">&larr; ALL COURSES</a>
+      <a href="course-02.html" class="nav-btn accent">COURSE 02 &rarr;</a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-note">NEXTELITE ACADEMY &mdash; BUILT WITH CLAUDE</div>
+
+  </div>
+
+  <script>
+    /* ── THEME ── */
+    const html = document.documentElement;
+    const saved = localStorage.getItem('nextelite-theme');
+    if (saved) html.setAttribute('data-theme', saved);
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('nextelite-theme', next);
+    });
+
+    /* ── SCROLL PROGRESS ── */
+    const progressBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+    });
+
+    /* ── SCROLL REVEAL ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    /* ── LESSON COMPLETION ── */
+    const STORAGE_KEY = 'nextelite-course01';
+    let completed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    function updateProgress() {
+      const count = completed.length;
+      document.getElementById('progressCount').textContent = count + ' / 6';
+      document.getElementById('progressFill').style.width = (count / 6 * 100) + '%';
+    }
+
+    function renderChecks() {
+      document.querySelectorAll('.lesson-check').forEach(check => {
+        const id = parseInt(check.dataset.check);
+        const card = check.closest('.lesson-card');
+        if (completed.includes(id)) {
+          card.classList.add('completed');
+        } else {
+          card.classList.remove('completed');
+        }
+      });
+      updateProgress();
+    }
+
+    document.querySelectorAll('.lesson-check').forEach(check => {
+      check.addEventListener('click', () => {
+        const id = parseInt(check.dataset.check);
+        if (completed.includes(id)) {
+          completed = completed.filter(x => x !== id);
+        } else {
+          completed.push(id);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
+        renderChecks();
+      });
+    });
+
+    renderChecks();
+  </script>
+</body>
+</html>

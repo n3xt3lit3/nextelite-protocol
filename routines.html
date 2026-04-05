@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Routines — Steffensen</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: rgb(248, 181, 196);
+      color: rgb(83, 83, 83);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+    .nav-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgb(120, 110, 115);
+      text-decoration: none;
+    }
+    .nav-socials {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+    .nav-socials a {
+      color: rgb(120, 110, 115);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-socials a:hover { color: rgb(80, 70, 75); }
+
+    /* === HERO === */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 12vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+    }
+
+    /* === ROUTINE === */
+    .routine {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2.5rem 8rem;
+    }
+    .routine-header {
+      margin-bottom: 3rem;
+    }
+    .routine-date {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: rgb(83, 83, 83);
+      margin-bottom: 0.5rem;
+    }
+    .routine-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 900;
+      color: rgb(83, 83, 83);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+    }
+    .routine-meta {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgb(83, 83, 83);
+      margin-top: 0.5rem;
+    }
+
+    /* === VIDEO === */
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      margin-top: 2rem;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* === DIVIDER === */
+    .routine-divider {
+      width: 40px;
+      height: 1px;
+      background: rgb(83, 83, 83);
+      opacity: 0.2;
+      margin: 6rem 0;
+    }
+
+    /* === ROUTINE LIST === */
+    .routine-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .routine-item {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-left: 3px solid transparent;
+    }
+    .priority-health { border-left-color: #4ecdc4; }
+    .priority-both { border-left-color: #f5c400; }
+    .priority-looks { border-left-color: #e8197a; }
+    .routine-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      margin-bottom: 0.6rem;
+    }
+    .tag-health { background: #4ecdc4; color: #1a1a1a; }
+    .tag-both { background: #f5c400; color: #1a1a1a; }
+    .tag-looks { background: #e8197a; color: #fff; }
+    .routine-item-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: rgb(60, 60, 60);
+      margin-bottom: 0.4rem;
+    }
+    .routine-item-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: rgb(83, 83, 83);
+      margin-bottom: 0.5rem;
+    }
+    .routine-item-when {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgb(120, 110, 115);
+      margin-bottom: 0.3rem;
+    }
+    .routine-item-status {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: rgb(150, 140, 145);
+    }
+    .routine-item-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: rgb(60, 60, 60);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .routine-item-link:hover { color: rgb(30, 30, 30); }
+
+    @media (max-width: 700px) {
+      .nav { padding: 0 1.5rem; }
+      .routine { padding: 0 1.5rem 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="ne-nav">
+    <div class="ne-nav-inner">
+      <a href="index.html" class="ne-nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span>t_<span class="c4">e</span>lite<span style="color:var(--text-muted)">();</span></a>
+      <ul class="ne-nav-links">
+        <li><a href="index.html">PROTOCOL</a></li>
+        <li><a href="clicker.html" class="active">TRAINING</a><div class="ne-nav-dropdown"><a href="clicker.html">CLICKER</a><a href="routines.html">ROUTINES</a><a href="tagteach.html">TAGTEACH</a></div></li>
+        <li><a href="ai.html">AI</a></li>
+        <li><a href="dashboard.html">DASHBOARD</a></li>
+        <li><a href="subscribe.html">JOIN</a></li>
+      </ul>
+      <div class="ne-nav-right">
+        <button class="ne-nav-hamburger" id="neNavHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="ne-mobile-menu" id="neMobileMenu">
+    <a href="index.html">PROTOCOL</a>
+    <a href="clicker.html">CLICKER</a>
+    <a href="routines.html">ROUTINES</a>
+    <a href="tagteach.html">TAGTEACH</a>
+    <a href="ai.html">AI</a>
+    <a href="dashboard.html">DASHBOARD</a>
+    <a href="subscribe.html">JOIN</a>
+  </div>
+
+  <header class="hero">
+    <h1 class="hero-title">Routines</h1>
+  </header>
+
+  <section class="routine">
+    <div class="routine-header">
+      <div class="routine-date">Daily</div>
+      <div class="routine-name">Morning Routine</div>
+      <div class="routine-meta">The first hour sets the rest</div>
+    </div>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube-nocookie.com/embed/h8udLWTJrK4?si=CZKWBrISlve1P0EE" title="Morning Routine" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section class="routine">
+    <div class="routine-divider"></div>
+    <div class="routine-header">
+      <div class="routine-date">Daily</div>
+      <div class="routine-name">Beauty Routine</div>
+      <div class="routine-meta">Health first, aesthetics follow</div>
+    </div>
+
+    <div class="routine-list">
+
+      <div class="routine-item priority-health">
+        <span class="routine-tag tag-health">HEALTH</span>
+        <div class="routine-item-name">Zygo Tape — Facial Support Tape</div>
+        <div class="routine-item-desc">Mouth taping for nasal breathing during sleep. Improves sleep quality, oxygen saturation, nitric oxide production. Also promotes proper tongue posture and jawline definition.</div>
+        <div class="routine-item-when">Every night</div>
+        <div class="routine-item-status">Not yet purchased</div>
+        <a href="https://zygotape.com/" target="_blank" class="routine-item-link">zygotape.com</a>
+      </div>
+
+      <div class="routine-item priority-health">
+        <span class="routine-tag tag-health">HEALTH</span>
+        <div class="routine-item-name">Coconut Oil — Oil Pulling</div>
+        <div class="routine-item-desc">Swish for 10-15 min on empty stomach. Antimicrobial, whitens teeth naturally, improves gum health. Also used as natural deodorant and hair styling.</div>
+        <div class="routine-item-when">Morning — before eating</div>
+        <div class="routine-item-status">In use</div>
+      </div>
+
+      <div class="routine-item priority-both">
+        <span class="routine-tag tag-both">HEALTH + LOOKS</span>
+        <div class="routine-item-name">Egg Yolk Shampoo</div>
+        <div class="routine-item-desc">Raw egg yolk as shampoo in cold water. Rich in biotin, lecithin, and protein. Strengthens hair, adds shine, no sulfates or chemicals. Cold water seals the cuticle.</div>
+        <div class="routine-item-when">Wash days — cold water only</div>
+        <div class="routine-item-status">In use</div>
+      </div>
+
+      <div class="routine-item priority-both">
+        <span class="routine-tag tag-both">HEALTH + LOOKS</span>
+        <div class="routine-item-name">Castor Oil — Hair Mask</div>
+        <div class="routine-item-desc">Deep conditioning mask. High in ricinoleic acid — anti-inflammatory, promotes blood circulation to scalp, stimulates hair growth and thickness.</div>
+        <div class="routine-item-when">1-2x per week — leave in 30+ min before wash</div>
+        <div class="routine-item-status">In use</div>
+      </div>
+
+      <div class="routine-item priority-looks">
+        <span class="routine-tag tag-looks">LOOKS</span>
+        <div class="routine-item-name">Coconut Oil — Styling</div>
+        <div class="routine-item-desc">Natural hair styling. Light hold, adds shine, tames frizz. No synthetic chemicals or parabens.</div>
+        <div class="routine-item-when">After wash / as needed</div>
+        <div class="routine-item-status">In use</div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    var neHam = document.getElementById('neNavHamburger');
+    var neMob = document.getElementById('neMobileMenu');
+    if (neHam && neMob) {
+      neHam.addEventListener('click', function() { neHam.classList.toggle('open'); neMob.classList.toggle('open'); });
+      neMob.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { neHam.classList.remove('open'); neMob.classList.remove('open'); }); });
+    }
+  </script>
+</body>
+</html>

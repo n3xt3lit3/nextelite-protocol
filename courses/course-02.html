@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextElite Academy — Claude Code in Action</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Course 2: Claude Code in Action — master the AI coding agent that built the NextElite protocol." />
+  <meta property="og:title" content="NextElite Academy — Claude Code in Action" />
+  <meta property="og:description" content="The tool behind the protocol. Learn Claude Code mastery through real project work." />
+  <meta property="og:image" content="https://n3xt3lit3.github.io/nextelite-protocol/1500x500.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script>var s=localStorage.getItem('nextelite-theme');if(s)document.documentElement.setAttribute('data-theme',s);</script>
+  <style>
+    /* ── BRAND COLORS ── */
+    :root {
+      --yellow: #F5C400;
+      --cyan: #00BADF;
+      --blue: #3B6EF5;
+      --pink: #E8197A;
+      --green: #22c55e;
+      --purple: #a855f7;
+    }
+
+    /* ── THEME: DARK ── */
+    [data-theme="dark"] {
+      --bg: #050505;
+      --bg-raised: #0a0a0c;
+      --card: #0c0c0e;
+      --card-border: #1a1a1e;
+      --card-glass: rgba(12,12,14,0.6);
+      --text: #e4e4e7;
+      --text-dim: #52525b;
+      --text-muted: #3f3f46;
+      --nav-bg: rgba(5,5,5,0.8);
+      --grain-opacity: 0.03;
+    }
+
+    /* ── THEME: LIGHT ── */
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-raised: #f4f4f5;
+      --card: #ffffff;
+      --card-border: #e4e4e7;
+      --card-glass: rgba(255,255,255,0.6);
+      --text: #18181b;
+      --text-dim: #71717a;
+      --text-muted: #a1a1aa;
+      --nav-bg: rgba(250,250,250,0.8);
+      --grain-opacity: 0.02;
+    }
+
+    /* ── RESET ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── BASE ── */
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── GRAIN TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: var(--grain-opacity);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── FLOATING NAV ── */
+    .floating-nav {
+      position: fixed;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+      padding: 0.5rem 1.5rem;
+      z-index: 9999;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-logo {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+    .nav-link {
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-divider {
+      width: 1px;
+      height: 14px;
+      background: var(--card-border);
+    }
+    .theme-toggle {
+      width: 36px;
+      height: 20px;
+      border-radius: 100px;
+      border: 1px solid var(--card-border);
+      background: var(--bg-raised);
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+      flex-shrink: 0;
+    }
+    .theme-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: transform 0.3s, background 0.3s;
+    }
+    [data-theme="light"] .theme-toggle::after {
+      transform: translateX(16px);
+      background: var(--text);
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+    }
+
+    /* ── COURSE HEADER ── */
+    .course-num {
+      font-size: 0.5rem;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      margin-bottom: 0.75rem;
+    }
+    .course-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+    .course-subtitle {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .course-desc {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 3rem;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      margin-bottom: 3.5rem;
+    }
+    .progress-label {
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--card-border);
+      border-radius: 100px;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--cyan);
+      border-radius: 100px;
+      transition: width 0.6s ease;
+    }
+
+    /* ── LESSON CARD ── */
+    .lesson {
+      background: var(--card-glass);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 1.5rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .lesson.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .lesson:hover {
+      background: var(--card);
+      transform: translateY(-2px);
+    }
+    .lesson.visible:hover {
+      transform: translateY(-2px);
+    }
+    .lesson-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .lesson-num {
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      font-weight: 700;
+      min-width: 60px;
+    }
+    .lesson-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      flex: 1;
+    }
+
+    /* ── CHECKBOX ── */
+    .lesson-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--card-border);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .lesson-check:hover {
+      border-color: var(--cyan);
+    }
+    .lesson-check.checked {
+      background: var(--cyan);
+      border-color: var(--cyan);
+    }
+    .lesson-check.checked::after {
+      content: '';
+      width: 6px;
+      height: 10px;
+      border: solid #050505;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translateY(-1px);
+    }
+
+    .lesson-content {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── EXERCISE BOX ── */
+    .exercise {
+      border-left: 3px solid var(--cyan);
+      background: var(--bg-raised);
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.5rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .exercise-label {
+      font-size: 0.48rem;
+      letter-spacing: 2.5px;
+      color: var(--cyan);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .exercise-text {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      line-height: 1.85;
+    }
+    .exercise-text code {
+      background: var(--card-border);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.56rem;
+      color: var(--cyan);
+      transition: background 0.3s;
+    }
+
+    /* ── NAVIGATION ── */
+    .course-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: 2rem;
+    }
+    .nav-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--card-border);
+      border-radius: 100px;
+      padding: 0.6rem 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .nav-btn:hover {
+      color: var(--text);
+      border-color: var(--text-dim);
+      background: var(--card);
+    }
+    .nav-btn.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* ── FOOTER ── */
+    .footer-note {
+      text-align: center;
+      font-size: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .container { padding: 5rem 1.2rem 3rem; }
+      .course-title { font-size: 1.2rem; }
+      .lesson { padding: 1.8rem 1.4rem; }
+      .floating-nav { gap: 1rem; padding: 0.5rem 1rem; }
+      .nav-logo { font-size: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING NAV -->
+  <nav class="floating-nav">
+    <a href="../index.html" class="nav-logo">NEXTELITE</a>
+    <div class="nav-divider"></div>
+    <a href="index.html" class="nav-link">ACADEMY</a>
+    <div class="nav-divider"></div>
+    <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+  </nav>
+
+  <div class="container">
+
+    <!-- COURSE HEADER -->
+    <div class="course-num">COURSE 02</div>
+    <h1 class="course-title">Claude Code in Action</h1>
+    <div class="course-subtitle">// the tool behind the protocol</div>
+    <p class="course-desc">
+      The entire NextElite site was built with Claude Code — an AI coding agent that lives in your terminal. This course teaches you to master it. Not theory. Real workflows, real automation, real project work.
+    </p>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>PROGRESS</span>
+        <span id="progressText">0 / 8</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- LESSON 1 -->
+    <div class="lesson" data-lesson="1">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 01</div>
+          <div class="lesson-title">What is Claude Code?</div>
+        </div>
+        <div class="lesson-check" data-check="1" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        Claude Code is Anthropic's CLI for Claude — an AI coding agent that lives in your terminal. It can read files, edit code, run commands, search codebases, and manage git. It's how the entire NextElite site was built. Available as CLI, desktop app, web app, and IDE extensions.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Install Claude Code (<code>npm install -g @anthropic-ai/claude-code</code>) and run <code>claude</code> in your NextElite project directory. Ask it to describe the project structure.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="lesson" data-lesson="2">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 02</div>
+          <div class="lesson-title">Architecture & Tool Use</div>
+        </div>
+        <div class="lesson-check" data-check="2" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        How Claude Code works under the hood — tool integration (Read, Write, Edit, Bash, Glob, Grep), how it interacts with your codebase. The permission system controls what Claude Code can do without asking. Understanding tool calls helps you predict behavior and debug issues.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Ask Claude Code to find all CSS color variables in the NextElite project. Watch which tools it uses (Glob, Grep, Read) and how it chains them together to get the answer.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="lesson" data-lesson="3">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 03</div>
+          <div class="lesson-title">Context Management</div>
+        </div>
+        <div class="lesson-check" data-check="3" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        CLAUDE.md files are project instructions that persist across sessions. They tell Claude Code about your project, your rules, your preferences. The memory system and conversation context determine how effectively the agent works. The right context turns a generic AI into your project partner.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Create a <code>CLAUDE.md</code> in the nextelite-website root that describes the project, brand colors, design rules, and key decisions.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 4 -->
+    <div class="lesson" data-lesson="4">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 04</div>
+          <div class="lesson-title">Effective Workflows</div>
+        </div>
+        <div class="lesson-check" data-check="4" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        How to work with Claude Code effectively. Start broad then refine. Use screenshots and images to communicate design intent. Review diffs before accepting changes. Git integration handles commits, branches, and PRs without leaving the terminal.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Use Claude Code to add a new section to the NextElite site. Take a screenshot of a design you like and ask Claude Code to recreate it with the NextElite design system.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 5 -->
+    <div class="lesson" data-lesson="5">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 05</div>
+          <div class="lesson-title">Custom Slash Commands</div>
+        </div>
+        <div class="lesson-check" data-check="5" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        Build custom commands with markdown files in <code>.claude/commands/</code>. Each file becomes a slash command. They can accept parameters, chain operations, and automate repetitive workflows. Turn multi-step processes into single commands.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Create a <code>/deploy</code> command that commits, pushes, and opens the live site. Create a <code>/audit</code> command that checks the site for broken links and missing meta tags.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 6 -->
+    <div class="lesson" data-lesson="6">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 06</div>
+          <div class="lesson-title">Hooks & Automation</div>
+        </div>
+        <div class="lesson-check" data-check="6" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        Settings.json hooks fire at key moments — SessionStart, PreToolUse, PostToolUse. They automate behaviors without manual intervention. The NextElite startup banner is a real example: a hook that runs on every session start to display project status.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Add a PostToolUse hook that plays a sound when a file is written. Add a SessionStart hook that shows <code>git status</code> on launch.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 7 -->
+    <div class="lesson" data-lesson="7">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 07</div>
+          <div class="lesson-title">MCP Server Integration</div>
+        </div>
+        <div class="lesson-check" data-check="7" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        MCP (Model Context Protocol) servers extend what Claude Code can do. They add external tools — web search, databases, APIs, file systems — accessible through the same interface. Install servers to give Claude Code new capabilities without custom code.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Install a web search MCP server and use it to research competitor biohacking sites from within Claude Code.
+        </div>
+      </div>
+    </div>
+
+    <!-- LESSON 8 -->
+    <div class="lesson" data-lesson="8">
+      <div class="lesson-header">
+        <div>
+          <div class="lesson-num">LESSON 08</div>
+          <div class="lesson-title">GitHub Integration</div>
+        </div>
+        <div class="lesson-check" data-check="8" title="Mark complete"></div>
+      </div>
+      <div class="lesson-content">
+        Claude Code integrates deeply with GitHub. Create PRs with proper descriptions, review code, manage CI/CD — all from the terminal. The <code>gh</code> CLI commands work seamlessly. Automated code review catches issues before they ship.
+      </div>
+      <div class="exercise">
+        <div class="exercise-label">EXERCISE</div>
+        <div class="exercise-text">
+          Create a feature branch for the NextElite site, make a change, and use Claude Code to create a PR with a proper description.
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="course-nav">
+      <a href="course-01.html" class="nav-btn">&larr; PREV COURSE</a>
+      <a href="course-03.html" class="nav-btn">NEXT COURSE &rarr;</a>
+    </div>
+
+    <div class="footer-note">NEXTELITE ACADEMY</div>
+
+  </div>
+
+  <script>
+    /* ── THEME TOGGLE ── */
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('nextelite-theme', next);
+    });
+
+    /* ── SCROLL REVEAL ── */
+    const lessons = document.querySelectorAll('.lesson');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    lessons.forEach(l => observer.observe(l));
+
+    /* ── CHECKBOX TRACKER ── */
+    const STORAGE_KEY = 'nextelite-course02-progress';
+    const checks = document.querySelectorAll('.lesson-check');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+
+    function loadProgress() {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      let count = 0;
+      checks.forEach(c => {
+        const id = c.getAttribute('data-check');
+        if (saved[id]) {
+          c.classList.add('checked');
+          count++;
+        }
+      });
+      updateBar(count);
+    }
+
+    function updateBar(count) {
+      const total = checks.length;
+      const pct = (count / total) * 100;
+      progressFill.style.width = pct + '%';
+      progressText.textContent = count + ' / ' + total;
+    }
+
+    checks.forEach(c => {
+      c.addEventListener('click', () => {
+        c.classList.toggle('checked');
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        const id = c.getAttribute('data-check');
+        saved[id] = c.classList.contains('checked');
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+        let count = 0;
+        checks.forEach(ch => { if (ch.classList.contains('checked')) count++; });
+        updateBar(count);
+      });
+    });
+
+    loadProgress();
+  </script>
+</body>
+</html>

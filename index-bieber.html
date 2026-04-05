@@ -2,6 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NextElite Protocol — Nemine Steffensen</title>
   <meta name="description" content="NextElite Protocol — boxing, clicker training, biohacking & XRPL. Built in public by Nemine Steffensen." />
@@ -285,11 +286,11 @@
     <div class="drop-grid">
       <div class="drop-card">
         <div class="drop-card-img-wrap">
-          <img src="meme001.png" alt="Nememe #001" loading="lazy" />
+          <img src="nememe001.png" alt="XX #001" loading="lazy" />
         </div>
         <div class="drop-card-info">
           <div class="drop-card-number">#001</div>
-          <div class="drop-card-title">Nememe</div>
+          <div class="drop-card-title">XX</div>
           <div class="drop-card-meta">1/1 — XRPL</div>
           <div class="drop-card-status">NOT YET MINTED</div>
         </div>
@@ -396,8 +397,8 @@
       dogs:"Dog training here is 100% clicker-based. Positive reinforcement, marker signals, and shaping.",
       whoop:function(){return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol.";},
       dashboard:"The Dashboard page shows live WHOOP biometrics — current stats, recovery/strain/HRV charts over 10 days.",
-      xrp:"Building on XRPL. Nememe #001 is the first NFT drop — 1/1 edition, not yet minted.",
-      nft:"Nememe #001 — a 1/1 NFT on XRPL. Status: not yet minted.",
+      xrp:"Building on XRPL. XX #001 is the first art drop — 1/1 edition, not yet minted.",
+      nft:"XX #001 — a 1/1 original artwork on XRPL. Status: not yet minted.",
       stack:"The daily protocol: morning routine at 06:00, boxing, dog work, WHOOP-led recovery, and building.",
       protocol:"NextElite is a personal protocol — not a product you buy, but a system you live.",
       ai:"AI services — build with AI, no code required.",
@@ -414,7 +415,7 @@
       q=q.toLowerCase().replace(/[?!.,]/g,'');var words=q.split(/\s+/);
       if(/who (are you|is|made|built)/.test(q)||/what is (this|nextelite)/.test(q))return knowledge.protocol;
       if(/who is nemi/.test(q))return knowledge.about;
-      var keyMap={'boxing':['boxing','box','fight'],'tagteach':['tagteach','tag teach','tag point'],'clicker':['clicker','operant','shaping'],'dogs':['dog','dogs','canine'],'whoop':['whoop','recovery','strain','sleep','biometric','hrv'],'xrp':['xrp','xrpl','crypto','ledger'],'nft':['nft','nememe','mint'],'stack':['stack','routine','daily','morning'],'protocol':['protocol','system'],'ai':['ai','automation','agent'],'pillars':['pillar','pillars'],'story':['story','origin','soccer'],'sound':['sound','music','spotify','playlist'],'site':['site','website','code','github'],'help':['help','commands','menu'],'stats':['stats','numbers','data'],'membership':['membership','subscribe','join','tier','price'],'version':['version','v0','changelog']};
+      var keyMap={'boxing':['boxing','box','fight'],'tagteach':['tagteach','tag teach','tag point'],'clicker':['clicker','operant','shaping'],'dogs':['dog','dogs','canine'],'whoop':['whoop','recovery','strain','sleep','biometric','hrv'],'xrp':['xrp','xrpl','crypto','ledger'],'nft':['nft','xx','mint'],'stack':['stack','routine','daily','morning'],'protocol':['protocol','system'],'ai':['ai','automation','agent'],'pillars':['pillar','pillars'],'story':['story','origin','soccer'],'sound':['sound','music','spotify','playlist'],'site':['site','website','code','github'],'help':['help','commands','menu'],'stats':['stats','numbers','data'],'membership':['membership','subscribe','join','tier','price'],'version':['version','v0','changelog']};
       var best=null,bestScore=0;
       for(var key in keyMap){var score=0;keyMap[key].forEach(function(kw){if(q.indexOf(kw)!==-1)score+=2;});words.forEach(function(w){keyMap[key].forEach(function(kw){if(kw.indexOf(w)!==-1&&w.length>2)score+=1;});});if(score>bestScore){bestScore=score;best=key;}}
       if(best&&bestScore>=2){var val=knowledge[best];return typeof val==='function'?val():val;}

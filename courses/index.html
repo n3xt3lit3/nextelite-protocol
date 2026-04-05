@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NextElite Academy</title>
+  <meta name="description" content="NextElite Academy — 15 courses to master the tools that build the protocol." />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+    :root { --yellow:#F5C400; --cyan:#00BADF; --blue:#3B6EF5; --pink:#E8197A; --green:#22c55e; --purple:#a855f7; }
+    [data-theme="dark"] {
+      --bg:#0a0a0a; --bg-raised:#111113; --card:#141416; --card-border:#1e1e22;
+      --card-glass:rgba(14,14,16,0.6); --text:#e4e4e7; --text-dim:#71717a; --text-muted:#3f3f46;
+      --nav-bg:rgba(10,10,10,0.85); --grain-opacity:0.03; --orb-opacity:0.7; --orb-blur:90px;
+    }
+    [data-theme="light"] {
+      --bg:#fafafa; --bg-raised:#f4f4f5; --card:#ffffff; --card-border:#e4e4e7;
+      --card-glass:rgba(255,255,255,0.6); --text:#18181b; --text-dim:#71717a; --text-muted:#a1a1aa;
+      --nav-bg:rgba(250,250,250,0.85); --grain-opacity:0.02; --orb-opacity:0.5; --orb-blur:80px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Space Mono',monospace; -webkit-font-smoothing:antialiased; overflow-x:hidden; transition:background 0.4s, color 0.4s; }
+    a { color:inherit; text-decoration:none; }
+
+    /* GRAIN */
+    body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:9998; opacity:var(--grain-opacity); background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:128px; }
+
+    /* PRELOADER */
+    .preloader { position:fixed; inset:0; z-index:99999; background:var(--bg); display:flex; align-items:center; justify-content:center; transition:opacity 0.5s, visibility 0.5s; }
+    .preloader.done { opacity:0; visibility:hidden; pointer-events:none; }
+    .preloader-text { font-size:0.8rem; font-weight:700; letter-spacing:2px; animation:preloaderPulse 1s ease-in-out infinite alternate; }
+    @keyframes preloaderPulse { from{opacity:0.3} to{opacity:1} }
+
+    /* SCROLL PROGRESS */
+    .scroll-progress { position:fixed; top:0; left:0; height:2px; z-index:101; background:linear-gradient(90deg, var(--yellow), var(--cyan), var(--blue), var(--pink), var(--green), var(--purple)); width:0; }
+
+    /* NAV */
+    nav { position:fixed; top:1rem; left:50%; transform:translateX(-50%) translateY(0); z-index:100; background:var(--nav-bg); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid var(--card-border); border-radius:100px; padding:0.6rem 1.5rem; transition:all 0.35s ease; }
+    nav.nav-hidden { transform:translateX(-50%) translateY(-120%); opacity:0; }
+    .nav-inner { display:flex; align-items:center; gap:1.5rem; }
+    .nav-logo { font-size:0.68rem; font-weight:700; letter-spacing:0.5px; cursor:pointer; }
+    .nav-logo .c1{color:var(--yellow);} .nav-logo .c2{color:var(--cyan);} .nav-logo .c3{color:var(--blue);} .nav-logo .c4{color:var(--pink);}
+    .nav-links { display:flex; gap:1.2rem; list-style:none; }
+    .nav-links a { font-size:0.5rem; letter-spacing:1.5px; color:var(--text-muted); transition:color 0.2s; }
+    .nav-links a:hover { color:var(--text); }
+    .nav-links a.active { color:var(--cyan); }
+    .nav-right { display:flex; align-items:center; gap:0.8rem; }
+    .nav-status { display:flex; align-items:center; gap:0.4rem; font-size:0.5rem; letter-spacing:1.5px; color:var(--text-muted); }
+    .live-dot { width:5px; height:5px; background:var(--green); border-radius:50%; animation:pulse 2.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .theme-toggle { width:36px; height:20px; border-radius:100px; border:1px solid var(--card-border); background:var(--bg-raised); cursor:pointer; position:relative; transition:all 0.3s; }
+    .theme-toggle::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:var(--text-muted); transition:transform 0.3s; }
+    [data-theme="light"] .theme-toggle::after { transform:translateX(16px); background:var(--text); }
+    .nav-hamburger { display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer; background:none; border:none; padding:0; }
+    .nav-hamburger span { display:block; width:100%; height:2px; background:var(--text-muted); transition:all 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(9px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-9px) rotate(-45deg); }
+    .mobile-menu { position:fixed; inset:0; z-index:99; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; opacity:0; visibility:hidden; transition:all 0.3s; }
+    .mobile-menu.open { opacity:1; visibility:visible; }
+    .mobile-menu a { font-size:0.9rem; letter-spacing:3px; color:var(--text-dim); }
+    @media(max-width:700px) { .nav-links{display:none;} .nav-hamburger{display:flex;} nav{padding:0.5rem 1rem;} }
+
+    /* HERO */
+    .hero { min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
+    .hero-orb { position:absolute; width:clamp(280px,40vw,480px); aspect-ratio:1; top:50%; left:50%; transform:translate(-50%,-50%); border-radius:50%; background:conic-gradient(from 0deg, rgba(0,186,223,0.35), rgba(59,110,245,0.25), rgba(168,85,247,0.20), rgba(0,186,223,0.35)); filter:blur(var(--orb-blur)); animation:orbPulse 12s ease-in-out infinite alternate, orbDrift 25s ease-in-out infinite; pointer-events:none; z-index:0; }
+    @keyframes orbPulse { 0%{opacity:var(--orb-opacity);transform:translate(-50%,-50%) scale(1);} 100%{opacity:var(--orb-opacity);transform:translate(-50%,-50%) scale(1.12);} }
+    @keyframes orbDrift { 0%{border-radius:50%;} 25%{border-radius:42% 58% 55% 45%/55% 42% 58% 45%;} 50%{border-radius:55% 45% 42% 58%/45% 55% 45% 55%;} 75%{border-radius:45% 55% 58% 42%/58% 45% 55% 42%;} 100%{border-radius:50%;} }
+    .hero > *:not(.hero-orb) { position:relative; z-index:1; }
+    .hero-title { font-size:clamp(2rem,6vw,3.4rem); font-weight:700; letter-spacing:-1.5px; margin-bottom:0.75rem; background:linear-gradient(90deg, var(--cyan), var(--blue), var(--purple), var(--pink), var(--cyan)); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:rainbowShift 6s linear infinite; }
+    @keyframes rainbowShift { 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
+    .hero-sub { font-size:0.65rem; letter-spacing:3px; color:var(--text-muted); opacity:0; animation:fadeUp 1s 0.4s forwards; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* PROGRESS TRACKER */
+    .progress-section { max-width:720px; margin:0 auto; padding:0 2rem 3rem; }
+    .progress-card { background:var(--card-glass); backdrop-filter:blur(16px); border:1px solid var(--card-border); border-radius:12px; padding:1.5rem 2rem; }
+    .progress-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    .progress-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); }
+    .progress-count { font-size:0.72rem; font-weight:700; }
+    .progress-count span { color:var(--cyan); }
+    .progress-bar-wrap { height:3px; border-radius:2px; background:var(--card-border); overflow:hidden; }
+    .progress-bar { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--cyan), var(--blue), var(--purple)); width:0; transition:width 1.5s ease; }
+
+    /* SECTIONS */
+    .section { max-width:720px; margin:0 auto; padding:3rem 2rem 4rem; }
+    .section-label { font-size:0.55rem; letter-spacing:3px; color:var(--text-muted); margin-bottom:2rem; display:flex; align-items:center; gap:0.6rem; }
+    .section-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+    .phase-desc { font-size:0.6rem; color:var(--text-dim); letter-spacing:1px; margin-bottom:2rem; line-height:1.6; }
+
+    /* COURSE CARDS */
+    .course-grid { display:flex; flex-direction:column; gap:1rem; }
+    .course-card { display:block; background:var(--card-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid var(--card-border); border-radius:12px; padding:1.5rem 1.8rem; transition:all 0.3s; position:relative; overflow:hidden; cursor:pointer; }
+    .course-card:hover { transform:translateY(-2px); background:var(--card); border-color:var(--text-muted); }
+    .course-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; border-radius:3px 0 0 3px; }
+    .course-card[data-accent="yellow"]::before { background:var(--yellow); }
+    .course-card[data-accent="cyan"]::before { background:var(--cyan); }
+    .course-card[data-accent="blue"]::before { background:var(--blue); }
+    .course-card[data-accent="pink"]::before { background:var(--pink); }
+    .course-card[data-accent="green"]::before { background:var(--green); }
+    .course-card[data-accent="purple"]::before { background:var(--purple); }
+    .course-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.6rem; }
+    .course-num { font-size:0.42rem; letter-spacing:3px; color:var(--text-muted); }
+    .course-badge { font-size:0.38rem; letter-spacing:2px; padding:0.2rem 0.6rem; border-radius:100px; border:1px solid var(--card-border); color:var(--text-muted); background:var(--bg-raised); }
+    .course-badge.locked { color:var(--text-muted); }
+    .course-badge.unlocked { color:var(--green); border-color:var(--green); }
+    .course-title { font-size:0.78rem; font-weight:700; margin-bottom:0.4rem; letter-spacing:-0.3px; }
+    .course-desc { font-size:0.6rem; color:var(--text-dim); line-height:1.6; margin-bottom:0.6rem; }
+    .course-meta { font-size:0.42rem; letter-spacing:2px; color:var(--text-muted); }
+
+    /* DIVIDERS */
+    .div-line { border:none; height:1px; margin:0; background:linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent); }
+    .zone { background:var(--bg-raised); transition:background 0.4s; }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* SOCIALS */
+    .socials { display:flex; justify-content:center; gap:1.2rem; margin-top:1.5rem; }
+    .social-link { width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:1px solid var(--card-border); color:var(--text-muted); transition:all 0.2s; }
+    .social-link:hover { color:var(--text); border-color:var(--text-dim); }
+    .social-link svg { width:14px; height:14px; fill:currentColor; }
+
+    /* FOOTER */
+    .footer { text-align:center; padding:4rem 2rem; border-top:1px solid var(--card-border); }
+    .footer-logo { font-size:0.7rem; font-weight:700; margin-bottom:0.75rem; }
+    .footer-sub { font-size:0.5rem; color:var(--text-muted); letter-spacing:2px; }
+
+    /* BACK TO TOP */
+    .back-to-top { position:fixed; bottom:1.5rem; left:1.5rem; width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--card-border); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:90; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+    .back-to-top.visible { opacity:1; pointer-events:auto; }
+    .back-to-top svg { width:14px; height:14px; stroke:var(--text-muted); fill:none; stroke-width:2; }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="preloader" id="preloader">
+    <div class="preloader-text"><span style="color:var(--cyan)">a</span><span style="color:var(--blue)">c</span><span style="color:var(--purple)">a</span><span>d</span><span>e</span><span>m</span><span>y</span><span style="color:var(--text-muted)">();</span></div>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span><span>t</span><span>_</span><span class="c4">e</span><span>l</span><span>i</span><span>t</span><span>e</span><span style="color:var(--text-muted)">();</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">PROTOCOL</a></li>
+        <li><a href="#" class="active">ACADEMY</a></li>
+      </ul>
+      <div class="nav-right">
+        <div class="nav-status"><span class="live-dot"></span> 0/15</div>
+        <div class="theme-toggle" id="themeToggle"></div>
+        <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="../index.html" class="mobile-nav-link">PROTOCOL</a>
+    <a href="#" class="mobile-nav-link">ACADEMY</a>
+  </div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-orb"></div>
+    <div class="hero-title">NextElite Academy</div>
+    <div class="hero-sub">// master the tools that build the protocol</div>
+  </header>
+
+  <!-- PROGRESS TRACKER -->
+  <div class="progress-section reveal">
+    <div class="progress-card">
+      <div class="progress-header">
+        <div class="progress-label">OVERALL PROGRESS</div>
+        <div class="progress-count"><span>0</span> / 15 COURSES</div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 1: FOUNDATION -->
+  <section class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--cyan);"></span> PHASE 01 — FOUNDATION</div>
+    <div class="course-grid">
+
+      <a href="course-01.html" class="course-card" data-accent="cyan">
+        <div class="course-top">
+          <div class="course-num">COURSE 01</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Claude 101</div>
+        <div class="course-desc">Learn Claude fundamentals through NextElite examples</div>
+        <div class="course-meta">6 LESSONS</div>
+      </a>
+
+      <a href="course-02.html" class="course-card" data-accent="blue">
+        <div class="course-top">
+          <div class="course-num">COURSE 02</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Claude Code in Action</div>
+        <div class="course-desc">Master the tool you use daily</div>
+        <div class="course-meta">8 LESSONS</div>
+      </a>
+
+      <a href="course-03.html" class="course-card" data-accent="purple">
+        <div class="course-top">
+          <div class="course-num">COURSE 03</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Introduction to Claude Cowork</div>
+        <div class="course-desc">Task loops and file workflows</div>
+        <div class="course-meta">5 LESSONS</div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="div-line" />
+
+  <!-- PHASE 2: POWER USER -->
+  <div class="zone">
+  <section class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--yellow);"></span> PHASE 02 — POWER USER</div>
+    <div class="course-grid">
+
+      <a href="course-04.html" class="course-card" data-accent="yellow">
+        <div class="course-top">
+          <div class="course-num">COURSE 04</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Agent Skills</div>
+        <div class="course-desc">Build reusable NextElite skills</div>
+        <div class="course-meta">7 LESSONS</div>
+      </a>
+
+      <a href="course-05.html" class="course-card" data-accent="pink">
+        <div class="course-top">
+          <div class="course-num">COURSE 05</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Subagents</div>
+        <div class="course-desc">Parallel workflows and delegation</div>
+        <div class="course-meta">6 LESSONS</div>
+      </a>
+
+      <a href="course-06.html" class="course-card" data-accent="green">
+        <div class="course-top">
+          <div class="course-num">COURSE 06</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Introduction to MCP</div>
+        <div class="course-desc">Build a WHOOP MCP server</div>
+        <div class="course-meta">8 LESSONS</div>
+      </a>
+
+      <a href="course-07.html" class="course-card" data-accent="cyan">
+        <div class="course-top">
+          <div class="course-num">COURSE 07</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">MCP Advanced</div>
+        <div class="course-desc">Production deployment</div>
+        <div class="course-meta">7 LESSONS</div>
+      </a>
+
+    </div>
+  </section>
+  </div>
+
+  <hr class="div-line" />
+
+  <!-- PHASE 3: BUILDER -->
+  <section class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--pink);"></span> PHASE 03 — BUILDER</div>
+    <div class="course-grid">
+
+      <a href="course-08.html" class="course-card" data-accent="blue">
+        <div class="course-top">
+          <div class="course-num">COURSE 08</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Building with the Claude API</div>
+        <div class="course-desc">Build the NextElite AI chatbot</div>
+        <div class="course-meta">8 LESSONS</div>
+      </a>
+
+      <a href="course-09.html" class="course-card" data-accent="purple">
+        <div class="course-top">
+          <div class="course-num">COURSE 09</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">AI Fluency Foundations</div>
+        <div class="course-desc">Ethics and effective AI collaboration</div>
+        <div class="course-meta">6 LESSONS</div>
+      </a>
+
+      <a href="course-10.html" class="course-card" data-accent="yellow">
+        <div class="course-top">
+          <div class="course-num">COURSE 10</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Teaching AI Fluency</div>
+        <div class="course-desc">Structure your AI services</div>
+        <div class="course-meta">5 LESSONS</div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="div-line" />
+
+  <!-- PHASE 4: PLATFORM -->
+  <div class="zone">
+  <section class="section reveal">
+    <div class="section-label"><span class="section-dot" style="background:var(--green);"></span> PHASE 04 — PLATFORM</div>
+    <div class="course-grid">
+
+      <a href="course-11.html" class="course-card" data-accent="green">
+        <div class="course-top">
+          <div class="course-num">COURSE 11</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Claude with Amazon Bedrock</div>
+        <div class="course-desc">Deploy Claude on AWS infrastructure</div>
+        <div class="course-meta">7 LESSONS</div>
+      </a>
+
+      <a href="course-12.html" class="course-card" data-accent="cyan">
+        <div class="course-top">
+          <div class="course-num">COURSE 12</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">Claude with Google Vertex AI</div>
+        <div class="course-desc">Deploy Claude on Google Cloud</div>
+        <div class="course-meta">7 LESSONS</div>
+      </a>
+
+      <a href="course-13.html" class="course-card" data-accent="pink">
+        <div class="course-top">
+          <div class="course-num">COURSE 13</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">AI Fluency for Educators</div>
+        <div class="course-desc">Integrate AI into teaching workflows</div>
+        <div class="course-meta">6 LESSONS</div>
+      </a>
+
+      <a href="course-14.html" class="course-card" data-accent="blue">
+        <div class="course-top">
+          <div class="course-num">COURSE 14</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">AI Fluency for Students</div>
+        <div class="course-desc">Learn with AI as your study partner</div>
+        <div class="course-meta">5 LESSONS</div>
+      </a>
+
+      <a href="course-15.html" class="course-card" data-accent="purple">
+        <div class="course-top">
+          <div class="course-num">COURSE 15</div>
+          <div class="course-badge locked">LOCKED</div>
+        </div>
+        <div class="course-title">AI Fluency for Nonprofits</div>
+        <div class="course-desc">Scale impact with AI-powered operations</div>
+        <div class="course-meta">6 LESSONS</div>
+      </a>
+
+    </div>
+  </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo"><span style="color:var(--yellow)">n</span><span style="color:var(--cyan)">e</span><span style="color:var(--blue)">x</span>t_<span style="color:var(--pink)">e</span>lite<span style="color:var(--text-muted)">();</span></div>
+    <div class="footer-sub">ACADEMY — 15 COURSES</div>
+    <div class="footer-sub" style="margin-top:0.5rem;opacity:0.35;">&copy; 2026 NEXTELITE PROTOCOL</div>
+    <div class="socials">
+      <a href="https://x.com/N3XT3LIT3" target="_blank" class="social-link" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://github.com/n3xt3lit3/nextelite-protocol" target="_blank" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+    </div>
+  </footer>
+
+  <script>
+    /* PRELOADER */
+    window.addEventListener('load',function(){setTimeout(function(){document.getElementById('preloader').classList.add('done');},400);});
+
+    /* THEME */
+    var toggle=document.getElementById('themeToggle'),html=document.documentElement;
+    var saved=localStorage.getItem('nextelite-theme');
+    if(saved)html.setAttribute('data-theme',saved);
+    toggle.addEventListener('click',function(){
+      var next=html.getAttribute('data-theme')==='dark'?'light':'dark';
+      html.setAttribute('data-theme',next);localStorage.setItem('nextelite-theme',next);
+    });
+
+    /* NAV AUTO-HIDE + SCROLL PROGRESS + BACK TO TOP */
+    var lastY=0,navEl=document.querySelector('nav'),scrollProg=document.getElementById('scrollProgress'),btt=document.getElementById('backToTop');
+    var scrollTicking=false;
+    window.addEventListener('scroll',function(){
+      if(!scrollTicking){requestAnimationFrame(function(){
+        var sy=window.scrollY;
+        if(sy>200&&sy>lastY){navEl.classList.add('nav-hidden');}else{navEl.classList.remove('nav-hidden');}
+        lastY=sy;
+        var docH=document.documentElement.scrollHeight-window.innerHeight;
+        scrollProg.style.width=docH>0?(sy/docH*100)+'%':'0%';
+        btt.classList.toggle('visible',sy>600);
+        scrollTicking=false;
+      });scrollTicking=true;}
+    });
+    btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+    /* REVEAL ON SCROLL */
+    document.querySelectorAll('.reveal').forEach(function(el){
+      new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1}).observe(el);
+    });
+
+    /* HAMBURGER */
+    var hamburger=document.getElementById('navHamburger'),mobileMenu=document.getElementById('mobileMenu');
+    hamburger.addEventListener('click',function(){hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');});
+    document.querySelectorAll('.mobile-nav-link').forEach(function(l){l.addEventListener('click',function(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');});});
+  </script>
+</body>
+</html>

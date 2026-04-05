@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Log — NextElite</title>
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -21,7 +22,7 @@
 
     .back {
       display: inline-block;
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       margin-bottom: 3rem;
     }
 
@@ -32,7 +33,7 @@
     }
 
     .subtitle {
-      font-size: 0.6rem;
+      font-size: 0.75rem;
       letter-spacing: 2px;
       color: var(--text-muted);
       margin-bottom: 3rem;
@@ -46,7 +47,7 @@
       flex-wrap: wrap;
     }
     .version-badge {
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       letter-spacing: 1.5px;
       padding: 0.35rem 0.75rem;
       border: 1px solid var(--card-border);
@@ -65,7 +66,7 @@
       margin-bottom: 2.5rem;
     }
     .date-header {
-      font-size: 0.5rem;
+      font-size: 0.75rem;
       letter-spacing: 3px;
       color: var(--text-muted);
       margin-bottom: 1rem;
@@ -84,21 +85,21 @@
     .log-item:hover { color: var(--text); }
 
     .log-dot { display:none; }
-    .log-status { font-size:0.4rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; margin-left:auto; }
+    .log-status { font-size:0.75rem; letter-spacing:2px; flex-shrink:0; padding:0.25rem 0.6rem; border-radius:100px; margin-left:auto; }
     .log-status.c-yellow { color:var(--yellow); background:rgba(245,196,0,0.08); }
     .log-status.c-cyan { color:var(--cyan); background:rgba(0,186,223,0.08); }
     .log-status.c-blue { color:var(--blue); background:rgba(59,110,245,0.08); }
     .log-status.c-pink { color:var(--pink); background:rgba(232,25,122,0.08); }
 
     .log-text {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
       line-height: 1.7;
     }
     .log-item:hover .log-text { color: var(--text); }
 
     .log-tag {
-      font-size: 0.42rem;
+      font-size: 0.75rem;
       letter-spacing: 1.5px;
       padding: 0.15rem 0.5rem;
       border-radius: 10px;
@@ -116,20 +117,45 @@
     }
     .stat { text-align: center; }
     .stat-value { font-size: 1.4rem; font-weight: 700; color: var(--text); }
-    .stat-label { font-size: 0.42rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 0.2rem; }
+    .stat-label { font-size: 0.75rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 0.2rem; }
 
     @media (max-width: 600px) {
       .container { padding: 4rem 1.25rem 3rem; }
       .stats-row { gap: 1rem; }
       .log-item { gap:0.5rem; }
-      .log-text { font-size:0.65rem; }
-      .log-status { font-size:0.35rem; padding:0.2rem 0.5rem; }
+      .log-text { font-size:0.75rem; }
+      .log-status { font-size:0.75rem; padding:0.2rem 0.5rem; }
     }
   </style>
 </head>
 <body>
+  <nav class="ne-nav">
+    <div class="ne-nav-inner">
+      <a href="index.html" class="ne-nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span>t_<span class="c4">e</span>lite<span style="color:var(--text-muted)">();</span></a>
+      <ul class="ne-nav-links">
+        <li><a href="index.html">PROTOCOL</a></li>
+        <li><a href="clicker.html">TRAINING</a><div class="ne-nav-dropdown"><a href="clicker.html">CLICKER</a><a href="routines.html">ROUTINES</a><a href="tagteach.html">TAGTEACH</a></div></li>
+        <li><a href="ai.html">AI</a></li>
+        <li><a href="dashboard.html">DASHBOARD</a></li>
+        <li><a href="subscribe.html">JOIN</a></li>
+      </ul>
+      <div class="ne-nav-right">
+        <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+        <button class="ne-nav-hamburger" id="neNavHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="ne-mobile-menu" id="neMobileMenu">
+    <a href="index.html">PROTOCOL</a>
+    <a href="clicker.html">CLICKER</a>
+    <a href="routines.html">ROUTINES</a>
+    <a href="tagteach.html">TAGTEACH</a>
+    <a href="ai.html">AI</a>
+    <a href="dashboard.html">DASHBOARD</a>
+    <a href="subscribe.html">JOIN</a>
+  </div>
+
   <div class="container">
-    <a href="index.html" class="back">&larr; BACK TO PROTOCOL</a>
 
     <h1>Protocol Log</h1>
     <div class="subtitle">EVERY CHANGE. BUILDING IN PUBLIC.</div>
@@ -159,15 +185,15 @@
   <script>
     var entries = [
       // 28.03.2026
-      { date: "28.03.2026", text: "Nememe Edition deployed as live index", type: "feature" },
+      { date: "28.03.2026", text: "XX Edition deployed as live index", type: "feature" },
       { date: "28.03.2026", text: "Animation library (animations.css) + playground page — all effects documented and reusable", type: "feature" },
-      { date: "28.03.2026", text: "3 index variants created: Bieber (editorial minimalism), Norris (athletic premium), Nememe (rainbow maximalist)", type: "feature" },
+      { date: "28.03.2026", text: "3 index variants created: Bieber (editorial minimalism), Norris (athletic premium), XX (rainbow maximalist)", type: "feature" },
       { date: "28.03.2026", text: "Removed biometrics section from main page (lives on dashboard)", type: "design" },
       { date: "28.03.2026", text: "Spotify embed replaced with clean link card", type: "design" },
       { date: "28.03.2026", text: "Preloader text fixed to match next_elite(); branding", type: "fix" },
       // 27.03.2026
       { date: "27.03.2026", text: "WHOOP Dashboard page — live stats, recovery/strain/HRV bar charts, 10-day averages, recovery log", type: "feature" },
-      { date: "27.03.2026", text: "XRP dedicated page — thesis, Nememe drop, Signal sources, fund wallet, playbook link", type: "feature" },
+      { date: "27.03.2026", text: "XRP dedicated page — thesis, XX drop, Signal sources, fund wallet, playbook link", type: "feature" },
       { date: "27.03.2026", text: "Pillar cards now link to subpages (XRP → xrp.html, WHOOP → dashboard.html, AI → ai.html)", type: "feature" },
       { date: "27.03.2026", text: "Dashboard linked from nav, mobile menu, biometrics section, and footer", type: "feature" },
       { date: "27.03.2026", text: "Hero overhaul — gradient orb, grid texture, organic morphing animation", type: "design" },
@@ -206,7 +232,7 @@
       { date: "26.03.2026", text: "Drop card: natural image proportions", type: "fix" },
       { date: "26.03.2026", text: "Story card: solid background with gradient border", type: "fix" },
       { date: "26.03.2026", text: "Roadmap: brand colors (yellow/cyan/blue/pink)", type: "feature" },
-      { date: "26.03.2026", text: "Nememe replaced with higher quality version", type: "fix" },
+      { date: "26.03.2026", text: "XX artwork replaced with higher quality version", type: "fix" },
       { date: "26.03.2026", text: "Roadmap redesigned: progress bar, pill badges, phase labels, hover rows", type: "feature" },
       { date: "26.03.2026", text: "Visual upgrade: hero gradient, manifesto, staggered reveals, card glows, count-up", type: "feature" },
       { date: "26.03.2026", text: "NFT card redesigned multiple times — final: compact vertical collectible", type: "feature" },
@@ -287,6 +313,8 @@
 
       container.appendChild(group);
     });
+
   </script>
+  <script src="shared.js"></script>
 </body>
 </html>

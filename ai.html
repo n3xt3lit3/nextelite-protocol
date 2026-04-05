@@ -2,6 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NextElite -- AI</title>
   <link rel="icon" type="image/png" href="favicon.png" />
@@ -13,6 +14,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <script>var s=localStorage.getItem('nextelite-theme');if(s)document.documentElement.setAttribute('data-theme',s);</script>
   <style>
+    /* ── PAGE-SPECIFIC: ai.html ── */
     .card {
       background: var(--card-glass);
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -27,90 +29,43 @@
     }
     .card:hover { background: var(--card); transform: translateY(-2px); }
 
-    .card-name {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-
-    .card-line {
-      width: 20px;
-      height: 2px;
-      border-radius: 1px;
-    }
-
-    .card-body {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      line-height: 1.8;
-    }
-
-    .card-badge {
-      font-size: 0.5rem;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      margin-top: auto;
-    }
-
-    .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 4rem; }
-    .step {
-      display: flex;
-      gap: 2rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--card-border);
-      transition: border-color 0.4s;
-    }
-    .step:last-child { border-bottom: none; }
-    .step-num {
-      font-size: 0.55rem;
-      letter-spacing: 1.5px;
-      color: var(--purple);
-      min-width: 30px;
-      padding-top: 0.15rem;
-      font-weight: 700;
-    }
-    .step-content { flex: 1; }
-    .step-title {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.5rem;
-    }
-    .step-desc {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      line-height: 1.8;
-    }
-
-    .code-block {
-      background: var(--bg-raised);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--purple);
-      margin-top: 0.75rem;
-      overflow-x: auto;
-      transition: background 0.3s, border-color 0.4s;
-    }
-
   </style>
 </head>
 <body>
-  <div class="container">
-
-    <div class="top-bar">
-      <a href="index.html" class="back">&lt;-- BACK TO PROTOCOL</a>
-      <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+  <nav class="ne-nav">
+    <div class="ne-nav-inner">
+      <a href="index.html" class="ne-nav-logo"><span class="c1">n</span><span class="c2">e</span><span class="c3">x</span>t_<span class="c4">e</span>lite<span style="color:var(--text-muted)">();</span></a>
+      <ul class="ne-nav-links">
+        <li><a href="index.html">PROTOCOL</a></li>
+        <li><a href="clicker.html">TRAINING</a><div class="ne-nav-dropdown"><a href="clicker.html">CLICKER</a><a href="routines.html">ROUTINES</a><a href="tagteach.html">TAGTEACH</a></div></li>
+        <li><a href="ai.html" class="active">AI</a></li>
+        <li><a href="dashboard.html">DASHBOARD</a></li>
+        <li><a href="subscribe.html">JOIN</a></li>
+      </ul>
+      <div class="ne-nav-right">
+        <div class="theme-toggle" id="themeToggle" title="Toggle theme"></div>
+        <button class="ne-nav-hamburger" id="neNavHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
     </div>
+  </nav>
+  <div class="ne-mobile-menu" id="neMobileMenu">
+    <a href="index.html">PROTOCOL</a>
+    <a href="clicker.html">CLICKER</a>
+    <a href="routines.html">ROUTINES</a>
+    <a href="tagteach.html">TAGTEACH</a>
+    <a href="ai.html">AI</a>
+    <a href="dashboard.html">DASHBOARD</a>
+    <a href="subscribe.html">JOIN</a>
+  </div>
+
+  <div class="container" style="padding-top:5rem;">
 
     <h1 class="page-title" style="font-size:1.6rem;">YOU HAVE AN IDEA.<br>I MAKE IT REAL.</h1>
     <div class="page-sub">AI SERVICES</div>
 
     <div class="reveal">
       <div class="card">
-        <div class="card-body" style="font-size:0.72rem;line-height:2;">
+        <div class="card-body" style="font-size:0.75rem;line-height:2;">
           while everyone else is talking about AI —<br>
           I'm building with it. every day. for real projects.<br><br>
           I know what works, what doesn't, and how to get<br>
@@ -206,31 +161,24 @@
     </div>
 
     <div class="footer-back">
-      <a href="index.html" class="back">&lt;-- BACK TO PROTOCOL</a>
       <div class="socials">
         <a href="https://x.com/N3XT3LIT3" target="_blank" class="social-link" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
         <a href="https://open.spotify.com/user/1154923706" target="_blank" class="social-link" title="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
         <a href="https://github.com/n3xt3lit3/nextelite-protocol" target="_blank" class="social-link" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
       </div>
-      <div style="margin-top:1rem;font-size:0.42rem;letter-spacing:2px;color:var(--text-muted);opacity:0.35;">&copy; 2026 NEXTELITE PROTOCOL</div>
+      <div style="margin-top:1rem;font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);opacity:0.35;">&copy; 2026 NEXTELITE PROTOCOL</div>
+      <!-- TODO: Add org.nr when ENK is registered -->
+      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);opacity:0.5;">Nemine Steffensen | nemine@nextelite.no | Norway</div>
+      <div style="margin-top:0.5rem;display:flex;gap:1.5rem;justify-content:center;">
+        <a href="terms.html" style="font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);">TERMS</a>
+        <a href="privacy.html" style="font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);">PRIVACY</a>
+        <a href="disclaimers.html" style="font-size:0.75rem;letter-spacing:2px;color:var(--text-muted);">DISCLAIMERS</a>
+      </div>
+      <div style="margin-top:1.5rem;font-size:0.75rem;color:var(--text-dim);line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto;text-align:center;opacity:0.7;">AI services are provided as-is. Deliverables depend on the scope agreed upon. NextElite is not liable for third-party tools, APIs, or services integrated into your project.</div>
     </div>
 
   </div>
 
-  <script>
-    var toggle = document.getElementById('themeToggle');
-    var html = document.documentElement;
-    var saved = localStorage.getItem('nextelite-theme');
-    if (saved) html.setAttribute('data-theme', saved);
-    toggle.addEventListener('click', function() {
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('nextelite-theme', next);
-    });
-
-    var reveals = document.querySelectorAll('.reveal');
-    var obs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
-    reveals.forEach(function(el) { obs.observe(el); });
-  </script>
+  <script src="shared.js"></script>
 </body>
 </html>

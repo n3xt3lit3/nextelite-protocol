@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextElite — Something is coming</title>
   <meta name="description" content="NextElite — The protocol is the product. The process is the proof. Building in public." />
+  <meta name="theme-color" content="#0a0a0a" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="NextElite" />
@@ -48,25 +49,28 @@
   }
   </script>
 
-  <!-- TODO: Self-host Inter font files at /fonts/ for full GDPR compliance -->
-  <!-- Using system font stack with Inter as first choice — no external CDN requests -->
-
-  <link rel="stylesheet" href="coming-soon.css" />
+  <link rel="stylesheet" href="coming-soon-dark.css" />
 </head>
 <body>
 
-  <!-- l1ft0ff: Mission Voyager — the clean slate -->
-  <!-- if you're reading this, you're early. -->
-  <!-- 01101110 01100101 01111000 01110100 -->
+  <!-- l1ft0ff: Mission Apollo — the dark terminal -->
+  <!-- root@nextelite:~$ cat /dev/future -->
+  <!-- every keystroke is a decision -->
 
   <main class="page">
     <div class="container">
+
+      <div class="prompt">
+        <span>root@nextelite:~$</span><span class="prompt-cursor"></span>
+      </div>
 
       <div class="logo" aria-label="next_elite();">
         <span class="c-gold">n</span><span class="c-cyan">e</span><span class="c-cobalt">x</span>t_<span class="c-magenta">e</span>lite<span class="c-muted">();</span>
       </div>
 
-      <p class="tagline">The protocol is the product.<br />The process is the proof.</p>
+      <div class="tagline-wrapper">
+        <p class="tagline" id="tagline-text"><span class="cursor"></span></p>
+      </div>
 
       <div class="status">
         <span class="status-dot"></span>
@@ -104,10 +108,68 @@
   </footer>
 
   <script>
-    // Mission: Voyager — l1ft0ff was here
-    console.log('%c next_elite(); %c voyager ', 'background:#18181b;color:#F5C400;font-family:monospace;padding:4px 8px;border-radius:3px 0 0 3px;', 'background:#3B6EF5;color:#fff;font-family:monospace;padding:4px 8px;border-radius:0 3px 3px 0;');
-    console.log('%c the protocol is loading... ', 'color:#a1a1aa;font-family:monospace;padding:2px 0;');
-    console.log('%c <333 xxx n3xt3lit3 ', 'color:#E8197A;font-family:monospace;padding:2px 0;');
+    // Mission: Apollo — l1ft0ff was here
+    console.log('%c next_elite(); %c apollo ', 'background:#0a0a0a;color:#F5C400;font-family:monospace;padding:4px 8px;border:1px solid #27272a;', 'background:#0a0a0a;color:#00BADF;font-family:monospace;padding:4px 8px;border:1px solid #27272a;');
+    console.log('%c > the terminal never sleeps ', 'color:#52525b;font-family:monospace;padding:2px 0;');
+    console.log('%c > <333 xxx n3xt3lit3 ', 'color:#E8197A;font-family:monospace;padding:2px 0;');
+
+    // Easter egg: Konami code reveals a hidden message
+    const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    let konamiPos = 0;
+    document.addEventListener('keydown', function(e) {
+      if (e.keyCode === konamiCode[konamiPos]) {
+        konamiPos++;
+        if (konamiPos === konamiCode.length) {
+          document.querySelector('.prompt span').textContent = 'root@nextelite:~$ echo "you found the back door"';
+          konamiPos = 0;
+        }
+      } else {
+        konamiPos = 0;
+      }
+    });
+
+    // Typing animation
+    (function() {
+      const lines = [
+        'The protocol is the product.',
+        'The process is the proof.'
+      ];
+      const el = document.getElementById('tagline-text');
+      let lineIndex = 0;
+      let charIndex = 0;
+      let currentText = '';
+
+      function type() {
+        if (lineIndex >= lines.length) {
+          // Remove cursor after typing is done
+          const cursor = el.querySelector('.cursor');
+          if (cursor) cursor.style.animation = 'blink 0.8s steps(1) infinite';
+          return;
+        }
+
+        const line = lines[lineIndex];
+
+        if (charIndex < line.length) {
+          currentText += line[charIndex];
+          el.innerHTML = currentText + '<span class="cursor"></span>';
+          charIndex++;
+          setTimeout(type, 45 + Math.random() * 35);
+        } else {
+          // Line done
+          lineIndex++;
+          if (lineIndex < lines.length) {
+            currentText += '<br />';
+            charIndex = 0;
+            setTimeout(type, 600);
+          } else {
+            el.innerHTML = currentText + '<span class="cursor"></span>';
+          }
+        }
+      }
+
+      // Start typing after page loads
+      setTimeout(type, 1200);
+    })();
   </script>
 
 </body>

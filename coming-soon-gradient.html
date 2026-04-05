@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextElite — Something is coming</title>
   <meta name="description" content="NextElite — The protocol is the product. The process is the proof. Building in public." />
+  <meta name="theme-color" content="#0c0c14" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="NextElite" />
@@ -48,16 +49,16 @@
   }
   </script>
 
-  <!-- TODO: Self-host Inter font files at /fonts/ for full GDPR compliance -->
-  <!-- Using system font stack with Inter as first choice — no external CDN requests -->
-
-  <link rel="stylesheet" href="coming-soon.css" />
+  <link rel="stylesheet" href="coming-soon-gradient.css" />
 </head>
 <body>
 
-  <!-- l1ft0ff: Mission Voyager — the clean slate -->
-  <!-- if you're reading this, you're early. -->
-  <!-- 01101110 01100101 01111000 01110100 -->
+  <!-- l1ft0ff: Mission Gemini — the northern lights -->
+  <!-- 69.3096 N, 15.8518 E — Vesteralen -->
+  <!-- the aurora never asks permission to be seen -->
+
+  <div class="gradient-bg" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
   <main class="page">
     <div class="container">
@@ -104,10 +105,30 @@
   </footer>
 
   <script>
-    // Mission: Voyager — l1ft0ff was here
-    console.log('%c next_elite(); %c voyager ', 'background:#18181b;color:#F5C400;font-family:monospace;padding:4px 8px;border-radius:3px 0 0 3px;', 'background:#3B6EF5;color:#fff;font-family:monospace;padding:4px 8px;border-radius:0 3px 3px 0;');
-    console.log('%c the protocol is loading... ', 'color:#a1a1aa;font-family:monospace;padding:2px 0;');
+    // Mission: Gemini — l1ft0ff was here
+    console.log('%c next_elite(); %c gemini ', 'background:#0c0c14;color:#F5C400;font-family:monospace;padding:4px 8px;border-radius:3px 0 0 3px;', 'background:linear-gradient(90deg,#00BADF,#3B6EF5);color:#fff;font-family:monospace;padding:4px 8px;border-radius:0 3px 3px 0;');
+    console.log('%c like northern lights over Vesteralen ', 'color:rgba(255,255,255,0.35);font-family:monospace;padding:2px 0;');
     console.log('%c <333 xxx n3xt3lit3 ', 'color:#E8197A;font-family:monospace;padding:2px 0;');
+
+    // Easter egg: click the logo 7 times to trigger aurora burst
+    let logoClicks = 0;
+    document.querySelector('.logo').addEventListener('click', function() {
+      logoClicks++;
+      if (logoClicks === 7) {
+        const bg = document.querySelector('.gradient-bg');
+        bg.style.transition = 'opacity 0.5s';
+        bg.querySelector(':before') // can't select pseudo, so we use a class
+        document.body.style.setProperty('--aurora-burst', '1');
+        // Flash the gradient to full opacity briefly
+        const flash = document.createElement('div');
+        flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(245,196,0,0.15),rgba(0,186,223,0.1),rgba(59,110,245,0.1),rgba(232,25,122,0.08));opacity:0;transition:opacity 1s;';
+        document.body.appendChild(flash);
+        requestAnimationFrame(() => { flash.style.opacity = '1'; });
+        setTimeout(() => { flash.style.opacity = '0'; }, 2000);
+        setTimeout(() => { flash.remove(); }, 3000);
+        logoClicks = 0;
+      }
+    });
   </script>
 
 </body>

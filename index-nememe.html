@@ -2,6 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self' https://buy.stripe.com; base-uri 'self'; frame-ancestors 'none';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NextElite Protocol — Nemine Steffensen</title>
   <meta name="description" content="NextElite Protocol — boxing, clicker training, biohacking & XRPL. Built in public by Nemine Steffensen." />
@@ -334,10 +335,10 @@
     <div class="section-label"><span class="section-dot" style="background:var(--blue);"></span> XRP & DROPS</div>
     <div class="drop-grid">
       <div class="drop-card">
-        <div class="drop-card-img-wrap"><img src="meme001.png" alt="Nememe #001" loading="lazy" /></div>
+        <div class="drop-card-img-wrap"><img src="nememe001.png" alt="XX #001" loading="lazy" /></div>
         <div class="drop-card-info">
           <div class="drop-card-number">#001</div>
-          <div class="drop-card-title">Nememe</div>
+          <div class="drop-card-title">XX</div>
           <div class="drop-card-meta">1/1 — XRPL</div>
           <div class="drop-card-status">NOT YET MINTED</div>
         </div>
@@ -378,7 +379,7 @@
       <div class="rm-item done"><span class="rm-num">10</span><span class="rm-name">WHOOP Dashboard</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-item done"><span class="rm-num">11</span><span class="rm-name">XRP page</span><span class="rm-status s-done">DONE</span></div>
       <div class="rm-phase-label">BUILDING NOW</div>
-      <div class="rm-item"><span class="rm-num">12</span><span class="rm-name">Nememe #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
+      <div class="rm-item"><span class="rm-num">12</span><span class="rm-name">XX #001 mint</span><span class="rm-status s-active">IN PROGRESS</span></div>
       <div class="rm-item"><span class="rm-num">13</span><span class="rm-name">Stripe + email</span><span class="rm-status s-active">IN PROGRESS</span></div>
       <div class="rm-phase-label">NEXT UP</div>
       <div class="rm-item"><span class="rm-num">14</span><span class="rm-name">Daily WHOOP automation</span><span class="rm-status s-upcoming">UPCOMING</span></div>
@@ -502,24 +503,24 @@
       clicker:"Clicker training uses operant conditioning to shape precise behaviors in dogs.",
       dogs:"Dog training here is 100% clicker-based. Science, not dominance.",
       whoop:function(){return "WHOOP tracks recovery, strain, and sleep. The data feeds into the protocol.";},
-      xrp:"Building on XRPL. Nememe #001 is the first NFT drop — 1/1, not yet minted.",
-      nft:"Nememe #001 — a 1/1 NFT on XRPL. The first drop from NextElite.",
-      nememe:"Nememe is the NFT/meme brand under NextElite. #001 is the genesis drop on XRPL.",
+      xrp:"Building on XRPL. XX #001 is the first art drop — 1/1, not yet minted.",
+      nft:"XX #001 — a 1/1 original artwork on XRPL. The first drop from NextElite.",
+      xx:"XX is the art collection by NextElite. #001 is the genesis drop on XRPL.",
       stack:"Daily protocol: morning at 06:00, boxing, dog work, WHOOP recovery, building.",
       protocol:"NextElite is a personal protocol — not a product, a system you live.",
       ai:"AI services — build with AI, no code required.",
       story:"Started with soccer — Energikampen — evolved into the protocol.",
       sound:"Protocol playlist — boxing, focus, grind tracks on Spotify.",
       site:"Built from scratch — no frameworks. Pure HTML, CSS, JS. Open source.",
-      help:"Topics: about, boxing, tagteach, clicker, whoop, xrp, nft, nememe, stack, protocol, ai, story, sound, site, stats.",
+      help:"Topics: about, boxing, tagteach, clicker, whoop, xrp, nft, xx, stack, protocol, ai, story, sound, site, stats.",
       stats:"220 days tracked. 121 boxing sessions. 403 workouts. 51 bpm resting.",
       membership:"Observer (free) and Gym Access (199 NOK/mo). Launching soon.",
-      version:"NextElite Protocol v0.3 — NEMEME EDITION. Built in public."
+      version:"NextElite Protocol v0.3 — XX EDITION. Built in public."
     };
     function findAnswer(q){
       q=q.toLowerCase().replace(/[?!.,]/g,'');var words=q.split(/\s+/);
       if(/who (are you|is|made|built)/.test(q)||/what is (this|nextelite)/.test(q))return knowledge.protocol;
-      var keyMap={'boxing':['boxing','box','fight'],'tagteach':['tagteach','tag teach'],'clicker':['clicker','operant','shaping'],'dogs':['dog','dogs'],'whoop':['whoop','recovery','strain','sleep','hrv'],'xrp':['xrp','xrpl','crypto','ledger'],'nft':['nft','mint','collectible'],'nememe':['nememe','meme'],'stack':['stack','routine','daily'],'protocol':['protocol','system'],'ai':['ai','automation'],'story':['story','origin','soccer'],'sound':['sound','music','spotify'],'site':['site','website','code','github'],'help':['help','commands'],'stats':['stats','numbers'],'membership':['membership','subscribe','join','price'],'version':['version','v0']};
+      var keyMap={'boxing':['boxing','box','fight'],'tagteach':['tagteach','tag teach'],'clicker':['clicker','operant','shaping'],'dogs':['dog','dogs'],'whoop':['whoop','recovery','strain','sleep','hrv'],'xrp':['xrp','xrpl','crypto','ledger'],'nft':['nft','mint','collectible'],'xx':['xx','art'],'stack':['stack','routine','daily'],'protocol':['protocol','system'],'ai':['ai','automation'],'story':['story','origin','soccer'],'sound':['sound','music','spotify'],'site':['site','website','code','github'],'help':['help','commands'],'stats':['stats','numbers'],'membership':['membership','subscribe','join','price'],'version':['version','v0']};
       var best=null,bestScore=0;
       for(var key in keyMap){var score=0;keyMap[key].forEach(function(kw){if(q.indexOf(kw)!==-1)score+=2;});words.forEach(function(w){keyMap[key].forEach(function(kw){if(kw.indexOf(w)!==-1&&w.length>2)score+=1;});});if(score>bestScore){bestScore=score;best=key;}}
       if(best&&bestScore>=2){var val=knowledge[best];return typeof val==='function'?val():val;}
@@ -531,7 +532,7 @@
     function showTyping(){var el=document.createElement('div');el.className='chat-typing';el.id='chatTyping';el.innerHTML='<span></span><span></span><span></span>';chatMsgs.appendChild(el);chatMsgs.scrollTop=chatMsgs.scrollHeight;}
     function removeTyping(){var t=document.getElementById('chatTyping');if(t)t.remove();}
     function sendChat(){var q=chatIn.value.trim();chatIn.value='';if(!q)return;addLine('<span class="prompt">&gt;</span> <span class="user-cmd">'+q+'</span>');showTyping();var answer=findAnswer(q);setTimeout(function(){removeTyping();addLine('<span class="response">'+answer+'</span>');},400+Math.random()*300);}
-    addLine('<span class="accent">nextelite</span> <span class="dim">v0.3 — nememe edition</span>');
+    addLine('<span class="accent">nextelite</span> <span class="dim">v0.3 — xx edition</span>');
     addLine('<span class="dim">type anything to query the protocol</span>');
     document.getElementById('termClose').addEventListener('click',function(){chatOpen=false;chatFab.classList.remove('open');chatWin.classList.remove('open');});
     chatFab.addEventListener('click',function(){chatOpen=!chatOpen;chatFab.classList.toggle('open',chatOpen);chatWin.classList.toggle('open',chatOpen);if(chatOpen)setTimeout(function(){chatIn.focus();},100);});
